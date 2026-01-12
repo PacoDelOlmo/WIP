@@ -1,14 +1,56 @@
+/* ------------------------------
+   1. Reset / Normalización
+------------------------------ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ------------------------------
+   2. Variables (colores, fuentes, tamaños)
+------------------------------ */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    --color-primario: #396E81;
+    --color-secundario: #f0f0f0;
+    --color-terciario: #006E83;
+    --color-texto-primario: #222;
+    --color-texto-secundario: #4D4D4D;
+    --color-texto-app: #3AAFA9;
+    --color-texto-enlace: #222;
+    --color-acento: #4A7984;
+    --gris-claro: #EAEAEA;
+    --gris-medio: #D3D3D3;
+    --gris-oscuro: #707070;
+    --verde-clarito: #E2F7FF;
+    --subnavbar-bg: #4E94AD;
+    --bg-verde: #A8D1D5;
+    --color-boton-primary: #396E81;
+    --color-boton-primary-hover: #F0F0F0;
+    --color-boton-seconday: #F0F0F0;
+    --color-boton-seconday-hover: #396E81;
+    --color-bg-navBar: #FAFAFA;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    --fuente-principal: 'Poppins', sans-serif;
+    --max-width: 100%;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ------------------------------
+   3. Estilos globales (body, tipografía, enlaces)
+------------------------------ */
+/* html {
+    scroll-behavior: smooth;
+} */
+
+body {
+    font-family: var(--fuente-principal);
+    color: var(--color-texto);
+    background-color: #fff;
+    line-height: 1.6;
+    max-width: var(--max-width);
+    /* display: grid; */
+    min-height: 100dvh;
+    /* grid-template-rows: auto 1fr auto; */
+                    /*header main footer*/
 }
