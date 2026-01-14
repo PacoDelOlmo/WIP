@@ -1,0 +1,42 @@
+.card{
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1vw;
+    border-radius: 1vw;
+    border: .1vw solid var(--color-primario) ;
+}
+
+.card_tittle{
+    color: var(--color-primario);
+    font-size: 1.5vw;
+    text-align: center;
+}
+
+.card_desc,
+.card_close{
+    color: var(--color-texto-primario);
+    font-size: 1vw;
+    text-align: center;
+    font-weight: 400;
+    padding: .5vw;
+}
+
+@media (max-width: 576px){
+    .card{
+        width: 66%;
+        margin: 0.8vh;
+    }
+
+    .card_tittle{
+        font-size: 1.2vh;
+    }
+
+    .card_desc,
+    .card_close{
+        font-size: 0.9vh;
+        font-weight: 500;
+    }
+}

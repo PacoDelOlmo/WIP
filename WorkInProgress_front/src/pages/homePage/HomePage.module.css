@@ -1,0 +1,214 @@
+main{
+    margin: 0;
+}
+
+.hero{
+    padding: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+
+    h1{
+        color: var(--color-texto-app);
+        font-size: 4.8vw;
+        font-weight: bolder;
+        text-transform: uppercase;
+        margin: 0;
+        margin-block-end: 0;
+        margin-block-start: 0;
+        text-align: center;
+        white-space: pre-line;
+    }
+
+    p{
+        color: var(--color-texto-secundario);
+        font-size: 2vw;
+        font-weight: bold;
+        text-align: center;
+        white-space: pre-line;
+    }
+}
+
+.primary_button {
+    border: 0.1rem solid var(--color-boton-primary);
+    background-color: var(--color-boton-primary);
+    border-radius: 0.5vw;
+    box-shadow: 0.2rem 0.3rem 0.2rem var(--gris-oscuro);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    margin: 2vh;
+
+    a {
+        font-size: 1.5vw;
+        font-weight: 600;
+        padding: 2rem;
+        text-decoration: none;
+        color: var(--color-boton-primary-hover);
+        transition: color 0.2s ease-in-out;
+    }
+}
+
+.primary_button:hover {
+    background-color: var(--color-boton-secondary);
+    box-shadow: 0rem 0rem 0rem transparent;
+    transform: translate(0.2rem, 0.3rem);
+
+    a {
+        color: var(--color-boton-primary);
+    }
+}
+
+.info{
+    background-color: var(--gris-claro);
+    padding: 1vw 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h4{
+        color: var(--color-texto-app);
+        font-size: 1vw;
+        font-weight: bolder;
+        text-transform: uppercase;
+        margin: 0;
+        margin-block-end: 0;
+        margin-block-start: 0;
+        text-align: center;
+        white-space: pre-line;
+    }
+
+    h2{
+        color: var(--color-texto-app);
+        font-size: 2vw;
+        font-weight: bolder;
+        text-transform: uppercase;
+        margin: 0;
+        margin-block-end: 0;
+        margin-block-start: 0;
+        text-align: center;
+        white-space: pre-line;
+    }
+
+    h3{
+        color: var(--color-texto-secundario);
+        font-size: 1.5vw;
+        margin: 0;
+        margin-block-end: 0;
+        margin-block-start: 0;
+        text-align: center;
+        white-space: pre-line;
+    }
+}
+
+.cards_section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+    margin: 1vw;
+}
+
+.motiv{
+    background-color: var(--color-primario);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--color-secundario);
+    padding: 1vw;
+
+    h2 {
+        font-size: 2vw;
+    }
+
+    p{
+        font-size: 1vw;
+    }
+}
+
+.start{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2vw;
+
+    h2 {
+        color: var(--color-texto-app);
+        font-size: 2vw;
+    }
+    
+    h3{
+        color: var(--color-texto-secundario);
+        font-size: 1.5vw;
+        margin: 0;
+        margin-block-end: 0;
+        margin-block-start: 0;
+        text-align: center;
+        white-space: pre-line;
+    }
+}
+
+
+@media (max-width: 576px){
+
+    .hero{
+        padding: 1vh;
+
+        h1{
+            font-size: 3vh;
+        }
+
+        p{
+            font-size: 1.4vh;
+        }
+    }
+
+    .primary_button{
+        padding: 1vh;
+        border-radius: 1vh;
+        a{
+            font-size: 2vh;
+        }
+    }
+
+    .info{
+        h4{
+            font-size: 1vh;
+        }
+
+        h2{
+            font-size: 1.3vh;
+        }
+
+        h3{
+            font-size: 0.9vh;
+        }
+    }
+
+    .cards_section{
+        flex-direction: column;
+        align-items: center;
+        margin: 1vh;
+    }
+
+    .motiv{
+        padding: 1.2vh;
+        h2{
+            font-size: 1.3vh;
+        }
+
+        p{
+            font-size: 0.7vh;
+        }
+    }
+
+    .start{
+        h2{
+            font-size: 1.8vh;
+        }
+
+        h3{
+            font-size: 1.4vh;
+        }
+    }
+}

@@ -1,0 +1,297 @@
+:root {
+    --color-primario: #396E81;
+    --color-secundario: #f0f0f0;
+    --color-texto-primario: #222;
+    --color-texto-secundario: #4D4D4D;
+    --color-acento: #4A7984;
+    --gris-claro: #EAEAEA;
+    --gris-medio: #D3D3D3;
+    --subnavbar-bg: #4E94AD; 
+    --bg-verde: #A8D1D5;
+    --verde-clarito: #E2F7FF;
+    --fuente-principal: 'Poppins', sans-serif;
+}
+
+/* --- 1. ESCENARIO (Consistente con SignUp) --- */
+.loginPageContainer {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    
+    background-color: var(--gris-claro); 
+    background-image: linear-gradient(to bottom, #ffffff, var(--verde-clarito));
+    position: relative;
+    overflow: hidden;
+}
+
+/* Formas de fondo (Variación sutil para diferenciar del SignUp) */
+.loginPageContainer::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    left: -10%;
+    width: 60%;
+    height: 60%;
+    background: linear-gradient(45deg, var(--bg-verde), var(--subnavbar-bg));
+    opacity: 0.3;
+    border-radius: 47% 53% 60% 40% / 35% 66% 34% 65%; /* Blob orgánico */
+    transform: rotate(-15deg);
+    z-index: 0;
+    filter: blur(60px);
+}
+
+.loginPageContainer::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    right: -15%;
+    width: 70%;
+    height: 50%;
+    background: linear-gradient(to left, var(--color-primario), var(--color-acento));
+    opacity: 0.25;
+    border-radius: 61% 39% 54% 46% / 58% 43% 57% 42%;
+    transform: rotate(10deg);
+    z-index: 0;
+    filter: blur(80px);
+}
+
+.login_card {
+    position: relative;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    width: 100%;
+    max-width: 420px;
+    
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(57, 110, 129, 0.15);
+    border: .1rem solid var(--color-acento);
+    
+    animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.logo { width: 60px; margin-bottom: 0.5rem; }
+.header h1 {
+    font-family: var(--fuente-principal);
+    color: var(--color-primario);
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+.subtitle {
+    color: var(--color-texto-secundario);
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.input_group {
+    margin-bottom: 1.2rem;
+}
+
+.input_group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    color: var(--color-texto-primario);
+    font-size: 0.9rem;
+}
+
+.input_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input_icon {
+    position: absolute;
+    left: 0.8rem;
+    color: var(--color-primario);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.input_group input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1.5px solid var(--gris-medio);
+    border-radius: 0.5rem;
+    font-family: var(--fuente-principal);
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+    background-color: #FAFAFA;
+}
+
+.input_group input:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    background-color: white;
+    box-shadow: 0 0 0 3px var(--verde-clarito);
+}
+
+.input_group input::placeholder {
+    color: var(--gris-medio);
+}
+
+.remember_me_group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+}
+
+.checkbox_container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox_container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: relative;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    border-radius: 4px;
+    margin-right: 8px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.checkbox_container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.checkbox_container input:checked ~ .checkmark {
+    background-color: var(--color-primario);
+}
+
+.checkmark svg {
+    display: none;
+}
+.checkbox_container input:checked ~ .checkmark svg {
+    display: block;
+}
+
+.checkbox_text {
+    color: var(--color-texto-secundario);
+}
+
+.forgot_link {
+    color: var(--color-primario);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.forgot_link:hover { text-decoration: underline; }
+
+
+.primary_button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--fuente-principal);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.primary_button:hover {
+    background-color: var(--color-terciario);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(57, 110, 129, 0.3);
+}
+
+
+.footer_section {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    color: var(--gris-oscuro);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+.separator::before, .separator::after {
+    content: ''; flex: 1; border-bottom: 1px solid var(--gris-medio);
+}
+.separator span { margin: 0 1rem; }
+
+.social_buttons_group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.social_btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gris-medio);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--color-texto-primario);
+}
+
+.social_btn:hover {
+    background-color: var(--gris-claro);
+    border-color: var(--color-primario);
+    color: var(--color-primario);
+    transform: scale(1.1);
+}
+
+
+.links_footer {
+    font-size: 0.9rem;
+    color: var(--color-texto-secundario);
+}
+
+.create_account {
+    color: var(--color-primario);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 0.4rem;
+}
+.create_account:hover { text-decoration: underline; }
+
+
+/* Animación */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
