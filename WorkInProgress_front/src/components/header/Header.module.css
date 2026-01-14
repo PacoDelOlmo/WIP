@@ -1,0 +1,210 @@
+:root {
+    --color-primario: #396E81;
+    --color-secundario: #f0f0f0;
+    --color-terciario: #006E83;
+    --color-texto-primario: #222;
+    --color-texto-secundario: #4D4D4D;
+    --color-texto-app: #3AAFA9;
+    --color-texto-enlace: #222;
+    --color-acento: #4A7984;
+    --gris-claro: #EAEAEA;
+    --gris-medio: #D3D3D3;
+    --gris-oscuro: #707070;
+    --verde-clarito: #E2F7FF;
+    --subnavbar-bg: #4E94AD;
+    --bg-verde: #A8D1D5;
+    --color-boton-primary: #396E81;
+    --color-boton-primary-hover: #F0F0F0;
+    --color-boton-seconday: #F0F0F0;
+    --color-boton-seconday-hover: #396E81;
+    --color-bg-navBar: #FAFAFA;
+
+    --fuente-principal: 'Poppins', sans-serif;
+    --max-width: 100%;
+}
+
+.navbar_container {
+    background-color: var(--color-secundario);
+    width: 100%;
+    box-shadow: 0px 0.2rem 1rem rgb(100, 100, 100);
+    border-bottom: 2px solid rgb(226, 226, 226);
+}
+
+.navbar_main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1vh 2vh;
+}
+
+.nav_list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 1.5rem;
+
+    li {
+        margin-left: .1vh;
+        display: flex;
+        align-items: center;
+        a {
+            color: var(--color-primario);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.desktop_buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.WIP_button {
+    width: 2.5rem;
+}
+
+.btn_group {
+    margin-right: 1rem;
+    display: flex;
+    align-content: space-between;
+
+    div {
+        margin-left: 1rem;
+    }
+}
+
+.primary_button {
+    border: 0.1rem solid var(--color-boton-primary);
+    background-color: var(--color-boton-primary);
+    border-radius: 0.2rem;
+    box-shadow: 0.2rem 0.3rem 0.2rem var(--gris-oscuro);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    a {
+        font-weight: 600;
+        padding: 2rem;
+        text-decoration: none;
+        color: var(--color-boton-primary-hover);
+        transition: color 0.2s ease-in-out;
+    }
+}
+
+.primary_button:hover {
+    background-color: var(--color-boton-secondary);
+    box-shadow: 0rem 0rem 0rem transparent;
+    transform: translate(0.2rem, 0.3rem);
+
+    a {
+        color: var(--color-boton-primary);
+    }
+}
+
+.secondary_button {
+    border: 0.1rem solid var(--color-boton-primary);
+    background-color: var(--gris-claro);
+    border-radius: 0.2rem;
+    box-shadow: 0.2rem 0.3rem 0.2rem var(--gris-oscuro);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    a {
+        font-weight: 600;
+        padding: 2rem;
+        text-decoration: none;
+        color: var(--color-boton-primary);
+        transition: color 0.2s ease-in-out;
+    }
+}
+
+.secondary_button:hover {
+    border: 0.1rem solid var(--color-boton-secondary);
+    background-color: var(--color-boton-primary);
+    box-shadow: 0rem 0rem 0rem transparent;
+    transform: translate(0.2rem, 0.3rem);
+
+    a {
+        color: var(--color-boton-primary-hover);
+    }
+}
+
+.menu_icon {
+    height: 100%;
+    color: var(--color-boton-primary-hover);
+    border: 0.1rem solid var(--color-boton-primary);
+    background-color: var(--color-boton-primary);
+    border-radius: 0.2rem;
+    box-shadow: 0.2rem 0.3rem 0.2rem var(--gris-oscuro);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    padding: 0.1vw;
+    display: none;
+}
+
+.mobile_menu {
+    display: none;
+    background-color: var(--color-secundario);
+    padding: 1rem 2vh;
+    border-top: 1px solid var(--gris-medio);
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* ---------- Responsive design ------------ */
+@media (max-width: 576px) {
+    .desktop_buttons {
+        display: none;
+    }
+
+    .menu_icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .show_menu {
+        display: flex;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    .secondary_button.show {
+        top: 13vh;
+    }
+
+    .btn_group {
+        flex-direction: row;
+    }
+
+    a {
+        font-size: 1.4vh;
+    }
+
+    .WIP_button {
+        width: 5vh;
+    }
+
+    .mobile_menu .primary_button,
+    .mobile_menu .secondary_button {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+/* ------------ Animaciones ------------ */
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

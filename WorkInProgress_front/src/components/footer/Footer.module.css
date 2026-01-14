@@ -1,0 +1,222 @@
+:root {
+    --color-primario: #396E81;
+    --color-secundario: #f0f0f0;
+    --color-terciario: #006E83;
+    --color-texto-primario: #222;
+    --color-texto-secundario: #4D4D4D;
+    --color-texto-app: #3AAFA9;
+    --color-texto-enlace: #222;
+    --color-acento: #4A7984;
+    --gris-claro: #EAEAEA;
+    --gris-medio: #D3D3D3;
+    --gris-oscuro: #707070;
+    --verde-clarito: #E2F7FF;
+    --subnavbar-bg: #4E94AD;
+    --bg-verde: #A8D1D5;
+    --color-boton-primary: #396E81;
+    --color-boton-primary-hover: #F0F0F0;
+    --color-boton-seconday: #F0F0F0;
+    --color-boton-seconday-hover: #396E81;
+    --color-bg-navBar: #FAFAFA;
+
+    --fuente-principal: 'Poppins', sans-serif;
+    --max-width: 100%;
+}
+
+.footer {
+    display: block;
+    flex-direction: column;
+    padding: 2rem 0rem 0.5rem 0rem;
+    background-color: var(--color-terciario);
+    color: var(--color-secundario);
+    width: 100%;
+
+    p {
+        align-self: self-end;
+        font-size: small;
+    }
+}
+
+.container_logo_WIP{
+    display: flex;
+    align-self: center;
+    border: .1rem solid var(--color-secundario);
+    border-radius: 20%;
+}  
+
+.WIP_button {
+    width: 2.5rem;
+}
+
+.footer_info{
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.columna_footer {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.columna_footer h3 {
+    margin: 0;
+    font-size: 0.9rem;
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+    
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    
+    text-align: right; 
+    white-space: nowrap;
+}
+
+.enlaces {
+    list-style: none;
+    font-size: 1rem;
+    line-height: 1.4;
+
+    li {
+        margin-bottom: 0.2rem; 
+    }
+}
+
+.enlaces a {
+    color: white;
+    text-decoration: none; 
+    margin: 0;
+}
+
+.enlaces a:hover {
+    text-decoration: underline;
+}
+
+.footer_bottom{
+    border-top: 0.1rem solid var(--color-texto-app);
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding-top: 1rem;
+}
+
+.copy{
+    align-self: flex-end;
+    font-size: smaller;
+    font-weight: 100;
+    margin-right: 1.5rem;
+    font-size: 60%;
+}
+
+.politicas_footer{
+    align-self: center;
+    margin-left: 1.5rem;
+
+    ul{
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        list-style: none;
+
+        li{
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            a {
+                text-decoration: none;
+                color: var(--color-secundario);
+                font-size: 70%;
+            }
+        }
+    }
+}
+
+.politicas_footer>ul>li>a:hover{
+    text-decoration: underline;
+}
+
+.container_logo_WIP_mobile{
+    display: none;
+}
+
+@media (max-width: 576px){
+
+    .footer_info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+        padding: 0 1.5rem;
+    }
+
+    .columna_footer {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid var(--verde-clarito);
+    }
+
+    .columna_footer h3 {
+        writing-mode: horizontal-tb; 
+        transform: none; 
+        text-align: left;
+        margin: 0;
+        padding: 1rem 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+    }
+
+    .columna_footer.active .enlaces {
+        max-height: 500px;
+        opacity: 1;
+        padding-bottom: 1rem;
+    }
+
+    .enlaces{
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out, padding 0.3s ease;
+        
+        padding: 0;
+        margin: 0;
+    }
+
+    .enlaces li {
+        margin-bottom: 0.5rem;
+        padding-left: 0.5rem;
+    }
+
+    .footer_bottom{
+        flex-direction: column;
+    }
+
+    .container_logo_WIP_mobile{
+        display: flex;
+        align-self: center;
+        border: .1rem solid var(--color-secundario);
+        border-radius: 20%;
+    }   
+
+    .container_logo_WIP{
+        display: none;
+    }
+
+    .copy{
+        align-self: center;
+        justify-self: center;
+    }
+
+    .footer_bottom{
+        gap: .5rem;
+    }
+
+    .autor{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

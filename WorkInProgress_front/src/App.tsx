@@ -1,14 +1,17 @@
-
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import {Routes, Route} from 'react-router'
+import { HomePage } from './pages/homePage/HomePage'
+import { Login } from './pages/login/Login'
+import { SignUp } from './pages/signUp/SignUp'
 
 function App() {
   
   return (
-    <>
-      <h1>Welcome to WIP</h1>
-    </>
+    <Routes>
+      <Route path='/' element={<HomePage />}/>
+      <Route path='/login' element={<Login />}/>
+      <Route path='/signup' element={<SignUp />}/>
+    </Routes>
   )
 }
 
