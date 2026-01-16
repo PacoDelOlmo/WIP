@@ -1,0 +1,143 @@
+:root {
+    --color-primario: #396E81;
+    --color-secundario: #f0f0f0;
+    --color-terciario: #006E83;
+    --color-texto-primario: #222;
+    --color-texto-secundario: #4D4D4D;
+    --color-texto-app: #3AAFA9;
+    --color-texto-enlace: #222;
+    --color-acento: #4A7984;
+    --gris-claro: #EAEAEA;
+    --gris-medio: #D3D3D3;
+    --gris-oscuro: #707070;
+    --verde-clarito: #E2F7FF;
+    --subnavbar-bg: #4E94AD;
+    --bg-verde: #A8D1D5;
+    --color-boton-primary: #396E81;
+    --color-boton-primary-hover: #F0F0F0;
+    --color-boton-seconday: #F0F0F0;
+    --color-boton-seconday-hover: #396E81;
+    --color-bg-navBar: #FAFAFA;
+
+    --fuente-principal: 'Poppins', sans-serif;
+    --max-width: 100%;
+}
+
+.aside{
+    background-color: var(--gris-claro);
+    width: 25%;
+    padding: 1rem;
+    height: 110vh;
+}
+
+.asideElement, .aside {
+    margin-bottom: 0.5rem;
+}
+
+a{
+    color: var(--color-texto);
+    text-decoration: none;
+}
+
+ul{
+    list-style: none;
+}
+
+div>ul{
+    margin-left: 2rem;
+}
+
+.dropdown{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    animation: fadeIn 0.2s ease-in-out;
+
+}
+
+.dropdown,
+.asideElement{
+    padding: 0.4rem;
+}
+
+.dropdown:hover,
+.asideElement:hover{
+    background-color: var(--bg-verde);
+    border-radius: 0.4rem;
+
+    a{
+        color: var(--color-primario);
+        font-weight: 500;
+        
+        i{
+            color: var(--color-primario);
+        }
+    }
+}
+
+.selected{
+    background-color: var(--gris-medio);
+    border-radius: 0.4rem;
+
+    a{
+        font-weight: 500;
+    }
+}
+
+button{
+    border: none;
+    background-color: transparent;
+    margin-left: 1rem;
+}
+
+.oculta{
+    display: none;
+}
+
+.asideElement a{
+    display: flex;
+    align-content: center;
+
+    span{
+        margin-left: .5rem;
+    }
+}
+
+.accordion {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out;
+}
+
+.accordionOpen {
+    grid-template-rows: 1fr;
+}
+
+.accordionContent {
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.accordionOpen .accordionContent {
+    opacity: 1;
+}
+
+.dropdown button {
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 576px){
+    .aside{
+        display: none;
+    }
+}
+
+/* ------------------- Animaciones -------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
