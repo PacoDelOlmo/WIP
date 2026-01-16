@@ -35,14 +35,14 @@
 }
 
 .top_nav{
-    margin-left: 1rem;
+    margin-left: 1vw;
         ul {
             list-style: none;
             display: flex;
             align-items: center;
 
             li {
-                margin-left: 1rem;
+                margin-left: 1vw;
                 color: var(--color-primario);
             }
         }
@@ -63,11 +63,11 @@
 }
 
 .btn_group{
-    margin-right: 2rem;
+    margin-right: 2vw;
     display: flex;
     align-content: space-between;
 
-    gap: 1rem;
+    gap: 1vw;
 }
 
 .notification_button{
