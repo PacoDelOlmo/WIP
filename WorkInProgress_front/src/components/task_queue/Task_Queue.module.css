@@ -1,0 +1,154 @@
+:root {
+    --color-primario: #396E81;
+    --color-secundario: #f0f0f0;
+    --color-terciario: #006E83;
+    --color-texto-primario: #222;
+    --color-texto-secundario: #4D4D4D;
+    --color-texto-app: #3AAFA9;
+    --color-texto-enlace: #222;
+    --color-acento: #4A7984;
+    --gris-claro: #EAEAEA;
+    --gris-medio: #D3D3D3;
+    --gris-oscuro: #707070;
+    --verde-clarito: #E2F7FF;
+    --subnavbar-bg: #4E94AD;
+    --bg-verde: #A8D1D5;
+    --color-boton-primary: #396E81;
+    --color-boton-primary-hover: #F0F0F0;
+    --color-boton-seconday: #F0F0F0;
+    --color-boton-seconday-hover: #396E81;
+    --color-bg-navBar: #FAFAFA;
+
+    --fuente-principal: 'Poppins', sans-serif;
+    --max-width: 100%;
+}
+
+.pila_tareas{
+    width: 28vh;
+    background-color: var(--gris-medio);
+    padding: 1rem;
+    margin: 1vh;
+    border-radius: 0.5rem;
+
+    
+}
+
+.btn_nueva_tarea{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+
+    span{
+        font-size: medium;
+        font-weight: 800;
+    }
+}
+
+.btn_nueva_tarea:hover{
+    background-color: var(--gris-oscuro);
+    border-radius: 0.4rem;
+    color: var(--gris-claro);
+
+    i{
+        color: var(--gris-claro);
+    }
+
+    span{
+        color: var(--gris-claro);
+    }
+}
+
+.titulo_opciones{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1vh;
+
+    h3{
+        font-size: 2vh;
+    }
+
+}
+
+.option_button{
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    &:hover{
+            background-color: var(--gris-oscuro);
+            color: var(--color-secundario);
+            border-radius: 20%;
+    }
+}
+
+.dropdown_menu {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    
+    width: 12rem;
+    background-color: var(--color-bg-navBar);
+    border: 0.1rem solid var(--gris-medio);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    
+    z-index: 100;
+    
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown_item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem;
+    
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 0.3rem;
+    
+    font-family: var(--fuente-principal);
+    color: var(--color-texto-primario);
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+
+    &:hover{
+        background-color: var(--gris-claro);
+        color: var(--color-primario);
+    }
+}
+
+.dropdown_item.danger:hover {
+    background-color: #ffeaea;
+    color: #d9534f; 
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid var(--gris-medio);
+    margin: 0.2rem 0;
+    opacity: 0.5;
+}
+
+/* ------------------- Animaciones -------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

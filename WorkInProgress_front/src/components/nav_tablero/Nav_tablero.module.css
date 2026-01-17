@@ -1,0 +1,249 @@
+:root {
+    --color-primario: #396E81;
+    --color-secundario: #f0f0f0;
+    --color-terciario: #006E83;
+    --color-texto-primario: #222;
+    --color-texto-secundario: #4D4D4D;
+    --color-texto-app: #3AAFA9;
+    --color-texto-enlace: #222;
+    --color-acento: #4A7984;
+    --gris-claro: #EAEAEA;
+    --gris-medio: #D3D3D3;
+    --gris-oscuro: #707070;
+    --verde-clarito: #E2F7FF;
+    --subnavbar-bg: #4E94AD;
+    --bg-verde: #A8D1D5;
+    --color-boton-primary: #396E81;
+    --color-boton-primary-hover: #F0F0F0;
+    --color-boton-seconday: #F0F0F0;
+    --color-boton-seconday-hover: #396E81;
+    --color-bg-navBar: #FAFAFA;
+
+    --fuente-principal: 'Poppins', sans-serif;
+    --max-width: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--subnavbar-bg);
+    padding: 0.5rem;
+    width: 100%;
+    height: 3.5rem;
+    border-bottom: 2px solid var(--subnavbar-bg);
+    box-shadow: 0rem 0.3rem 0.2rem var(--gris-oscuro);
+    color: var(--color-bg-navBar);
+}
+
+.left_section{
+    display: flex;
+    align-items: center;
+}
+
+.desktop_left_section{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.titulo_tablero{
+    color: var(--color-secundario);
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.logo_container{
+    display: flex;
+}
+
+.WIP_button {
+    width: 2.5rem;
+    border: 0.1rem solid var(--color-secundario) ;
+    border-radius: 20%;
+    margin: 0;
+    &:hover{
+        border: 0.2rem solid var(--bg-verde);
+        border-radius: 0.5rem;
+    }
+}
+
+.mobile_left_section,
+.mobile_actions{
+    display: none;
+}
+
+.right_section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+.option_button{
+    border: 0.15rem solid var(--color-boton-primary);
+    background-color: var(--color-boton-primary);
+    border-radius: 0.4rem;
+    box-shadow: 0.2rem 0.3rem 0.2rem var(--gris-medio);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    color: var(--color-secundario);
+    padding: 0.2rem;
+}
+
+.desktop_option_btn {
+    border: 0.15rem solid var(--color-boton-primary);
+    background-color: var(--color-boton-primary);
+    border-radius: 0.4rem;
+    box-shadow: 0.2rem 0.3rem 0.2rem var(--gris-medio);
+    transition: all 0.2s ease-in-out;
+    padding-right: 0.2rem;
+    color: var(--color-secundario);
+    margin-right: 2rem;
+}
+
+.desktop_option_btn:hover {
+    background-color: var(--color-boton-primary-hover);
+    box-shadow: 0rem 0rem 0rem transparent;
+    transform: translate(0.2rem, 0.3rem);
+    color: var(--color-boton-primary);
+}
+
+.options_container {
+    position: relative;
+}
+
+.dropdown_menu {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    
+    width: 12rem;
+    background-color: var(--color-bg-navBar);
+    border: 0.1rem solid var(--gris-medio);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    
+    z-index: 10;
+    
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown_item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem;
+    
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 0.3rem;
+    
+    font-family: var(--fuente-principal);
+    color: var(--color-texto-primario);
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+
+    &:hover{
+        background-color: var(--gris-claro);
+        color: var(--color-primario);
+    }
+}
+
+.dropdown_item.danger:hover {
+    background-color: #ffeaea;
+    color: #d9534f; 
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid var(--gris-medio);
+    margin: 0.2rem 0;
+    opacity: 0.5;
+}
+
+
+
+/* ---------- Responsive design ------------ */
+@media (max-width: 576px) {
+    .navbar {
+        height: auto;
+        min-height: 4.5rem; /* Un poco más alto para acomodar dos líneas de texto */
+        padding: 0.5rem 1rem;
+    }
+
+    .desktop_brand, 
+    .desktop_option_btn,
+    .desktop_left_section {
+        display: none;
+        margin-right: 0;
+    }
+
+    .option_button {
+        display: flex;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        color: white;
+
+        &:hover {
+            background: transparent;
+            transform: none;
+            box-shadow: none;
+            color: var(--gris-claro);
+        }
+    }
+
+    .mobile_left_section{
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .mobile_tittles{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 1.2;
+    }
+
+    .subtitulo_tablero {
+        font-size: 0.75rem;
+        color: var(--gris-medio);
+        font-weight: 400;
+    }
+
+    .mobile_actions {
+        display: flex;
+        gap: 1vh;
+        margin-right: 1vh;
+    }
+
+    .icon_transparent {
+        background: transparent;
+        border: none;
+        color: white;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+}
+
+
+/* ------------------- Animaciones -------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

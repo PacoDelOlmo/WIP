@@ -1,0 +1,413 @@
+:root {
+    --color-primario: #396E81;
+    --color-secundario: #f0f0f0;
+    --color-terciario: #006E83;
+    --color-texto-primario: #222;
+    --color-texto-secundario: #4D4D4D;
+    --color-texto-app: #3AAFA9;
+    --color-texto-enlace: #222;
+    --color-acento: #4A7984;
+    --gris-claro: #EAEAEA;
+    --gris-medio: #D3D3D3;
+    --gris-oscuro: #707070;
+    --verde-clarito: #E2F7FF;
+    --subnavbar-bg: #4E94AD;
+    --bg-verde: #A8D1D5;
+    --color-boton-primary: #396E81;
+    --color-boton-primary-hover: #F0F0F0;
+    --color-boton-seconday: #F0F0F0;
+    --color-boton-seconday-hover: #396E81;
+    --color-bg-navBar: #FAFAFA;
+
+    --fuente-principal: 'Poppins', sans-serif;
+    --max-width: 100%;
+}
+
+.tarea{
+    display: flex;
+    justify-content: space-between;
+    background-color:  var(--gris-claro);
+    border-radius: 0.4rem;
+    box-shadow: 0.2rem 0.3rem 0.2rem var(--gris-oscuro);
+    cursor:grab;
+    transition: all 0.2s ease-in-out;
+    margin-bottom: 0.5rem;
+    position: relative;
+
+    input{
+        margin-left: 0.2rem;
+        visibility: hidden;
+        transition: all 0.2s ease-in-out;
+    }
+
+    button{
+        visibility: hidden;
+        margin-right: 0.5rem;
+        background-color: transparent;
+        border: transparent;
+        cursor: pointer;
+    }
+}
+
+
+.tarea:hover{
+    box-shadow: 0rem 0rem 0rem transparent;
+    transform: translate(0.2rem, 0.3rem);
+
+    input{
+        visibility: visible;
+    }
+
+    button{
+        visibility: visible;
+    }
+}
+
+.tareaSeleccionada {
+    background-color: white;
+    border: 1px solid var(--color-primario);
+    box-shadow: 0 0 0 2px var(--verde-clarito);
+    transform: none !important;
+}
+
+.tarea input {
+    margin-left: 0.2rem;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.tarea button {
+    visibility: hidden;
+    margin-right: 0.5rem;
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+}
+
+.tarea:hover input, 
+.tarea:hover button,
+.tareaSeleccionada input,
+.tareaSeleccionada button {
+    visibility: visible;
+}
+
+.titulo_check{
+    display: flex;
+    gap: 0.4rem;
+}
+
+.completa{
+    box-shadow: 0rem 0rem 0rem transparent;
+    transform: translate(0.2rem, 0.3rem);
+    margin-bottom: 0.8rem;
+
+    input{
+        visibility: visible;
+    }
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); 
+    z-index: 9999;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding: 2rem; 
+    cursor: default;
+    
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modalBox {
+    background-color: white;
+    width: 100%;
+    max-width: 900px; 
+    max-height: 90vh;
+    border-radius: 0.8rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+}
+
+.contenidoExpandido {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--gris-medio);
+}
+
+.nombreLista {
+    font-weight: 500;
+    color: var(--color-texto-primario);
+}
+
+.headerActions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.headerActions button {
+    visibility: visible; 
+    margin: 0;
+    padding: 0.2rem;
+    color: var(--gris-oscuro);
+}
+
+.headerActions button:hover {
+    background-color: var(--gris-claro);
+    border-radius: 4px;
+    color: var(--color-primario);
+}
+
+
+.cardBody {
+    display: flex;
+    flex: 1;
+}
+
+
+.mainColumn {
+    flex: 2; 
+    padding: 1.5rem;
+    background-color: white;
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.circleIcon {
+    color: var(--color-primario);
+    min-width: 24px;
+}
+
+.titleSection h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--color-texto-primario);
+}
+
+
+.metaActions {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+    margin-left: 2.2rem; 
+}
+
+.metaActions button {
+    visibility: visible;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: var(--verde-clarito); 
+    color: var(--color-acento);
+    border: 1px solid transparent;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.metaActions button:hover {
+    background-color: var(--bg-verde);
+    border-color: var(--color-acento);
+}
+
+
+.descriptionSection {
+    margin-left: 0;
+}
+
+.descHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.descTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.btnEdit {
+    visibility: visible !important;
+    border: .1rem solid var(--gris-medio);
+    padding: 0.2rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--color-texto-secundario);
+
+    &:hover{
+        border: .1rem solid var(--color-boton-primary);
+        color: var(--color-boton-primary);
+    }
+}
+
+.descText {
+    color: var(--color-texto-secundario);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-left: 2rem;
+}
+
+
+.sidebarColumn {
+    flex: 1; 
+    background-color: var(--gris-claro);
+    border-left: 1px solid var(--gris-medio);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.sidebarHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-texto-primario);
+}
+
+.sidebarHeader h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.commentInputWrapper input {
+    visibility: visible;
+    width: 100%;
+    margin: 0;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--gris-medio);
+    border-radius: 4px;
+    background-color: white;
+    outline: none;
+}
+
+.commentInputWrapper input:focus {
+    border-color: var(--color-primario);
+}
+
+
+.activityLog {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    background-color: var(--bg-verde);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primario);
+    flex-shrink: 0;
+}
+
+.activityText {
+    color: var(--color-texto-primario);
+    line-height: 1.4;
+}
+
+.dateLink {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--color-texto-secundario);
+    text-decoration: underline;
+    font-size: 0.75rem;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 576px) {
+
+    .modalOverlay {
+        padding: 0; 
+        align-items: flex-start; 
+        background-color: white;
+    }
+
+    .modalBox {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    
+    .cardBody {
+        flex-direction: column; 
+        flex: unset; 
+    }
+
+    .mainColumn {
+        padding: 1rem;
+    }
+
+    .titleSection {
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .titleSection h2 {
+        font-size: 1.2rem; 
+        line-height: 1.3;
+    }
+
+
+    .metaActions {
+        margin-left: 0; 
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+
+    .descText {
+        margin-left: 0;
+    }
+
+    .sidebarColumn {
+        border-left: none;
+        border-top: 1px solid var(--gris-medio); 
+        padding: 1rem;
+        background-color: #fafafa;
+    }
+
+    .headerActions button {
+        padding: 0.5rem; 
+    }
+}
+
+/* -- Animación -- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
