@@ -7,5 +7,7 @@ import com.example.wip.model.UserDTO;
 public interface UserService {
 
     List<UserDTO> obtenerUsuarios();
+    UserDTO obtenerUsuarioPorNickName(String userName);
+    UserDTO obtenerUsuarioPorCorreo(String correo);
     
 }

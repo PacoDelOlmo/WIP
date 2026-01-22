@@ -3,9 +3,11 @@ package com.example.wip.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.wip.entities.WorkspaceEntity;
+import com.example.wip.entities.TaskboardEntity;
+
+
 
 @Repository
-public interface TaskboardRepository extends JpaRepository<WorkspaceEntity, Long>{
+public interface TaskboardRepository extends JpaRepository<TaskboardEntity, Long>{
     
 }

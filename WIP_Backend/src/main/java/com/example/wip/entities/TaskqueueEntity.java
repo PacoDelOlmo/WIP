@@ -73,5 +73,13 @@ public class TaskqueueEntity implements Serializable{
         this.tablero = tablero;
     }
 
+    public Set<TaskEntity> getTareas() {
+        return tareas;
+    }
+
+    public void setTareas(Set<TaskEntity> tareas) {
+        this.tareas = tareas;
+    }
+
     
 }

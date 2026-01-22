@@ -22,7 +22,7 @@ public class UserEntity implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_USUARIO")
-    private long idEspacioTrabajo;
+    private long idUsuario;
 
     @Column(name = "NOMBRE")
     private String nombre;
@@ -48,12 +48,12 @@ public class UserEntity implements Serializable{
     @OneToMany(mappedBy = "autor")
     private Set<CommentEntity> comentarios = new HashSet<CommentEntity>();
 
-    public long getIdEspacioTrabajo() {
-        return idEspacioTrabajo;
+    public long getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdEspacioTrabajo(long idEspacioTrabajo) {
-        this.idEspacioTrabajo = idEspacioTrabajo;
+    public void setIdUsuario(long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNombre() {

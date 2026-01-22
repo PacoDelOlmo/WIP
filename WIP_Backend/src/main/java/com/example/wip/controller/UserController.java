@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
@@ -24,6 +24,16 @@ public class UserController {
     @GetMapping("/")
     public List<UserDTO> obtenerUsuario() {
         return userService.obtenerUsuarios() ;
+    }
+
+    @GetMapping("/username/{nickname}")
+    public UserDTO recuperarDatosUserName(@PathVariable String nickname){
+        return userService.obtenerUsuarioPorNickName(nickname);
+    }
+
+    @GetMapping("/correo/{correo}")
+    public UserDTO recuperarDatosCorreo(@PathVariable String correo){
+        return userService.obtenerUsuarioPorCorreo(correo);
     }
     
 }

@@ -2,6 +2,7 @@ package com.example.wip.model;
 
 public class UserDTO {
 
+    private long id; 
     private String nombre;
     private String apellido;
     private String nickname;
@@ -9,12 +10,14 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String nombre, String apellido, String nickname) {
+    public UserDTO(long id, String nombre, String apellido, String nickname) {
+        this.setId(id);
         this.setNombre(nombre);
         this.setApellido(apellido);
         this.setNickname(nickname);
     }
 
+    
     public String getNombre() {
         return nombre;
     }
@@ -37,6 +40,14 @@ public class UserDTO {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
 }

@@ -33,5 +33,37 @@ public class UserServiceImplement implements UserService {
 
         return listaUsuarios;
     }
+
+    public boolean loginCorrecto (String datos, String password){
+        boolean loginCorrecto = false;
+
+
+
+        return loginCorrecto;
+    }
+
+    @Override
+    public UserDTO obtenerUsuarioPorNickName(String userName){
+        List<UserEntity> usuariosDB = new ArrayList<UserEntity>(repo.buscarPorUsuario(userName));
+        List<UserDTO> listaUsuarios = new ArrayList<UserDTO>();
+
+        for (UserEntity u : usuariosDB){
+            listaUsuarios.add(conversor.prueba(u));
+        }
+
+        return listaUsuarios.get(0);
+    }
+
+    @Override
+    public UserDTO obtenerUsuarioPorCorreo(String correo){
+        List<UserEntity> usuariosDB = new ArrayList<UserEntity>(repo.buscarPorCorreo(correo));
+        List<UserDTO> listaUsuarios = new ArrayList<UserDTO>();
+
+        for (UserEntity u : usuariosDB){
+            listaUsuarios.add(conversor.prueba(u));
+        }
+
+        return listaUsuarios.get(0);
+    }
     
 }
