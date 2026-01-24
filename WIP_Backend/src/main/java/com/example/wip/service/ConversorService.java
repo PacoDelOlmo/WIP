@@ -25,6 +25,7 @@ public class ConversorService {
     public UserDTO prueba(UserEntity entidad){
         UserDTO dto = new UserDTO();
 
+        dto.setId(entidad.getIdUsuario());
         dto.setNombre(entidad.getNombre());
         dto.setApellido(entidad.getApellido());
         dto.setNickname(entidad.getNombreUsuario());

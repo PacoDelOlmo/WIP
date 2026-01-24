@@ -1,9 +1,54 @@
 import styles from './Login.module.css'
-import { Chrome, Github, Apple, Mail, Lock, Check } from 'lucide-react'; 
+import { Chrome, Github, Apple, Mail, Lock, Check, AlertCircle } from 'lucide-react'; 
 import LogoWip from './../../assets/img/WIP_SinLetra.png';
-import { Link } from 'react-router'
+import { useNavigate, Link } from 'react-router'
+import { useState, type ReactElement } from 'react';
+import { LoginService } from '../../services/LoginService';
+import { useAuthStore } from '../../store/Auth';
+
 
 export function Login() {
+
+    const navigate = useNavigate();
+    const loginEnStore = useAuthStore((state) => state.login);
+
+    const [correoUsuario, setCorreoUsuario] = useState('');
+    const [contrasena, setContrasena] = useState('');
+    const [error, setError] = useState<String | null>();
+
+    const actulizarCorreoUsuario = (e : React.ChangeEvent<HTMLInputElement>) =>{
+        setCorreoUsuario(e.target.value);
+        setError(null);
+    }
+
+    const actualizarContrsena = (e : React.ChangeEvent<HTMLInputElement>) =>{
+        setContrasena(e.target.value);
+        setError(null);
+    }
+
+    async function comprobarLogin (event : React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+
+        try{
+            let rs = await LoginService.getCorrectLogin(correoUsuario, contrasena);
+
+            if (rs.correcto){
+                console.log("Login correcto, redirigiendo...")
+                loginEnStore(rs.idUsuario);
+                navigate('/user/home')
+            } else {
+                setError("Credenciales incorrectas. Intentelo de nuevo");
+
+                setContrasena('');
+                setCorreoUsuario('');
+            }
+        } catch (e){
+            console.error(e);
+            setError('Error de conexión con el servidor');
+        }
+
+    }
+
     return (
     <div className={styles.loginPageContainer}>
         
@@ -14,12 +59,20 @@ export function Login() {
                 <p className={styles.subtitle}>Bienvenido de nuevo</p>
             </header>
 
-            <form action={'#'}>
+            <form  onSubmit={comprobarLogin}>
                 <div className={styles.input_group}>
                     <label htmlFor="user">Correo electrónico</label>
                     <div className={styles.input_wrapper}>
                         <Mail size={18} className={styles.input_icon} />
-                        <input type="email" name='user' id="user" placeholder='ejemplo@correo.com'/>
+                        <input
+                            type="email" 
+                            name='user' 
+                            id="user" 
+                            placeholder='ejemplo@correo.com'
+                            value={correoUsuario}
+                            onChange={(e) => actulizarCorreoUsuario(e)}
+                            required
+                            />
                     </div>
                 </div>
 
@@ -27,9 +80,24 @@ export function Login() {
                     <label htmlFor='password'>Contraseña</label>
                     <div className={styles.input_wrapper}>
                         <Lock size={18} className={styles.input_icon} />
-                        <input type="password" name='password' id="password" placeholder='••••••••'/>
+                        <input 
+                            type="password" 
+                            name='password' 
+                            id="password" 
+                            placeholder='••••••••'
+                            value={contrasena}
+                            onChange={(e) => actualizarContrsena(e)}
+                            required
+                        />
                     </div>
                 </div>
+
+                {error && (
+                    <div className={styles.error_message} style={{ color: 'red', display: 'flex', gap: '5px', fontSize: '0.9rem', marginTop: '10px', alignItems: 'center' }}>
+                        <AlertCircle size={16} />
+                        <span>{error}</span>
+                    </div>
+                )}
 
                 <div className={styles.remember_me_group}>
                     <label className={styles.checkbox_container}>
@@ -42,7 +110,7 @@ export function Login() {
                     <Link to="#" className={styles.forgot_link}>¿Olvidaste tu contraseña?</Link>
                 </div>
 
-                <button className={styles.primary_button}>Iniciar sesión</button>
+                <button className={styles.primary_button} type='submit'>Iniciar sesión</button>
             </form>
 
             <section className={styles.footer_section}>
