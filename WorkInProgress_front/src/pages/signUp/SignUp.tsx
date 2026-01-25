@@ -2,8 +2,73 @@ import styles from './SignUp.module.css'
 import { Chrome, Github, Apple, User, Mail, Lock, Check } from 'lucide-react'; 
 import LogoWip from './../../assets/img/WIP_SinLetra.png';
 import { Link } from 'react-router'
+import { useState } from 'react';
+import { RegisterService } from '../../services/RegisterService';
+import type { RegisterUser } from '../../services/RegisterService';
 
 export function SignUp() {
+
+    const [correo, setCorreo] = useState('');
+    const [contrasena, setContrasena] = useState('');
+    const [repContrasena, setRepContrasena] = useState('');
+    const [nombre, setNombre] = useState('');
+    const [usuario, setUsuario] = useState('');
+    const [condiciones, setCondiciones] = useState(false);
+    const [error, setError] = useState('');
+
+    const recogerCorreo = (e  : React.ChangeEvent<HTMLInputElement>) =>{
+        setCorreo(e.target.value);
+    }
+
+    const recogerContrasena = (e  : React.ChangeEvent<HTMLInputElement>) =>{
+        setContrasena(e.target.value);
+    }
+
+    const recogerRepContrasena = (e  : React.ChangeEvent<HTMLInputElement>) =>{
+        setRepContrasena(e.target.value);
+    }
+
+    const recogerNombre = (e  : React.ChangeEvent<HTMLInputElement>) =>{
+        setNombre(e.target.value);
+    }
+
+    const recogerUsuario = (e  : React.ChangeEvent<HTMLInputElement>) =>{
+        setUsuario(e.target.value);
+    }
+
+    const toggleCondiciones = () => {
+        console.log("Antes: " +condiciones)
+        setCondiciones(!condiciones);
+    }
+
+    async function register(event :React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        let registerData : RegisterUser = {
+            nombre: '',
+            nombreUsuario: '',
+            correo: '',
+            contrasena: ''
+        }
+        if (contrasena === repContrasena && condiciones){
+            registerData = {
+                nombre: nombre,
+                nombreUsuario: usuario,
+                correo: correo,
+                contrasena: contrasena
+            }
+        }
+
+        try{
+
+            let registerPromise = await RegisterService.postRegister(registerData);
+        } catch (e) {
+            console.error(e);
+            setError('Error de conexión con el servidor');
+        }
+    }
+
+
+
     return (
     <div className={styles.signupPageContainer}>
         
@@ -59,7 +124,7 @@ export function SignUp() {
 
                 <div className={styles.terms_group}>
                     <label className={styles.checkbox_container}>
-                        <input type="checkbox" name="terms" id="terms" />
+                        <input type="checkbox" name="terms" id="terms" checked={condiciones} onChange={toggleCondiciones}/>
                         <span className={styles.checkmark}>
                             <Check size={12} strokeWidth={4} />
                         </span>

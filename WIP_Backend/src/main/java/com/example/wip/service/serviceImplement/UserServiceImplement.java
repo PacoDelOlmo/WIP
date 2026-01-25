@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.wip.entities.UserEntity;
 import com.example.wip.model.LoginDTO;
+import com.example.wip.model.NewUserDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.repository.UserRepository;
 import com.example.wip.service.ConversorService;
@@ -82,5 +83,31 @@ public class UserServiceImplement implements UserService {
 
         return login;
     }
+
+    @Override
+    public UserDTO registrarUsuario(NewUserDTO usuario) {
+        boolean registroCorrecto = false;
+        List<UserEntity> usuariosDB = new ArrayList<UserEntity>(repo.findAll());
+        for (UserEntity u : usuariosDB){
+
+            if (u.getCorreo().equals(usuario.getCorreo()) ||
+                u.getNombreUsuario().equals(usuario.getNombreUsuario())){
+                    registroCorrecto = false;
+            } else {
+                registroCorrecto = true;
+            }
+        }
+
+        if (registroCorrecto){
+            repo.save(conversor.DtoAEntity(usuario)); // configurar esto
+        }else {
+            return new UserDTO(-1, null, null, null, registroCorrecto);
+        }
+
+        UserDTO nuevoUsuario = conversor.prueba(repo.findByCorreo(usuario.getCorreo())); //confiurar esto
+
+        return nuevoUsuario;
+    }
+
     
 }

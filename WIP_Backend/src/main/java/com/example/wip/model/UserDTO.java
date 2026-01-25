@@ -6,15 +6,18 @@ public class UserDTO {
     private String nombre;
     private String apellido;
     private String nickname;
+    private boolean correct;
     
     public UserDTO() {
     }
 
-    public UserDTO(long id, String nombre, String apellido, String nickname) {
+    public UserDTO(long id, String nombre, String apellido, String nickname, boolean correct) {
         this.setId(id);
         this.setNombre(nombre);
         this.setApellido(apellido);
         this.setNickname(nickname);
+        this.setCorrect(correct);
+
     }
 
     
@@ -48,6 +51,14 @@ public class UserDTO {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 
 }
