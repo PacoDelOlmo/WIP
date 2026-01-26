@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     List<UserEntity> buscarPorUsuario(@Param("usuario") String nombreUsuario);
 
     List<UserEntity> findByNombreUsuario(String nombreUsuario);
-    List<UserEntity> findByCorreo(String correo);
+    UserEntity findByCorreo(String correo);
 
     @Query("SELECT u FROM UserEntity u WHERE u.correo = :correo")
     List<UserEntity> buscarPorCorreo(@Param("correo") String correoUsuario);

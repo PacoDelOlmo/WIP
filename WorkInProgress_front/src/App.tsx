@@ -5,6 +5,7 @@ import { Login } from './pages/login/Login'
 import { SignUp } from './pages/signUp/SignUp'
 import { Home } from './pages/home/Home'
 import { Taskboard } from './pages/taskboard/Taskboard'
+import { Protected_Route } from './components/protected_route/Protected_Route'
 
 function App() {
   
@@ -13,8 +14,16 @@ function App() {
       <Route path='/' element={<HomePage />}/>
       <Route path='/login' element={<Login />}/>
       <Route path='/signup' element={<SignUp />}/>
-      <Route path='/user/*' element={<Home />} />
-      <Route path='/taskboard' element={<Taskboard />} />
+      <Route path='/user/*' element={
+          <Protected_Route>
+            <Home />
+          </Protected_Route>
+        } />
+      <Route path='/taskboard' element={
+        <Protected_Route>
+          <Taskboard />
+        </Protected_Route>
+        } />
     </Routes>
   )
 }

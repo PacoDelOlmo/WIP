@@ -8,6 +8,7 @@ import com.example.wip.entities.TaskqueueEntity;
 import com.example.wip.entities.UserEntity;
 import com.example.wip.entities.WorkspaceEntity;
 import com.example.wip.model.CommentDTO;
+import com.example.wip.model.NewUserDTO;
 import com.example.wip.model.TagDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.model.TaskQueueDTO;
@@ -22,12 +23,14 @@ public class ConversorService {
     ----------- ENTITY a DTO ------
     --------------------------------*/
 
-    public UserDTO prueba(UserEntity entidad){
+    public UserDTO entityADto(UserEntity entidad){
         UserDTO dto = new UserDTO();
 
+        dto.setId(entidad.getIdUsuario());
         dto.setNombre(entidad.getNombre());
         dto.setApellido(entidad.getApellido());
         dto.setNickname(entidad.getNombreUsuario());
+        dto.setCorrect(true);
 
         return dto;
     }
@@ -72,7 +75,7 @@ public class ConversorService {
 
         dto.setTitulo(entidad.getTitulo());
         dto.setDescripcion(entidad.getDescripcion());
-        dto.setCreador(prueba(entidad.getAutor()));
+        dto.setCreador(entityADto(entidad.getAutor()));
         dto.setCompletada(entidad.isCompletada());
         
         for (CommentEntity c : entidad.getComentarios()){
@@ -92,7 +95,7 @@ public class ConversorService {
 
         dto.setContenido(entidad.getContenido());
         dto.setFecha(entidad.getFecha().toString());
-        dto.setUser(prueba(entidad.getAutor()));
+        dto.setUser(entityADto(entidad.getAutor()));
 
         return dto;
     }
@@ -100,4 +103,23 @@ public class ConversorService {
     public TagDTO entityADto (TagEntity entidad){
         return new TagDTO(entidad.getEtiqueta());
     }
+
+
+    /*------------------------------
+    ----------- DTO a ENTITY ------
+    --------------------------------*/
+
+    public UserEntity DtoAEntity (NewUserDTO nuevoUsuario){
+        UserEntity entidad = new UserEntity();
+
+        entidad.setNombre(nuevoUsuario.getNombre());
+        entidad.setApellido(nuevoUsuario.getApellido());
+        entidad.setNombreUsuario(nuevoUsuario.getNombreUsuario());
+        entidad.setCorreo(nuevoUsuario.getCorreo());
+        entidad.setContrasena(nuevoUsuario.getContrasena());
+
+
+        return entidad;
+    }
+
 }
