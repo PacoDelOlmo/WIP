@@ -30,7 +30,7 @@ public class UserServiceImplement implements UserService {
         List<UserDTO> listaUsuarios = new ArrayList<UserDTO>();
 
         for (UserEntity u : usuariosDB){
-            listaUsuarios.add(conversor.prueba(u));
+            listaUsuarios.add(conversor.entityADto(u));
         }
 
         return listaUsuarios;
@@ -50,7 +50,7 @@ public class UserServiceImplement implements UserService {
         List<UserDTO> listaUsuarios = new ArrayList<UserDTO>();
 
         for (UserEntity u : usuariosDB){
-            listaUsuarios.add(conversor.prueba(u));
+            listaUsuarios.add(conversor.entityADto(u));
         }
 
         return listaUsuarios.get(0);
@@ -62,7 +62,7 @@ public class UserServiceImplement implements UserService {
         List<UserDTO> listaUsuarios = new ArrayList<UserDTO>();
 
         for (UserEntity u : usuariosDB){
-            listaUsuarios.add(conversor.prueba(u));
+            listaUsuarios.add(conversor.entityADto(u));
         }
 
         return listaUsuarios.get(0);
@@ -104,7 +104,7 @@ public class UserServiceImplement implements UserService {
             return new UserDTO(-1, null, null, null, registroCorrecto);
         }
 
-        UserDTO nuevoUsuario = conversor.prueba(repo.findByCorreo(usuario.getCorreo())); //confiurar esto
+        UserDTO nuevoUsuario = conversor.entityADto(repo.findByCorreo(usuario.getCorreo()));
 
         return nuevoUsuario;
     }

@@ -2,6 +2,7 @@ import axiosClient from "../api/axiosClient";
 
 export interface RegisterUser{
     nombre : string,
+    apellido : string,
     nombreUsuario : string,
     correo : string,
     contrasena : string

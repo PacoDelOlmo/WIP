@@ -22,7 +22,6 @@ public class RegisterController {
 
     @PostMapping("/")
     public UserDTO register (@RequestBody NewUserDTO nuevoUsuario) {
-        service.registrarUsuario(nuevoUsuario);
-        return service;
+        return service.registrarUsuario(nuevoUsuario);
     }
 }
