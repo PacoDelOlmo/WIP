@@ -15,9 +15,10 @@ export type UserCompleteDTO = {
   id: number,
   username: string,
   mail: string
-  workspace: Workspace[],
+  workspace: WorkspaceType[],
 }
 export interface Tarea {
+    id: number, 
     titulo: string;
     fecha?: string; 
 }
@@ -26,10 +27,12 @@ export interface ListaTareas {
     tareas: Tarea[];
 }
 export interface Tablero {
+    id : number,
     nombreTablero: string;
     listaTareas: ListaTareas[];
 }
-export interface Workspace {
+export interface WorkspaceType {
+    id: number,
     nombre: string;
     tableros: Tablero[];
 }
@@ -58,18 +61,19 @@ export function Home() {
 
   return (
     <>
-        {user ? <Header_logged usuario={user}/> : ''}
-        <main className={styles.body}>
-            {user ? <Aside usuario={user}/> : ''}
-            <Routes>
-              <Route path='/workspace' element={<Workspace />} />
-              <Route path='/home' element={user ? 
-                <Home_logged usuario={user} /> : <p>Cargando datos</p>
-              }/>
-              <Route path='/tableros' element={<Tableros />}/>
-              <Route path='/perfil' element={<Ajustes />}/>
-            </Routes>
-        </main>
+        {user ? 
+        <>
+          <Header_logged usuario={user}/> 
+          <main className={styles.body}>
+              {user ? <Aside usuario={user}/> : ''}
+              <Routes>
+                <Route path='/workspace/:id' element={<Workspace usuario={user}/>} />
+                <Route path='/home' element={<Home_logged usuario={user} /> }/>
+                <Route path='/tableros' element={<Tableros usuario={user} />}/>
+                <Route path='/perfil' element={<Ajustes />}/>
+              </Routes>
+          </main>
+        </> : ''}
     </>
   )
 }

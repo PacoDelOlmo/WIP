@@ -5,6 +5,7 @@ import java.util.List;
 
 public class TaskboardDTO {
     
+    private long id;
     private String nombreTablero;
     private List<TaskQueueDTO> listaTareas;
 
@@ -14,7 +15,8 @@ public class TaskboardDTO {
         this.setListaTareas(new ArrayList<TaskQueueDTO>());
     }
 
-    public TaskboardDTO(String nombreTablero, List<TaskQueueDTO> listaTareas) {
+    public TaskboardDTO(long id, String nombreTablero, List<TaskQueueDTO> listaTareas) {
+        this.setId(id);
         this.setNombreTablero(nombreTablero);
         this.setListaTareas(listaTareas);
     }
@@ -31,6 +33,14 @@ public class TaskboardDTO {
     }
     public void setListaTareas(List<TaskQueueDTO> listaTareas) {
         this.listaTareas = listaTareas;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     

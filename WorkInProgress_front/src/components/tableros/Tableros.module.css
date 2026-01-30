@@ -95,8 +95,14 @@
     }
 }
 
-.recent_activity{
+.recent_activity_wrapper{
     margin: 2vw;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 2vw
+    ;
+
 }
 
 .recent_activity_header{
