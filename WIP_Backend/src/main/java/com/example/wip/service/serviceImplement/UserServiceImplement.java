@@ -2,6 +2,7 @@ package com.example.wip.service.serviceImplement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.wip.entities.UserEntity;
 import com.example.wip.model.LoginDTO;
 import com.example.wip.model.NewUserDTO;
+import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.repository.UserRepository;
 import com.example.wip.service.ConversorService;
@@ -107,6 +109,18 @@ public class UserServiceImplement implements UserService {
         UserDTO nuevoUsuario = conversor.entityADto(repo.findByCorreo(usuario.getCorreo()));
 
         return nuevoUsuario;
+    }
+
+    @Override
+    public UserCompleteDTO obtenerUsuarioPorId(long id) {
+        Optional<UserEntity> usuarioDB = repo.findById(id);
+        UserCompleteDTO usuarioDto = new UserCompleteDTO();
+
+        if (usuarioDB.isPresent()){
+            usuarioDto = conversor.userCompleteEntityADto(usuarioDB.get());
+        } 
+
+        return usuarioDto;
     }
 
     

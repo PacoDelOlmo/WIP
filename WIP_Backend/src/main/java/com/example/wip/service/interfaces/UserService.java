@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.wip.model.LoginDTO;
 import com.example.wip.model.NewUserDTO;
+import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 
 public interface UserService {
@@ -13,4 +14,5 @@ public interface UserService {
     UserDTO obtenerUsuarioPorCorreo(String correo);
     LoginDTO comprobarLogin(String correo, String contrasena);
     UserDTO registrarUsuario(NewUserDTO usuario);
+    UserCompleteDTO obtenerUsuarioPorId(long id);
 }

@@ -13,6 +13,7 @@ import com.example.wip.model.TagDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.model.TaskQueueDTO;
 import com.example.wip.model.TaskboardDTO;
+import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.model.WorkspaceDTO;
 
@@ -38,6 +39,7 @@ public class ConversorService {
     public WorkspaceDTO entityADto (WorkspaceEntity entidad){
         WorkspaceDTO dto = new WorkspaceDTO();
         
+        dto.setId(entidad.getIdEspacioTrabajo());
         dto.setNombre(entidad.getNombreEspacioTrabajo());
         for (TaskboardEntity tb : entidad.getTableros()){
             dto.getTableros().add(entityADto(tb));
@@ -49,6 +51,7 @@ public class ConversorService {
     public TaskboardDTO entityADto (TaskboardEntity entidad){
         TaskboardDTO dto = new TaskboardDTO();
 
+        dto.setId(entidad.getIdTablero());
         dto.setNombreTablero(entidad.getNombreTablero());
         
         for(TaskqueueEntity t : entidad.getListasTareas()){
@@ -73,6 +76,7 @@ public class ConversorService {
     public TaskDTO entityADto (TaskEntity entidad){
         TaskDTO dto = new TaskDTO();
 
+        dto.setId(entidad.getIdTarea());
         dto.setTitulo(entidad.getTitulo());
         dto.setDescripcion(entidad.getDescripcion());
         dto.setCreador(entityADto(entidad.getAutor()));
@@ -104,6 +108,19 @@ public class ConversorService {
         return new TagDTO(entidad.getEtiqueta());
     }
 
+    public UserCompleteDTO userCompleteEntityADto (UserEntity entity){
+        UserCompleteDTO dto = new UserCompleteDTO();
+        
+        dto.setId(entity.getIdUsuario());
+        dto.setMail(entity.getCorreo());
+        dto.setUsername(entity.getNombreUsuario());
+
+        for (WorkspaceEntity we : entity.getEspaciosTrabajo()){
+            dto.getWorkspace().add(entityADto(we));
+        }
+
+        return dto;
+    }
 
     /*------------------------------
     ----------- DTO a ENTITY ------

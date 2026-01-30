@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskDTO {
-
+    private long id;
     private String titulo;
     private String descripcion;
     private boolean completada;
@@ -17,8 +17,9 @@ public class TaskDTO {
         this.setComentarios(new ArrayList<CommentDTO>());
     }
 
-    public TaskDTO(String titulo, String descripcion, boolean completada, UserDTO creador, List<TagDTO> etiquetas,
+    public TaskDTO(long id, String titulo, String descripcion, boolean completada, UserDTO creador, List<TagDTO> etiquetas,
             List<CommentDTO> comentarios) {
+        this.setId(id);
         this.setTitulo(titulo);
         this.setDescripcion(descripcion);
         this.setCreador(creador);
@@ -63,6 +64,14 @@ public class TaskDTO {
     }
     public void setComentarios(List<CommentDTO> comentarios) {
         this.comentarios = comentarios;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     

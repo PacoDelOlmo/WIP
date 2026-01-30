@@ -3,6 +3,7 @@ package com.example.wip.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.service.interfaces.UserService;
 
@@ -36,4 +37,8 @@ public class UserController {
         return userService.obtenerUsuarioPorCorreo(correo);
     }
     
+    @GetMapping("/user/{id}")
+    public UserCompleteDTO recuperarUsuarioPorId(@PathVariable long id){
+        return userService.obtenerUsuarioPorId(id);
+    }
 }

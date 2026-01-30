@@ -19,7 +19,7 @@ function App() {
             <Home />
           </Protected_Route>
         } />
-      <Route path='/taskboard' element={
+      <Route path='/taskboard/:id' element={
         <Protected_Route>
           <Taskboard />
         </Protected_Route>
