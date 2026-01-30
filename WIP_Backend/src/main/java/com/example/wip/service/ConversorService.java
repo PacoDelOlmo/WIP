@@ -13,6 +13,7 @@ import com.example.wip.model.TagDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.model.TaskQueueDTO;
 import com.example.wip.model.TaskboardDTO;
+import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.model.WorkspaceDTO;
 
@@ -104,6 +105,19 @@ public class ConversorService {
         return new TagDTO(entidad.getEtiqueta());
     }
 
+    public UserCompleteDTO userCompleteEntityADto (UserEntity entity){
+        UserCompleteDTO dto = new UserCompleteDTO();
+        
+        dto.setId(entity.getIdUsuario());
+        dto.setMail(entity.getCorreo());
+        dto.setUsername(entity.getNombreUsuario());
+
+        for (WorkspaceEntity we : entity.getEspaciosTrabajo()){
+            dto.getWorkspace().add(entityADto(we));
+        }
+        
+        return dto;
+    }
 
     /*------------------------------
     ----------- DTO a ENTITY ------

@@ -2,9 +2,17 @@ import { useState } from 'react'
 import styles from './Header_logged.module.css'
 import LogoWip from './../../assets/img/WIP_SinLetra.png'
 import { Grip, BellRing, LifeBuoy, UserCircle2, Search, Settings, LogOut, LayoutDashboard } from 'lucide-react'
+import type { UserCompleteDTO } from '../../pages/home/Home'
+import { useAuthStore } from '../../store/Auth'
+import { Link } from 'react-router'
 
+interface HeaderProps {
+    usuario: UserCompleteDTO,
+}
 
-export function Header_logged() {
+export function Header_logged({usuario} : HeaderProps) {
+
+    const logout = useAuthStore((state) => state.logout)
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,7 +26,7 @@ export function Header_logged() {
             <nav className={styles.top_nav}>
                 <ul>
                     <li><Grip size={30}  /></li>
-                    <li><a href="" className={styles.WIP_button_container}><img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/></a> <span className={styles.WIP_text}>WIP</span></li>
+                    <li><Link to="/user/workspace" className={styles.WIP_button_container}><img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/></Link> <span className={styles.WIP_text}>WIP</span></li>
                 </ul>
             </nav>
             <div className={styles.search_group}>
@@ -26,11 +34,11 @@ export function Header_logged() {
                     <Search />
                     <input type="text" placeholder="Buscar..."/>
                 </div>
-                <div className={styles.primary_button}><a href="">Buscar</a></div>
+                <div className={styles.primary_button}><Link to="">Buscar</Link></div>
             </div>
             <div className={styles.btn_group}>
-                <div className={styles.notification_button}><a href="#"><BellRing/></a></div>
-                <div className={styles.help_button}><a href="#"><LifeBuoy/></a></div>
+                <div className={styles.notification_button}><Link to="#"><BellRing/></Link></div>
+                <div className={styles.help_button}><Link to="#"><LifeBuoy/></Link></div>
                 <div className={styles.profile_container}>
                     <button 
                         className={styles.profile_button}
@@ -42,20 +50,20 @@ export function Header_logged() {
                     {menuOpen ? 
                         <div className={styles.dropdown_menu}>
                             <div className={styles.user_info}>
-                                <p className={styles.user_name}>User Usuario</p>
-                                <span className={styles.user_role}>user@usuario.us</span>
+                                <p className={styles.user_name}>{usuario.username}</p>
+                                <span className={styles.user_role}>{usuario.mail}</span>
                             </div>
                             <hr />
                             <ul className={styles.dropdown_list}>
                                 <li>
-                                    <a href="/perfil">
+                                    <Link to='/user/perfil'>
                                         <Settings size={18} /> Configuración
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="/logout" className={styles.logout_link}>
+                                    <button onClick={logout} className={styles.logout_link}>
                                         <LogOut size={18} /> Cerrar Sesión
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </div> 
@@ -66,31 +74,30 @@ export function Header_logged() {
             </div>
 
             <nav className={styles.mobile_bottom_nav}>
-                <a href="#tableros" className={styles.nav_item}>
+                <Link to="/user/tableros" className={styles.nav_item}>
                     <LayoutDashboard size={24} />
                     <span>Tableros</span>
-                </a>
+                </Link>
                 
-                <a href="#ayuda" className={styles.nav_item}>
+                <Link to="/ayuda" className={styles.nav_item}>
                     <LifeBuoy size={24} />
                     <span>Ayuda</span>
-                </a>
+                </Link>
 
-                {/* El buscador aquí suele abrir un modal o pantalla nueva */}
-                <a href="#buscar" className={`${styles.nav_item} ${styles.nav_search}`}>
+                <Link to="#buscar" className={`${styles.nav_item} ${styles.nav_search}`}>
                     <Search size={28} />
                     <span>Buscar</span>
-                </a>
+                </Link>
 
-                <a href="#notificaciones" className={styles.nav_item}>
+                <Link to="/notificaciones" className={styles.nav_item}>
                     <BellRing size={24} />
                     <span>Notificaciones</span>
-                </a>
+                </Link>
 
-                <a href="#perfil" className={styles.nav_item}>
+                <Link to="/user/perfil" className={styles.nav_item}>
                     <UserCircle2 size={24} />
                     <span>Perfil</span>
-                </a>
+                </Link>
             </nav>
         </header>
     </>
