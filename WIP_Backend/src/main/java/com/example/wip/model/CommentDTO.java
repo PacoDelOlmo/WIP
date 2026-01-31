@@ -2,6 +2,7 @@ package com.example.wip.model;
 
 public class CommentDTO {
     
+    private long id;
     private String contenido;
     private UserDTO user;
     private String fecha;
@@ -11,7 +12,8 @@ public class CommentDTO {
     }
 
     
-    public CommentDTO(String contenido, UserDTO user, String fecha) {
+    public CommentDTO(long id, String contenido, UserDTO user, String fecha) {
+        this.setId(id);
         this.setContenido(contenido);
         this.setUser(user);
         this.setFecha(fecha);
@@ -34,6 +36,16 @@ public class CommentDTO {
     }
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+
+    public long getId() {
+        return id;
+    }
+
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     
