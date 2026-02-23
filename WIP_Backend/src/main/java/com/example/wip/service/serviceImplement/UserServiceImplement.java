@@ -8,22 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import com.example.wip.entities.TaskboardEntity;
 import com.example.wip.entities.UserEntity;
-import com.example.wip.entities.WorkspaceEntity;
 import com.example.wip.model.ConfirmationObject;
 import com.example.wip.model.LoginDTO;
-import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.NewUserDTO;
-import com.example.wip.model.TaskboardDTO;
 import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.model.UserMailDTO;
 import com.example.wip.model.UserPasswordDTO;
-import com.example.wip.model.WorkspaceDTO;
-import com.example.wip.repository.TaskboardRepository;
 import com.example.wip.repository.UserRepository;
-import com.example.wip.repository.WorkspaceRepository;
 import com.example.wip.service.ConversorService;
 import com.example.wip.service.interfaces.UserService;
 
@@ -33,12 +26,6 @@ public class UserServiceImplement implements UserService {
 
     @Autowired
     private UserRepository repo;
-
-    @Autowired
-    private WorkspaceRepository wRepo;
-
-    @Autowired
-    private TaskboardRepository tbRepo;
 
     private ConversorService conversor = new ConversorService();
 
@@ -181,67 +168,4 @@ public class UserServiceImplement implements UserService {
         return confirmacion;
     }
 
-    @Override
-    public WorkspaceDTO nuevoWorkspace(long id, NewElementDTO workspace) {
-        WorkspaceEntity nuevoWorkspace = new WorkspaceEntity();
-        Optional<UserEntity> usuario = repo.findById(id);
-
-        if (usuario.isPresent()){
-            nuevoWorkspace.setPropietario(usuario.get());
-            nuevoWorkspace.setNombreEspacioTrabajo(workspace.getTittle());
-            wRepo.save(nuevoWorkspace);
-        }
-
-        return conversor.entityADto(nuevoWorkspace);
-    }
-
-    @Override
-    public TaskboardDTO nuevoTablero(long id, long idw, NewElementDTO tablero) {
-        TaskboardEntity nuevoTablero = new TaskboardEntity();
-        Optional<UserEntity> usuario = repo.findById(id);
-        Optional<WorkspaceEntity> workspace = wRepo.findById(idw);
-
-        if (usuario.isPresent() && workspace.isPresent()){
-            if (usuario.get().getIdUsuario() == workspace.get().getPropietario().getIdUsuario() && workspace.get().getIdEspacioTrabajo() == idw){
-                nuevoTablero.setNombreTablero(tablero.getTittle());
-                nuevoTablero.setEspacioTrabajo(workspace.get());
-                tbRepo.save(nuevoTablero);
-            }
-        }
-
-        return conversor.entityADto(nuevoTablero);
-    }
-
-    @Override
-    public WorkspaceDTO editarWorkspace(long id, long idw, NewElementDTO nuevoNombre) {
-        Optional<UserEntity> usuario = repo.findById(id);
-        Optional<WorkspaceEntity> workspace = wRepo.findById(idw);
-
-        if (usuario.isPresent() && workspace.isPresent()){
-            if (usuario.get().getIdUsuario() == workspace.get().getPropietario().getIdUsuario() && workspace.get().getIdEspacioTrabajo() == idw){
-                workspace.get().setNombreEspacioTrabajo(nuevoNombre.getTittle());
-                wRepo.save(workspace.get());
-            }
-        }
-
-        return conversor.entityADto(workspace.get());
-    }
-
-    @Override
-    public TaskboardDTO editarTablero(long id, long idw, long idt, NewElementDTO nuevoNombre) {
-        Optional<UserEntity> usuario = repo.findById(id);
-        Optional<WorkspaceEntity> workspace = wRepo.findById(idw);
-        Optional<TaskboardEntity> tablero = tbRepo.findById(idt);
-
-        if (usuario.isPresent() && workspace.isPresent() && tablero.isPresent()){
-            if (usuario.get().getIdUsuario() == id && workspace.get().getIdEspacioTrabajo() == idw && tablero.get().getIdTablero() == idt){
-                tablero.get().setNombreTablero(nuevoNombre.getTittle());
-                tbRepo.save(tablero.get());
-            }
-        }
-
-        return conversor.entityADto(tablero.get());
-    }
-
-    
 }
