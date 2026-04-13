@@ -9,8 +9,11 @@ import com.example.wip.model.TaskboardDTO;
 import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.model.UserMailDTO;
+import com.example.wip.model.UserPasswordDTO;
 import com.example.wip.model.WorkspaceDTO;
+import com.example.wip.service.interfaces.TaskboardService;
 import com.example.wip.service.interfaces.UserService;
+import com.example.wip.service.interfaces.WorkspaceService;
 
 import java.util.List;
 
@@ -31,6 +34,12 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    WorkspaceService wsService;
+
+    @Autowired
+    TaskboardService tbService;
 
     @GetMapping("/")
     public List<UserDTO> obtenerUsuario() {
@@ -58,28 +67,28 @@ public class UserController {
     }
 
     @PutMapping("/{id}/nuevo_contrasena")
-    public ConfirmationObject actualizarContrasena(@PathVariable long id, @RequestBody UserMailDTO nuevaContrasena) {
+    public ConfirmationObject actualizarContrasena(@PathVariable long id, @RequestBody UserPasswordDTO nuevaContrasena) {
         return userService.actualizarContrasena(nuevaContrasena);
     }
 
     @PostMapping("/{id}/workspace/nuevo")
-    public WorkspaceDTO postMethodName(@PathVariable long id, @RequestBody NewElementDTO workspace) {
-        return userService.nuevoWorkspace(id, workspace);
+    public WorkspaceDTO nuevoWorkspace(@PathVariable long id, @RequestBody NewElementDTO workspace) {
+        return wsService.nuevoWorkspace(id, workspace);
     }
 
     @PostMapping("/{id}/workspace/{idw}/tablero/nuevo")
-    public TaskboardDTO postMethodName(@PathVariable long id,@PathVariable long idw, @RequestBody NewElementDTO tablero) {
-        return userService.nuevoTablero(id, idw, tablero);
+    public TaskboardDTO nuevoTablero(@PathVariable long id,@PathVariable long idw, @RequestBody NewElementDTO tablero) {
+        return tbService.nuevoTablero(id, idw, tablero);
     }
 
     @PutMapping("/{id}/workspace/{idw}/editar")
-    public WorkspaceDTO postMethodName(@PathVariable long id,@PathVariable long idw, @RequestBody NewElementDTO nuevoNombre) {
-        return userService.editarWorkspace(id, idw, nuevoNombre);
+    public WorkspaceDTO editarWrokspace(@PathVariable long id,@PathVariable long idw, @RequestBody NewElementDTO nuevoNombre) {
+        return wsService.editarWorkspace(id, idw, nuevoNombre);
     }
 
-        @PutMapping("/{id}/workspace/{idw}/tablero/{idt}/editar")
-    public WorkspaceDTO postMethodName(@PathVariable long id, @PathVariable long idw, @PathVariable long idt, @RequestBody NewElementDTO nuevoNombre) {
-        return userService.editarTablero(id, idw, idt, nuevoNombre);
+    @PutMapping("/{id}/workspace/{idw}/tablero/{idt}/editar")
+    public TaskboardDTO editarTablero(@PathVariable long id, @PathVariable long idw, @PathVariable long idt, @RequestBody NewElementDTO nuevoNombre) {
+        return tbService.editarTablero(id, idw, idt, nuevoNombre);
     }
     
 }

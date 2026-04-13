@@ -9,10 +9,13 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.wip.entities.UserEntity;
+import com.example.wip.model.ConfirmationObject;
 import com.example.wip.model.LoginDTO;
 import com.example.wip.model.NewUserDTO;
 import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
+import com.example.wip.model.UserMailDTO;
+import com.example.wip.model.UserPasswordDTO;
 import com.example.wip.repository.UserRepository;
 import com.example.wip.service.ConversorService;
 import com.example.wip.service.interfaces.UserService;
@@ -101,7 +104,7 @@ public class UserServiceImplement implements UserService {
         }
 
         if (registroCorrecto){
-            repo.save(conversor.DtoAEntity(usuario)); // configurar esto
+            repo.save(conversor.DtoAEntity(usuario));
         }else {
             return new UserDTO(-1, null, null, null, registroCorrecto);
         }
@@ -123,5 +126,46 @@ public class UserServiceImplement implements UserService {
         return usuarioDto;
     }
 
-    
+    @Override
+    public ConfirmationObject actualizarCorreo(UserMailDTO nuevoEmail) {
+        ConfirmationObject confirmacion = new ConfirmationObject();
+        Optional<UserEntity> usuario = repo.findById(nuevoEmail.getId());
+
+        if (usuario.isPresent()){
+            usuario.get().setCorreo(nuevoEmail.getMail());
+            repo.save(usuario.get());
+            confirmacion.setCorrect(true);
+            confirmacion.setDescription("Correo acutalizado de forma correcta");
+            confirmacion.setIdUser(nuevoEmail.getId());
+        } else {
+            confirmacion.setCorrect(false);
+            confirmacion.setDescription("ERROR: Correo no acutalizado");
+            confirmacion.setIdUser(nuevoEmail.getId());
+        }
+
+        return confirmacion;
+    }
+
+    @Override
+    public ConfirmationObject actualizarContrasena(UserPasswordDTO nuevaContrasena) {
+                ConfirmationObject confirmacion = new ConfirmationObject();
+        Optional<UserEntity> usuario = repo.findById(nuevaContrasena.getId());
+
+        confirmacion.setCorrect(false);
+        confirmacion.setDescription("ERROR: Correo no acutalizado");
+        confirmacion.setIdUser(nuevaContrasena.getId());
+
+        if (usuario.isPresent()){
+            if (usuario.get().getContrasena().equals(nuevaContrasena.getOldPassword())){
+                usuario.get().setContrasena(nuevaContrasena.getNewPassword());
+                repo.save(usuario.get());
+                confirmacion.setCorrect(true);
+                confirmacion.setDescription("Correo acutalizado de forma correcta");
+                confirmacion.setIdUser(nuevaContrasena.getId());
+            }
+        }
+
+        return confirmacion;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.example.wip.service;
 
+import java.time.LocalDateTime;
+
 import com.example.wip.entities.CommentEntity;
 import com.example.wip.entities.TagEntity;
 import com.example.wip.entities.TaskEntity;
@@ -96,7 +98,7 @@ public class ConversorService {
 
     public CommentDTO entityADto(CommentEntity entidad){    
         CommentDTO dto = new CommentDTO();
-
+        dto.setId(entidad.getIdComentario());
         dto.setContenido(entidad.getContenido());
         dto.setFecha(entidad.getFecha().toString());
         dto.setUser(entityADto(entidad.getAutor()));
@@ -105,7 +107,7 @@ public class ConversorService {
     }
 
     public TagDTO entityADto (TagEntity entidad){
-        return new TagDTO(entidad.getEtiqueta());
+        return new TagDTO(entidad.getIdEtiqueta(), entidad.getEtiqueta());
     }
 
     public UserCompleteDTO userCompleteEntityADto (UserEntity entity){
@@ -139,4 +141,23 @@ public class ConversorService {
         return entidad;
     }
 
+
+    public CommentEntity dtoAEntity(CommentDTO comentario){
+        CommentEntity comment = new CommentEntity();
+
+        comment.setContenido(comentario.getContenido());
+        comment.setFecha(LocalDateTime.parse(comentario.getFecha()));
+
+        return comment;
+    }
+
+    public TagEntity dtoAEntity (TagDTO dto){
+        TagEntity tag = new TagEntity();
+        tag.setIdEtiqueta(dto.getId());
+        tag.setEtiqueta(dto.getEtiqueta());
+
+        return tag;
+    }
+
+    
 }

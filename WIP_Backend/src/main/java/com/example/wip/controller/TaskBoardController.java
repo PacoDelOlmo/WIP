@@ -3,10 +3,14 @@ package com.example.wip.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.wip.model.CommentDTO;
 import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.model.TaskQueueDTO;
 import com.example.wip.model.TaskboardDTO;
+import com.example.wip.service.interfaces.CommentService;
+import com.example.wip.service.interfaces.TaskQueueService;
+import com.example.wip.service.interfaces.TaskService;
 import com.example.wip.service.interfaces.TaskboardService;
 
 import java.util.List;
@@ -26,61 +30,75 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class TaskBoardController {
 
     @Autowired
-    TaskboardService service;
+    TaskboardService tbService;
+
+    @Autowired
+    TaskQueueService tqService;
+
+    @Autowired
+    TaskService tService;
+
+    @Autowired
+    CommentService cService;
+
 
     @GetMapping("/")
     public List<TaskboardDTO> getTodosLosTableros() {
-        return service.todosTableros();
+        return tbService.todosTableros();
     }
 
     @GetMapping("/tablero/{id}")
     public TaskboardDTO accederTablero(@PathVariable long id) {
-        return service.obtenerTablero(id);
+        return tbService.obtenerTablero(id);
     }
 
     @PostMapping("/tablero/{id}/nueva_lista")
     public TaskQueueDTO nuevaLista(@PathVariable long id, @RequestBody NewElementDTO lista) {
-        return service.nuevaLista(id, lista);
+        return tqService.nuevaLista(id, lista);
     }
 
     @PutMapping("/tablero/{id}/lista/{idl}/editar")
     public TaskQueueDTO editarLista(@PathVariable long id, @PathVariable long idl, @RequestBody NewElementDTO lista) {
-        return service.editarLista(id, idl, lista);
+        return tqService.editarLista(id, idl, lista);
     }
     
     @PutMapping("/tablero/{id}/lista/{idl}/borrar")
     public TaskQueueDTO borrarLista(@PathVariable long id, @PathVariable long idl) {
-        return service.borrarLista(id, idl);
+        return tqService.borrarLista(id, idl);
     }
 
     @PostMapping("/tablero/{id}/lista/{idl}/nueva_tarea")
     public TaskDTO nuevaTarea(@PathVariable long id, @PathVariable long idl, @RequestBody NewElementDTO tarea) {
-        return service.nuevaTarea(id, idl, tarea);
+        return tService.nuevaTarea(id, idl, tarea);
     }
 
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/editar_nombre")
     public TaskDTO editarNombreTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @RequestBody NewElementDTO nombreTarea) {
-        return service.editarNombreTarea(id, idl, idt, nombreTarea);
+        return tService.editarNombreTarea(id, idl, idt, nombreTarea);
     }
 
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/editar")
     public TaskDTO editarTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @RequestBody TaskDTO tarea) {
-        return service.editarTarea(id, idl, idt, tarea);
+        return tService.editarTarea(id, idl, idt, tarea);
     }
 
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/mover")
     public TaskDTO moverTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt) {
-        return service.moverTarea(id, idl, idt);
+        return tService.moverTarea(id, idl, idt);
     }
 
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/actualizar_estado")
     public TaskDTO actualizarEstadoTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt) {
-        return service.actualizarEstadoTarea(id, idl, idt);
+        return tService.actualizarEstadoTarea(id, idl, idt);
     }
     
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/borrar")
     public TaskDTO borrarTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt) {
-        return service.borrarTarea(id, idl, idt);
+        return tService.borrarTarea(id, idl, idt);
     }
     
+    @PostMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/user/{idu}/nuevo_comentario")
+    public CommentDTO anadirComentario (@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @PathVariable long idu, @RequestBody CommentDTO comentario){
+        return cService.anadirComentario(id, idl, idt, idu, comentario);
+    }
 }
