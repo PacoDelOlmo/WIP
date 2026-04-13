@@ -3,10 +3,12 @@ package com.example.wip.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.wip.model.CommentDTO;
 import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.model.TaskQueueDTO;
 import com.example.wip.model.TaskboardDTO;
+import com.example.wip.service.interfaces.CommentService;
 import com.example.wip.service.interfaces.TaskQueueService;
 import com.example.wip.service.interfaces.TaskService;
 import com.example.wip.service.interfaces.TaskboardService;
@@ -35,6 +37,10 @@ public class TaskBoardController {
 
     @Autowired
     TaskService tService;
+
+    @Autowired
+    CommentService cService;
+
 
     @GetMapping("/")
     public List<TaskboardDTO> getTodosLosTableros() {
@@ -91,4 +97,8 @@ public class TaskBoardController {
         return tService.borrarTarea(id, idl, idt);
     }
     
+    @PostMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/user/{idu}/nuevo_comentario")
+    public CommentDTO anadirComentario (@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @PathVariable long idu, @RequestBody CommentDTO comentario){
+        return cService.anadirComentario(id, idl, idt, idu, comentario);
+    }
 }

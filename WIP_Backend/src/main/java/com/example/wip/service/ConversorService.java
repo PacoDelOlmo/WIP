@@ -1,5 +1,7 @@
 package com.example.wip.service;
 
+import java.time.LocalDateTime;
+
 import com.example.wip.entities.CommentEntity;
 import com.example.wip.entities.TagEntity;
 import com.example.wip.entities.TaskEntity;
@@ -139,6 +141,15 @@ public class ConversorService {
         return entidad;
     }
 
+
+    public CommentEntity dtoAEntity(CommentDTO comentario){
+        CommentEntity comment = new CommentEntity();
+
+        comment.setContenido(comentario.getContenido());
+        comment.setFecha(LocalDateTime.parse(comentario.getFecha()));
+
+        return comment;
+    }
 
     public TagEntity dtoAEntity (TagDTO dto){
         TagEntity tag = new TagEntity();
