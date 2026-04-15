@@ -51,7 +51,7 @@ export function Home_logged({ usuario }: UserProps) {
                         ws.tableros.map((tablero, index) => (
                             <div key={`${ws.nombre}-${index}`} className={styles.board_button_link}>
                                 <div className={styles.board_draw}></div>
-                                <Link to='' className={styles.board_name}>
+                                <Link to={`/taskboard/${tablero.id}`} className={styles.board_name}>
                                     {tablero.nombreTablero}
                                 </Link>
                             </div>

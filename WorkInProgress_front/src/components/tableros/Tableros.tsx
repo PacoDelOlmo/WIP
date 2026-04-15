@@ -30,7 +30,7 @@ export function Tableros({ usuario }: UserProps) {
             tablerosRecientes.map((tablero) => (
                 <div key={`recent-${tablero.nombreTablero}`} className={styles.board_button_link}>
                   <div className={styles.board_draw}></div>
-                  <Link to={`/user/tablero/${tablero.id}`} className={styles.board_name}>
+                  <Link to={`/taskboard/${tablero.id}`} className={styles.board_name}>
                     {tablero.nombreTablero}
                   </Link>
                 </div>
@@ -62,7 +62,7 @@ export function Tableros({ usuario }: UserProps) {
                   {ws.tableros.map((tablero) => (
                     <div key={tablero.id} className={styles.board_button_link}>
                         <div className={styles.board_draw}></div>
-                        <Link to={`/user/tablero/${tablero.id}`} className={styles.board_name}>
+                        <Link to={`/taskboard/${tablero.id}`} className={styles.board_name}>
                           {tablero.nombreTablero}
                         </Link>
                     </div>

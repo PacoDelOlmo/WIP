@@ -1,5 +1,12 @@
 import axiosClient from "../api/axiosClient";
 
+export interface UserTO{
+    id: number,
+    nombre: String, 
+    apellido: String,
+    nickname: String,
+    correcto: boolean,
+}
 
 export const LoginService = {
 
