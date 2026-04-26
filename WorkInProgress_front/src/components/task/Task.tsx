@@ -12,7 +12,21 @@ import {
 import Styles from "./Task.module.css";
 import { useState } from "react";
 
-export function Task() {
+export interface TaskDTO{
+    comentarios: any[];
+    completada: boolean;
+    creador: object;
+    descripcion: String;
+    etiquetas: any[];
+    titulo: String;
+}
+
+interface TaskProps{
+    taskData : TaskDTO;
+    listaName: String;
+}
+
+export function Task({ taskData, listaName }: TaskProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = () => {
@@ -25,8 +39,14 @@ export function Task() {
         <>
             <div className={cardClass} onClick={toggleOpen}>
                 <div className={Styles.titulo_check}>
-                    <input type="checkbox" onClick={(e) => e.stopPropagation()} />
-                    <h4>Titulo de la tarea-1</h4>
+                    {taskData.completada ? (
+                            <input type="checkbox" checked onClick={(e) => e.stopPropagation()} />
+                        ) : (
+                            <input type="checkbox" onClick={(e) => e.stopPropagation()} />
+                        ) 
+                    }
+                    
+                    <h4>{taskData.titulo}</h4>
                 </div>
                 <button>
                     <SquarePen />
@@ -38,7 +58,7 @@ export function Task() {
                     <div className={Styles.modalBox} onClick={(e) => e.stopPropagation()}>
                         <div className={Styles.contenidoExpandido}>
                             <div className={Styles.cardHeader}>
-                                <span className={Styles.nombreLista}>Nombre Lista</span>
+                                <span className={Styles.nombreLista}>{listaName}</span>
                                 <div className={Styles.headerActions}>
                                     <button title="Cover">
                                         <ImageIcon size={18} />
@@ -56,17 +76,16 @@ export function Task() {
                                 <div className={Styles.mainColumn}>
                                     <div className={Styles.titleSection}>
                                         <Circle size={24} className={Styles.circleIcon} />
-                                        <h2>Título tarea 1</h2>
+                                        <h2>{taskData.titulo}</h2>
                                     </div>
 
                                     <div className={Styles.metaActions}>
                                         <button className={Styles.btnAdd}>+ Añadir</button>
-                                        <button className={Styles.btnTag}>
-                                            <Tag size={14} /> Etiquetas
-                                        </button>
-                                        <button className={Styles.btnDate}>
-                                            <Calendar size={14} /> Fechas
-                                        </button>
+                                        {taskData.etiquetas?.map(() => (
+                                            <button className={Styles.btnTag}>
+                                                <Tag size={14} /> Etiqueta
+                                            </button>
+                                        ))}
                                     </div>
 
                                     <div className={Styles.descriptionSection}>
@@ -78,7 +97,7 @@ export function Task() {
                                             <button className={Styles.btnEdit}>Editar</button>
                                         </div>
                                         <p className={Styles.descText}>
-                                            Descripción de la tarea 1 a completar
+                                            {taskData.descripcion}
                                         </p>
                                     </div>
                                 </div>

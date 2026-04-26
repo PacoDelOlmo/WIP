@@ -1,10 +1,20 @@
 import { EllipsisVertical, Pencil, Plus, Trash } from "lucide-react";
-import { Task } from "../task/Task";
+import { Task, type TaskDTO } from "../task/Task";
 import styles from './Task_Queue.module.css'
 import { useState } from "react";
 
 
-export function Task_Queue() {
+export interface QueueDTO {
+    titulo: String;
+    tareas: TaskDTO[]; // Usamos any[] por ahora, luego lo tiparás con TaskDTO
+}
+
+interface TaskQueueProps {
+    queueData: QueueDTO;
+}
+
+
+export function Task_Queue({ queueData }: TaskQueueProps) {
 
   const [optionsOpen, setOptionsOpen] = useState(false)
 
@@ -15,22 +25,22 @@ export function Task_Queue() {
   return (
     <section className={styles.pila_tareas}>
         <div className={styles.titulo_opciones}>
-            <h3>Nombre de la lista</h3>
+            
+            <h3>{queueData.titulo}</h3>
+            
             <button
                   className={styles.option_button} 
                   onClick={toggleOptions}>
               <EllipsisVertical />
             </button>
             
-            {optionsOpen && ( /* o también optionsActive ? true : false */
+            {optionsOpen && ( 
               <div className={styles.dropdown_menu}>
                   <button className={styles.dropdown_item}>
                       <Pencil size={18} />
                       <span>Renombrar</span>
                   </button>
-                  
                   <hr className={styles.separator} />
-
                   <button className={`${styles.dropdown_item} ${styles.danger}`}>
                       <Trash size={18} />
                       <span>Borrar Lista</span>
@@ -39,9 +49,16 @@ export function Task_Queue() {
           )}
         </div>
 
-        <Task/>
-        <Task/>
-        <Task/>
+        {/* NOTA PARA TU PRÓXIMO PASO: 
+            Aquí harás exactamente lo mismo: queueData.tareas.map(...) 
+            para renderizar las tarjetas dinámicamente */}
+        {queueData?.tareas?.map((tarea, index) => (
+          <Task
+            key={index}
+            taskData={tarea}
+            listaName={queueData.titulo}
+          />
+        ))}
         <button className={styles.btn_nueva_tarea}><Plus /><span> Añadir una tarjeta</span></button>
     </section>
   )

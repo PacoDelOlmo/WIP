@@ -4,7 +4,13 @@ import { EllipsisVertical, Pencil, XCircle, Share2, Bell, Filter, X } from 'luci
 import { useState } from 'react'
 
 
-export function Nav_tablero() {
+interface NavTableroProps {
+    tittle : String | undefined;
+    id : number | undefined;
+}
+
+
+export function Nav_tablero( {tittle, id}: NavTableroProps) {
 
     const [optionsActive, setOptionsActive] = useState(false);
 
@@ -18,7 +24,7 @@ export function Nav_tablero() {
             <div className={styles.left_section}>
 
                 <div className={styles.desktop_left_section}>
-                    <h3 className={styles.titulo_tablero}>Nombre del tablero</h3>
+                    <h3 className={styles.titulo_tablero}>{tittle} #{id}</h3>
                     <a href="" className={styles.logo_container}>
                         <img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/>
                     </a>
@@ -29,7 +35,7 @@ export function Nav_tablero() {
                         <X size={28} />
                     </button>
                     <div className={styles.mobile_tittles}>
-                        <h3 className={styles.titulo_tablero}>Nombre del tablero</h3>
+                        <h3 className={styles.titulo_tablero}>{tittle} #{id}</h3>
                         <span className={styles.subtitulo_tablero}>Espacio de trabajo de USER</span>
                     </div>
                 </div>
