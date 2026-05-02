@@ -3,8 +3,8 @@ import type { UserTO } from "./LoginService";
 
 export interface TaskTO{
     id: number,
-    titulo: String,
-    descripcion: String,
+    titulo: string,
+    descripcion: string,
     completada: boolean,
     creador: UserTO,
     etiquetas: TagTO[],
@@ -13,14 +13,14 @@ export interface TaskTO{
 
 export interface TagTO{
     id: number,
-    etiqueta: String,
+    etiqueta: string,
 }
 
 export interface CommentTO{
     id: number,
-    contenido: String,
+    contenido: string,
     user: UserTO,
-    fecha: String,
+    fecha: string,
 }
 
 export const TaskService = {

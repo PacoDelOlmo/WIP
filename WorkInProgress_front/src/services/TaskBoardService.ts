@@ -3,12 +3,12 @@ import type { TaskTO } from "./TaskService";
 
 export interface BoardTO{
     id: number,
-    nombreTablero: String,
+    nombreTablero: string,
     listaTareas: TaskQueueTO[],
 }
 
 export interface TaskQueueTO{
-    titulo: String,
+    titulo: string,
     tareas: TaskTO[],
 }
 

@@ -1,12 +1,13 @@
 import { EllipsisVertical, Pencil, Plus, Trash } from "lucide-react";
-import { Task, type TaskDTO } from "../task/Task";
+import { Task, } from "../task/Task";
 import styles from './Task_Queue.module.css'
+import type { TaskTO } from "../../services/TaskService";
 import { useState } from "react";
 
 
 export interface QueueDTO {
-    titulo: String;
-    tareas: TaskDTO[]; // Usamos any[] por ahora, luego lo tiparás con TaskDTO
+    titulo: string;
+    tareas: TaskTO[]; 
 }
 
 interface TaskQueueProps {
