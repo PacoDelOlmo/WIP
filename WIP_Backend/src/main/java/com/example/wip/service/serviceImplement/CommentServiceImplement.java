@@ -1,5 +1,6 @@
 package com.example.wip.service.serviceImplement;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.example.wip.entities.CommentEntity;
 import com.example.wip.entities.TaskEntity;
 import com.example.wip.entities.UserEntity;
 import com.example.wip.model.CommentDTO;
+import com.example.wip.model.NewElementDTO;
 import com.example.wip.repository.CommentRepository;
 import com.example.wip.repository.TaskRepository;
 import com.example.wip.repository.UserRepository;
@@ -33,13 +35,15 @@ public class CommentServiceImplement implements CommentService{
     ConversorService conversor = new ConversorService();
 
     @Override
-    public CommentDTO anadirComentario(long idTablero, long idLista, long idTarea, long idUsuario, CommentDTO comentario) {
+    public CommentDTO anadirComentario(long idTablero, long idLista, long idTarea, long idUsuario, NewElementDTO comentario) {
         //Comprobar si coinciden los ids recuperando la tarea y asignar el comentario a la tarea así como el autor al comentario;
             Optional<TaskEntity> tarea = tRepo.findById(idTarea); 
             Optional<UserEntity> usuario = uRepo.findById(idUsuario); 
 
-            if ((tarea != null && usuario != null) && (comentario.getUser().getId() == idUsuario)){
-                CommentEntity nuevoComentario = conversor.dtoAEntity(comentario);
+            if ((tarea != null && usuario != null) && (comentario != null)){
+                CommentEntity nuevoComentario = new CommentEntity();
+                nuevoComentario.setContenido(comentario.getTittle());
+                nuevoComentario.setFecha(LocalDateTime.now());
                 nuevoComentario.setAutor(usuario.get());
                 nuevoComentario.setTarea(tarea.get());
 
@@ -48,7 +52,7 @@ public class CommentServiceImplement implements CommentService{
                 usuario.get().getComentarios().add(nuevoComentario);
                 tarea.get().getComentarios().add(nuevoComentario);
 
-                return comentario;
+                return conversor.entityADto(nuevoComentario);
 
             } else {
 

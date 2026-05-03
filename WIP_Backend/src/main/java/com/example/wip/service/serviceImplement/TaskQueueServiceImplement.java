@@ -1,5 +1,6 @@
 package com.example.wip.service.serviceImplement;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class TaskQueueServiceImplement implements TaskQueueService{
         if (tablero.isPresent()){
             nuevaListaTareas.setTablero(tablero.get());
             nuevaListaTareas.setNombreLista(lista.getTittle());
+            nuevaListaTareas.setFechaCreacion(LocalDateTime.now());
             tqRepo.save(nuevaListaTareas);
         }
 

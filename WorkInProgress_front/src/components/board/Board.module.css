@@ -51,3 +51,93 @@
 .board_lists > *{
     flex-shrink: 0;
 }
+
+.add_list_container {
+    width: 28vh; /* Mismo ancho que .pila_tareas */
+    min-width: 28vh;
+    margin: 1vh;
+    flex-shrink: 0; /* Evita que se encoja al hacer scroll horizontal */
+}
+
+/* Modo Botón (Cuando no estamos añadiendo) */
+.btn_add_list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: rgba(255, 255, 255, 0.2); /* Un fondo semitransparente estilo Trello */
+    color: var(--color-texto-primario);
+    border: none;
+    border-radius: 0.5rem;
+    font-family: var(--fuente-principal);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn_add_list:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Modo Formulario (Cuando estamos escribiendo) */
+.add_list_form {
+    background-color: var(--gris-medio); /* Mismo fondo que la pila de tareas */
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.add_list_form input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid var(--color-primario);
+    border-radius: 0.3rem;
+    font-family: var(--fuente-principal);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.form_actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn_confirm {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: var(--color-primario);
+    color: var(--color-secundario);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-family: var(--fuente-principal);
+}
+
+.btn_confirm:hover {
+    background-color: var(--color-terciario);
+}
+
+.btn_cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: var(--gris-oscuro);
+    border: none;
+    padding: 0.4rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+.btn_cancel:hover {
+    background-color: var(--gris-claro);
+    color: #d9534f;
+}

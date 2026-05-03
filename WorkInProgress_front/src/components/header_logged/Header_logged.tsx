@@ -3,11 +3,15 @@ import styles from './Header_logged.module.css'
 import LogoWip from './../../assets/img/WIP_SinLetra.png'
 import { 
     Grip, BellRing, LifeBuoy, UserCircle2, Search, Settings, 
-    LogOut, LayoutDashboard, Plus, Briefcase // ✨ Añadimos Plus y Briefcase
+    LogOut, LayoutDashboard, Plus, Briefcase, // ✨ Añadimos Plus y Briefcase
+    Check,
+    X
 } from 'lucide-react'
 import type { UserCompleteDTO } from '../../pages/home/Home'
 import { useAuthStore } from '../../store/Auth'
 import { Link } from 'react-router'
+import { WorkSpaceService, type WorkSpaceTO } from '../../services/WorkSpaceService'
+import type { newElementTO } from '../../services/TaskQueueService'
 
 interface HeaderProps {
     usuario: UserCompleteDTO,
@@ -16,10 +20,11 @@ interface HeaderProps {
 export function Header_logged({usuario} : HeaderProps) {
 
     const logout = useAuthStore((state) => state.logout)
-
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-    
     const [workspaceMenuOpen, setWorkspaceMenuOpen] = useState(false);
+      const [isAddingWS, setIsAddingWS] = useState(false);
+      const [newWorkSpaceTitle, setNewWorkSpaceTitle] = useState("");
+      const [workspaces, setWorkspaces] = useState<WorkSpaceTO[]>(usuario.workspace);
 
     const toggleWorkspaceMenu = () => {
         setWorkspaceMenuOpen(!workspaceMenuOpen);
@@ -30,6 +35,26 @@ export function Header_logged({usuario} : HeaderProps) {
         setProfileMenuOpen(!profileMenuOpen);
         if (!profileMenuOpen) setWorkspaceMenuOpen(false);
     }
+
+    const handleCrearWorkSpace = async () => {
+                if (newWorkSpaceTitle.trim() === "") return;
+        
+                const payload : newElementTO = { tittle: newWorkSpaceTitle };
+        
+                const idUsuario = usuario.id;
+        
+                try {
+                    // Llamamos al backend
+                    const espacioTrabajoCreado = await WorkSpaceService.createEspacioTrabajo(payload, idUsuario);
+                    
+                    setWorkspaces([...workspaces, espacioTrabajoCreado]);
+        
+                    setNewWorkSpaceTitle("");
+                    setIsAddingWS(false);
+                } catch (error) {
+                    console.error("Error al crear el espacio de trabajo:", error);
+                }
+            };
 
     return (
     <>
@@ -51,8 +76,8 @@ export function Header_logged({usuario} : HeaderProps) {
                                 </div>
                                 <hr />
                                 <ul className={styles.dropdown_list}>
-                                    {usuario.workspace?.length > 0 ? (
-                                        usuario.workspace.map((ws, index) => (
+                                    {workspaces?.length > 0 ? (
+                                        workspaces.map((ws, index) => (
                                             <li key={`${ws.nombre}-${index}`}>
                                                 <Link to={`/user/workspace/${ws.id}`} onClick={() => setWorkspaceMenuOpen(false)}>
                                                     <Briefcase size={16} style={{marginRight: '8px'}}/> 
@@ -68,11 +93,42 @@ export function Header_logged({usuario} : HeaderProps) {
                                     
                                     <hr />
                                     
-                                    <li>
-                                        <Link to='/user/crear-workspace' onClick={() => setWorkspaceMenuOpen(false)} style={{color: 'var(--color-primary)'}}>
-                                            <Plus size={18} style={{marginRight: '8px'}}/> 
-                                            Nuevo Espacio
-                                        </Link>
+                                    <li className={styles.add_workspace_container}>
+                                        {isAddingWS ? (
+                                            <div className={styles.add_workspace_form}>
+                                                <input 
+                                                    type="text" 
+                                                    placeholder="Nombre del espacio..." 
+                                                    className={styles.add_workspace_input}
+                                                    value={newWorkSpaceTitle}
+                                                    onChange={(e) => setNewWorkSpaceTitle(e.target.value)}
+                                                    autoFocus
+                                                    onKeyDown={(e) => e.key === "Enter" && handleCrearWorkSpace()}
+                                                />
+                                                <div className={styles.form_actions}>
+                                                    <button 
+                                                        className={styles.btn_confirm} 
+                                                        onClick={handleCrearWorkSpace}
+                                                    >
+                                                        <Check size={16} /> Añadir
+                                                    </button>
+                                                    <button 
+                                                        className={styles.btn_cancel} 
+                                                        onClick={() => setIsAddingWS(false)}
+                                                    >
+                                                        <X size={16} />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <button 
+                                                className={styles.btn_trigger_add} 
+                                                onClick={() => setIsAddingWS(true)}
+                                            >
+                                                <Plus size={18} style={{marginRight: '8px'}}/> 
+                                                Nuevo Espacio
+                                            </button>
+                                        )}
                                     </li>
                                 </ul>
                             </div>

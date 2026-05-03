@@ -22,12 +22,14 @@ import {
 } from "lucide-react";
 import Styles from "./Task.module.css";
 import { useState } from "react";
-import type { TaskTO } from "../../services/TaskService";
-
+import { TaskService, type TaskTO } from "../../services/TaskService";
+import { useAuthStore } from "../../store/Auth";
 
 interface TaskProps{
     taskData : TaskTO;
     listaName: string;
+    listID: number;
+    taskBoardID: number;
 }
 
 const obtenerIconoEtiqueta = (nombreEtiqueta: string) => {
@@ -82,14 +84,39 @@ const obtenerIconoEtiqueta = (nombreEtiqueta: string) => {
 };
 
 
-export function Task({ taskData, listaName }: TaskProps) {
+export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
+    
     const [isOpen, setIsOpen] = useState(false);
+    const [nuevoComentario, setNuevoComentario] = useState("");
+    const [comentarios, setComentarios] = useState(taskData.comentarios || []);
+    const idUsuario = useAuthStore((state) => state.idUsuario);
 
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
 
+    const handleAddComment = async () => {
+        if (nuevoComentario.trim() === "") return;
+
+        try {
+            const comentarioCreado = await TaskService.addComment(
+                { tittle: nuevoComentario },
+                taskBoardID,
+                listID,
+                taskData.id,
+                idUsuario
+            );
+
+            setComentarios([...comentarios, comentarioCreado]);
+            setNuevoComentario("");
+        } catch (error) {
+            console.error("Error al añadir el comentario:", error);
+        }
+    };
+
     const cardClass = `${Styles.tarea} ${isOpen ? Styles.tareaSeleccionada : ""}`;
+
+
 
     return (
         <>
@@ -165,26 +192,39 @@ export function Task({ taskData, listaName }: TaskProps) {
                                         <h3>Comentarios</h3>
                                     </div>
 
-                                    {taskData?.comentarios?.map((comment) =>(
-                                    <div className={Styles.activityLog}>
-                                        <div className={Styles.avatar}>
-                                            <User size={20} />
+                                    {comentarios.map((comment) =>(
+                                        <div key={comment.id} className={Styles.activityLog}>
+                                            <div className={Styles.avatar}>
+                                                <User size={20} />
+                                            </div>
+                                            <div className={Styles.activityText}>
+                                                <h6>{comment.user.nickname}</h6>
+                                                <p>{comment.contenido}</p>
+                                                <a href="#" className={Styles.dateLink}>
+                                                    {comment.fecha.split("T")[0]}
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div className={Styles.activityText}>
-                                            <h6>{comment.user.nickname}</h6>
-                                            <p>
-                                                {comment.contenido}
-                                            </p>
-                                            <a href="#" className={Styles.dateLink}>
-                                                {comment.fecha.split("T")[0]}
-                                            </a>
-                                        </div>
-                                    </div>
                                     ))}
                                     
 
                                     <div className={Styles.commentInputWrapper}>
-                                        <input type="text" placeholder="Escribe un comentario..." />
+                                        <input 
+                                            type="text" 
+                                            placeholder="Escribe un comentario..." 
+                                            value={nuevoComentario}
+                                            onChange={(e) => setNuevoComentario(e.target.value)}
+                                            onKeyDown={(e) => e.key === "Enter" && handleAddComment()}
+                                        />
+                                        {/* Añadimos un botón visible (opcional) o confiamos en el "Enter" */}
+                                        {nuevoComentario.trim() !== "" && (
+                                            <button 
+                                                className={Styles.btnSaveComment} 
+                                                onClick={handleAddComment}
+                                            >
+                                                Guardar
+                                            </button>
+                                        )}
                                     </div>
 
                                     <div className={Styles.activityLog}>

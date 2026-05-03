@@ -1,5 +1,6 @@
 import axiosClient from "../api/axiosClient";
 import type { UserTO } from "./LoginService";
+import type { newElementTO } from "./TaskQueueService";
 
 export interface TaskTO{
     id: number,
@@ -9,6 +10,11 @@ export interface TaskTO{
     creador: UserTO,
     etiquetas: TagTO[],
     comentarios: CommentTO[],
+}
+
+export interface newTaskTO{
+    titulo: string,
+    creador: number,
 }
 
 export interface TagTO{
@@ -30,8 +36,8 @@ export const TaskService = {
         return response.data;
     },
 
-    createTask: async (task: Omit<TaskTO, 'id'>) => {
-        const response = await axiosClient.post<TaskTO>('/tareas', task);
+    createTask: async (task: newTaskTO, idTablero: number, idLista: number) => {
+        const response = await axiosClient.post<TaskTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/nueva_tarea`, task);
         return response.data;
     },
 
@@ -39,4 +45,9 @@ export const TaskService = {
         const response = await axiosClient.patch<TaskTO>(`/tareas/${id}`, {estado});
         return response.data;
     },
+
+    addComment: async (comentario: newElementTO, idTablero: number, idLista: number, idTarea: number, idUser: number) => {
+        const response = await axiosClient.post<CommentTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/user/${idUser}/nuevo_comentario`, comentario);
+        return response.data;
+    }
 }

@@ -36,13 +36,13 @@
 .btn_nueva_tarea{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     background-color: transparent;
     border: transparent;
     cursor: pointer;
     margin-top: 1rem;
     padding: 0.5rem;
-    width: 100%;
+    width: 95%;
 
     span{
         font-size: medium;
@@ -145,6 +145,78 @@
     border-top: 1px solid var(--gris-medio);
     margin: 0.2rem 0;
     opacity: 0.5;
+}
+
+.add_task_form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    animation: fadeIn 0.2s ease-in-out; 
+}
+
+
+.add_task_form input {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 0.4rem;
+    background-color: var(--color-bg-navBar);
+    box-shadow: 0 0.15rem 0.3rem rgba(0, 0, 0, 0.1); /* Sombra suave como una tarjeta */
+    font-family: var(--fuente-principal);
+    font-size: 0.9rem;
+    color: var(--color-texto-primario);
+    outline: none;
+    transition: box-shadow 0.2s ease;
+}
+
+
+.add_task_form input:focus {
+    box-shadow: 0 0 0 2px var(--color-primario);
+}
+
+
+.form_actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+
+.btn_confirm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primario);
+    color: var(--color-secundario);
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn_confirm:hover {
+    background-color: var(--color-terciario);
+}
+
+
+.btn_cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: var(--gris-oscuro);
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn_cancel:hover {
+    background-color: var(--gris-claro);
+    color: #d9534f; 
 }
 
 /* ------------------- Animaciones -------------------- */
