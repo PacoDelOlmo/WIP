@@ -19,6 +19,7 @@ import com.example.wip.entities.TaskqueueEntity;
 import com.example.wip.entities.UserEntity;
 import com.example.wip.model.CommentDTO;
 import com.example.wip.model.NewElementDTO;
+import com.example.wip.model.NewTaskDTO;
 import com.example.wip.model.TagDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.repository.TaskRepository;
@@ -70,16 +71,22 @@ public class TaskServiceImplement implements TaskService {
     }
 
     @Override
-    public TaskDTO nuevaTarea(long id, long idl, NewElementDTO tarea) {
+    public TaskDTO nuevaTarea(long id, long idl, NewTaskDTO tarea) {
         Optional<TaskboardEntity> tablero = repo.findById(id);
         Optional<TaskqueueEntity> listaTareas = tqRepo.findById(idl);
+        Optional<UserEntity> creador = uRepo.findById(tarea.getCreador());
         TaskEntity newTarea = new TaskEntity();
 
-        if (tablero.isPresent() && listaTareas.isPresent()){
+        if (tablero.isPresent() && listaTareas.isPresent() && creador.isPresent()){
             if (tablero.get() == listaTareas.get().getTablero()){
                 newTarea.setListaTareas(listaTareas.get());
-                newTarea.setTitulo(tarea.getTittle());
-                tRepo.save(newTarea);
+                newTarea.setTitulo(tarea.getTitulo());
+                newTarea.setAutor(creador.get());
+                newTarea.setDescripcion("");
+                newTarea.setFechaCreacion(LocalDateTime.now());
+                newTarea = tRepo.save(newTarea);
+
+                listaTareas.get().getTareas().add(newTarea);
             }
 
         }

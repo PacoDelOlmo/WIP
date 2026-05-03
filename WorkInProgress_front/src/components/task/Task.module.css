@@ -345,6 +345,46 @@
     font-size: 0.75rem;
 }
 
+.commentInputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.commentInputWrapper input {
+    visibility: visible;
+    width: 100%;
+    margin: 0;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--gris-medio);
+    border-radius: 4px;
+    background-color: white;
+    outline: none;
+    font-family: var(--fuente-principal);
+    transition: border-color 0.2s ease;
+}
+
+.commentInputWrapper input:focus {
+    border-color: var(--color-primario);
+}
+
+.btnSaveComment {
+    align-self: flex-end;
+    visibility: visible !important;
+    background-color: var(--color-primario);
+    color: var(--color-secundario);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btnSaveComment:hover {
+    background-color: var(--color-terciario);
+}
+
 /* RESPONSIVE DESIGN */
 @media (max-width: 576px) {
 

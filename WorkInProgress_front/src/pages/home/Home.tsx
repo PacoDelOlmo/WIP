@@ -10,12 +10,13 @@ import { Ajustes } from '../../components/ajustes/Ajustes'
 import { useAuthStore } from '../../store/Auth'
 import { useEffect, useState } from 'react'
 import { LoginService } from '../../services/LoginService'
+import type { WorkSpaceTO } from '../../services/WorkSpaceService'
 
 export type UserCompleteDTO = {
   id: number,
   username: string,
   mail: string
-  workspace: WorkspaceType[],
+  workspace: WorkSpaceTO[],
 }
 export interface Tarea {
     id: number, 

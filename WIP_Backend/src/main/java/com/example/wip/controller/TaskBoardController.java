@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.wip.model.CommentDTO;
 import com.example.wip.model.NewElementDTO;
+import com.example.wip.model.NewTaskDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.model.TaskQueueDTO;
 import com.example.wip.model.TaskboardDTO;
@@ -68,7 +69,7 @@ public class TaskBoardController {
     }
 
     @PostMapping("/tablero/{id}/lista/{idl}/nueva_tarea")
-    public TaskDTO nuevaTarea(@PathVariable long id, @PathVariable long idl, @RequestBody NewElementDTO tarea) {
+    public TaskDTO nuevaTarea(@PathVariable long id, @PathVariable long idl, @RequestBody NewTaskDTO tarea) {
         return tService.nuevaTarea(id, idl, tarea);
     }
 
@@ -98,7 +99,7 @@ public class TaskBoardController {
     }
     
     @PostMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/user/{idu}/nuevo_comentario")
-    public CommentDTO anadirComentario (@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @PathVariable long idu, @RequestBody CommentDTO comentario){
+    public CommentDTO anadirComentario (@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @PathVariable long idu, @RequestBody NewElementDTO comentario){
         return cService.anadirComentario(id, idl, idt, idu, comentario);
     }
 }

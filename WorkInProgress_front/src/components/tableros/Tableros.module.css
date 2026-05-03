@@ -179,6 +179,89 @@
     display: none;
 }
 
+.add_board_form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    animation: fadeIn 0.2s ease-in-out;
+    width: 100%; /* Asegura que ocupe todo el hueco */
+}
+
+.add_board_input {
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    border: 1px solid var(--color-primario);
+    outline: none;
+    font-family: var(--fuente-principal);
+    font-size: 0.9rem;
+    transition: box-shadow 0.2s ease;
+    width: 100%;
+}
+
+.add_board_input:focus {
+    box-shadow: 0 0 0 2px var(--bg-verde);
+}
+
+.form_actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn_confirm {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: var(--color-primario);
+    color: var(--color-secundario);
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-family: var(--fuente-principal);
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.btn_confirm:hover {
+    background-color: var(--color-terciario);
+}
+
+.btn_cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: #d9534f;
+    border: none;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn_cancel:hover {
+    background-color: #ffeaea;
+}
+
+.btn_trigger_add {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    font-family: var(--fuente-principal);
+    font-size: 1vw; 
+    text-align: center;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.btn_trigger_add:hover {
+    color: var(--color-primario);
+}
+
 
 /* -------- Responsive Design --------- */
 @media (max-width: 576px){
@@ -335,5 +418,9 @@
 
     .boards_section{
         margin-bottom: 3vh;
+    }
+
+    .btn_trigger_add {
+        font-size: 3vw;
     }
 }

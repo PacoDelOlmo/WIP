@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './Home_logged.module.css'
 import WIP_Logo from "./../../assets/img/WIP_SinLetra.png";
 import WIP_Logo_Letra from "./../../assets/img/WIP_Logo.png";
-import { LockIcon, UserIcon, ChevronRight, Clock } from 'lucide-react';
+import { LockIcon, UserIcon, ChevronRight, Clock, Check, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import type { UserCompleteDTO } from '../../pages/home/Home'
+import { TaskBoardService } from '../../services/TaskBoardService';
+import type { newElementTO } from '../../services/TaskQueueService';
+import { WorkSpaceService, type WorkSpaceTO } from '../../services/WorkSpaceService'
 
 interface UserProps {
     usuario: UserCompleteDTO
@@ -13,6 +16,9 @@ interface UserProps {
 export function Home_logged({ usuario }: UserProps) {
 
   const navigate = useNavigate();
+  const [isAddingWS, setIsAddingWS] = useState(false);
+  const [newWorkSpaceTitle, setNewWorkSpaceTitle] = useState("");
+  const [workspaces, setWorkspaces] = useState<WorkSpaceTO[]>(usuario.workspace);
 
     const actividadesRecientes = usuario.workspace.flatMap(ws => 
         ws.tableros.flatMap(tablero => 
@@ -26,6 +32,27 @@ export function Home_logged({ usuario }: UserProps) {
             )
         )
     ).slice(0, 3);
+
+    const handleCrearWorkSpace = async () => {
+            if (newWorkSpaceTitle.trim() === "") return;
+    
+            const payload : newElementTO = { tittle: newWorkSpaceTitle };
+    
+            const idUsuario = usuario.id;
+    
+            try {
+                // Llamamos al backend
+                const espacioTrabajoCreado = await WorkSpaceService.createEspacioTrabajo(payload, idUsuario);
+                
+                setWorkspaces([...workspaces, espacioTrabajoCreado]);
+    
+                setNewWorkSpaceTitle("");
+                setIsAddingWS(false);
+            } catch (error) {
+                console.error("Error al crear el espacio de trabajo:", error);
+            }
+        };
+    
 
     return (
         <section className={styles.content_section}>
@@ -47,19 +74,50 @@ export function Home_logged({ usuario }: UserProps) {
             <article className={styles.boards_section}>
                 <div className={styles.user_boards}>
                     
-                    {usuario.workspace?.flatMap((ws) => 
-                        ws.tableros.map((tablero, index) => (
+                    {workspaces?.flatMap((ws, index) => 
                             <div key={`${ws.nombre}-${index}`} className={styles.board_button_link}>
                                 <div className={styles.board_draw}></div>
-                                <Link to='' className={styles.board_name}>
-                                    {tablero.nombreTablero}
+                                <Link to={`/user/workspace/${ws.id}`} className={styles.board_name}>
+                                    {ws.nombre}
                                 </Link>
                             </div>
-                        ))
                     )}
 
                     <div className={styles.board_button_add}>
-                        <button> + Nuevo tablero</button>
+                              {isAddingWS ? (
+                                <div className={styles.add_board_form}>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Nombre del espacio de trabajo..." 
+                                        className={styles.add_board_input}
+                                        value={newWorkSpaceTitle}
+                                        onChange={(e) => setNewWorkSpaceTitle(e.target.value)}
+                                        autoFocus
+                                        onKeyDown={(e) => e.key === "Enter" && handleCrearWorkSpace()}
+                                    />
+                                    <div className={styles.form_actions}>
+                                        <button 
+                                            className={styles.btn_confirm} 
+                                            onClick={handleCrearWorkSpace}
+                                        >
+                                            <Check size={16} /> Añadir
+                                        </button>
+                                        <button 
+                                            className={styles.btn_cancel} 
+                                            onClick={() => setIsAddingWS(false)}
+                                        >
+                                            <X size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <button 
+                                    className={styles.btn_trigger_add} 
+                                    onClick={() => setIsAddingWS(true)}
+                                >
+                                    + Nuevo WorkSpace
+                                </button>
+                            )}
                     </div>
                 </div>
                 <footer>

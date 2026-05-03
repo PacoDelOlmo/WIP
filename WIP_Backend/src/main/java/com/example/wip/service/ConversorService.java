@@ -67,7 +67,7 @@ public class ConversorService {
         TaskQueueDTO dto = new TaskQueueDTO();
         
         dto.setTitulo(entidad.getNombreLista());
-        
+        dto.setId(entidad.getIdListaTareas());
         for(TaskEntity t : entidad.getTareas()){
             dto.getTareas().add(entityADto(t));
         }
