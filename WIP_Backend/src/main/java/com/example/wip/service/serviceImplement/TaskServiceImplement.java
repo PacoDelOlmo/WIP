@@ -107,7 +107,7 @@ public class TaskServiceImplement implements TaskService {
             }
 
         }
-
+        tRepo.save(task.get());
         return conversor.entityADto(task.get());
     }
 
@@ -119,15 +119,14 @@ public class TaskServiceImplement implements TaskService {
         Optional<TaskEntity> task = tRepo.findById(idt);
 
         if (tablero.isPresent() && listaTareas.isPresent() && task.isPresent()){
-            if (tablero.get() == listaTareas.get().getTablero() && task.get().getListaTareas() == listaTareas.get()){
+            if (tablero.get().equals(listaTareas.get().getTablero()) && task.get().getListaTareas().equals(listaTareas.get())){
                 task.get().setDescripcion(tarea.getDescripcion());
                 task.get().setCompletada(tarea.isCompletada());
-                task.get().setEtiquetas(convertirEtiquetas(tarea.getEtiquetas(), idt)); 
                 task.get().setTitulo(tarea.getTitulo());
             }
 
         }
-
+        tRepo.save(task.get());
         return conversor.entityADto(task.get());
     }
 
@@ -208,15 +207,4 @@ public class TaskServiceImplement implements TaskService {
         return comentariosEntidad;
     }
 
-    private Set<TagEntity> convertirEtiquetas (List<TagDTO> etiquetas, long idTarea){
-        Set<TagEntity> etiquetasEntidad = new HashSet<TagEntity>();
-        Optional<TaskEntity> tarea = tRepo.findById(idTarea);
-        for (TagDTO e : etiquetas){
-            TagEntity etiqueta = conversor.dtoAEntity(e);
-            etiqueta.setTarea(tarea.get());
-            etiquetasEntidad.add(etiqueta);
-        }
-
-        return etiquetasEntidad;
-    }
 }

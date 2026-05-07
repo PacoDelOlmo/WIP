@@ -5,6 +5,7 @@ import {
     MoreHorizontal,
     Tag,
     Calendar,
+    Check,
     MessageSquare,
     User,
     Circle,
@@ -89,6 +90,9 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [nuevoComentario, setNuevoComentario] = useState("");
     const [comentarios, setComentarios] = useState(taskData.comentarios || []);
+    const [nuevaEtiqueta, setNuevaEtiqueta] = useState("");
+    const [etiquetas, setEtiquetas] = useState(taskData.etiquetas || []);
+    const [isAddingEtiqueta, setIsAddingEtiqueta] = useState(false);
     const idUsuario = useAuthStore((state) => state.idUsuario);
 
     const toggleOpen = () => {
@@ -111,6 +115,26 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
             setNuevoComentario("");
         } catch (error) {
             console.error("Error al añadir el comentario:", error);
+        }
+    };
+
+    const handleAddEtiqueta = async () => {
+        if (nuevaEtiqueta.trim() === "") return;
+
+        try {
+            const etiqutaCreada = await TaskService.addEtiqueta(
+                { tittle: nuevaEtiqueta },
+                taskBoardID,
+                listID,
+                taskData.id,
+                idUsuario
+            );
+
+            setEtiquetas([...etiquetas, etiqutaCreada]);
+            setNuevaEtiqueta("");
+            setIsAddingEtiqueta(false);
+        } catch (error) {
+            console.error("Error al añadir la etiqueta:", error);
         }
     };
 
@@ -163,13 +187,38 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
                                     </div>
 
                                     <div className={Styles.metaActions}>
-                                        <button className={Styles.btnAdd}>+ Añadir</button>
-                                        {taskData.etiquetas?.map((etiqueta) => (
-                                            <button className={Styles.btnTag}>
+                                        
+                                        {etiquetas?.map((etiqueta, index) => (
+                                            <button key={etiqueta.id || index} className={Styles.btnTag}>
                                                 {obtenerIconoEtiqueta(etiqueta.etiqueta)}
                                                 {etiqueta.etiqueta}
                                             </button>
                                         ))}
+
+                                        {isAddingEtiqueta ? (
+                                            <div className={Styles.addTagForm}>
+                                                <input 
+                                                    type="text" 
+                                                    placeholder="Etiqueta..." 
+                                                    className={Styles.addTagInput}
+                                                    value={nuevaEtiqueta}
+                                                    onChange={(e) => setNuevaEtiqueta(e.target.value)}
+                                                    autoFocus
+                                                    onKeyDown={(e) => e.key === "Enter" && handleAddEtiqueta()}
+                                                />
+                                                <button className={Styles.btnConfirmTag} onClick={handleAddEtiqueta}>
+                                                    <Check size={14} />
+                                                </button>
+                                                <button className={Styles.btnCancelTag} onClick={() => setIsAddingEtiqueta(false)}>
+                                                    <X size={14} />
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <button className={Styles.btnAdd} onClick={() => setIsAddingEtiqueta(true)}>
+                                                + Añadir
+                                            </button>
+                                        )}
+
                                     </div>
 
                                     <div className={Styles.descriptionSection}>
