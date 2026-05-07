@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.wip.model.CommentDTO;
 import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.NewTaskDTO;
+import com.example.wip.model.TagDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.model.TaskQueueDTO;
 import com.example.wip.model.TaskboardDTO;
 import com.example.wip.service.interfaces.CommentService;
+import com.example.wip.service.interfaces.TagService;
 import com.example.wip.service.interfaces.TaskQueueService;
 import com.example.wip.service.interfaces.TaskService;
 import com.example.wip.service.interfaces.TaskboardService;
@@ -41,6 +43,9 @@ public class TaskBoardController {
 
     @Autowired
     CommentService cService;
+
+    @Autowired
+    TagService tagService;
 
 
     @GetMapping("/")
@@ -101,5 +106,10 @@ public class TaskBoardController {
     @PostMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/user/{idu}/nuevo_comentario")
     public CommentDTO anadirComentario (@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @PathVariable long idu, @RequestBody NewElementDTO comentario){
         return cService.anadirComentario(id, idl, idt, idu, comentario);
+    }
+
+    @PostMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/user/{idu}/nueva_etiqueta")
+    public TagDTO anadirEtiqueta(@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @PathVariable long idu, @RequestBody NewElementDTO etiqueta){
+        return tagService.anadirEtiqueta(id, idl, idt, idu, etiqueta);
     }
 }

@@ -49,9 +49,15 @@ CREATE TABLE TASK(
 
 CREATE TABLE TAG(
     ID_TAG BIGINT AUTO_INCREMENT PRIMARY KEY,
-    ETIQUETA VARCHAR(255),
+    ETIQUETA VARCHAR(255) /* <-- Corregida la coma extra aquí */
+);
+
+CREATE TABLE TASKTAG(
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
     ID_TASK BIGINT NOT NULL,
-    CONSTRAINT FK_TAG_TASK FOREIGN KEY (ID_TASK) REFERENCES TASK(ID_TASK)
+    ID_TAG BIGINT NOT NULL,
+    CONSTRAINT FK_TT_TASK FOREIGN KEY (ID_TASK) REFERENCES TASK (ID_TASK),
+    CONSTRAINT FK_TT_TAG FOREIGN KEY (ID_TAG) REFERENCES TAG (ID_TAG) /* <-- Corregida la coma extra aquí */
 );
 
 CREATE TABLE COMMENT(
@@ -64,6 +70,9 @@ CREATE TABLE COMMENT(
     CONSTRAINT FK_COMMENT_USER FOREIGN KEY (AUTOR) REFERENCES APP_USER(ID_USUARIO)
 );
 
+-- ==========================================
+-- INSERTS DE USUARIOS
+-- ==========================================
 INSERT INTO APP_USER (NOMBRE, APELLIDO, NOMBRE_USUARIO, CORREO, CONTRASENA) 
 VALUES ('Laura', 'García', 'lgarcia', 'laura.garcia@email.com', 'clave123');
 
@@ -73,70 +82,62 @@ VALUES ('Carlos', 'Ruiz', 'cruizdev', 'carlos.ruiz@wip.com', 'segura2024');
 INSERT INTO APP_USER (NOMBRE, APELLIDO, NOMBRE_USUARIO, CORREO, CONTRASENA) 
 VALUES ('Ana', 'Martínez', 'anam', 'ana.martinez@test.com', 'admin_pass');
 
-
 -- ==========================================
--- 1. CREACIÓN DE WORKSPACE (Asignado a Laura, ID: 1)
+-- 1. CREACIÓN DE WORKSPACE
 -- ==========================================
-INSERT INTO WORKSPACE (NOMBRE, PROPIETARIO) 
-VALUES ('Desarrollo TFG WIP', 1);
+INSERT INTO WORKSPACE (NOMBRE, PROPIETARIO) VALUES ('Desarrollo TFG WIP', 1);
 
 -- ==========================================
 -- 2. CREACIÓN DE TABLEROS (TASKBOARD)
 -- ==========================================
--- Asumimos que el Workspace anterior tiene ID = 1
 INSERT INTO TASKBOARD (NOMBRE, FECHA_CREACION, ID_WORKSPACE) VALUES 
-('Frontend - React', NOW(), 1),      -- ID será 1
-('Backend - Spring Boot', NOW(), 1); -- ID será 2
+('Frontend - React', NOW(), 1),      
+('Backend - Spring Boot', NOW(), 1); 
 
 -- ==========================================
 -- 3. CREACIÓN DE PILAS DE TAREAS (TASKQUEUE)
 -- ==========================================
 INSERT INTO TASKQUEUE (NOMBRE, FECHA_CREACION, ID_TASKBOARD) VALUES 
--- Pilas para el Tablero 1 (Frontend)
-('Por hacer', NOW(), 1),       -- ID: 1
-('En Progreso', NOW(), 1),     -- ID: 2
-('Terminado', NOW(), 1),       -- ID: 3
-
--- Pilas para el Tablero 2 (Backend)
-('Backlog', NOW(), 2),         -- ID: 4
-('En Revisión', NOW(), 2);     -- ID: 5
+('Por hacer', NOW(), 1),       
+('En Progreso', NOW(), 1),     
+('Terminado', NOW(), 1),       
+('Backlog', NOW(), 2),         
+('En Revisión', NOW(), 2);     
 
 -- ==========================================
 -- 4. CREACIÓN DE TAREAS (TASK)
 -- ==========================================
 INSERT INTO TASK (TITULO, AUTOR, DESCRIPCION, COMPLETADA, FECHA_CREACION, ID_TASKQUEUE) VALUES 
--- Tarea 1 en 'Por hacer' (Front) - Creada por Laura
-('Maquetar Header', 1, 'Usar CSS Modules y el logo nuevo', FALSE, NOW(), 1),
-
--- Tarea 2 en 'En Progreso' (Front) - Creada por Carlos
-('Componente Card', 2, 'Debe recibir props dinámicas', FALSE, NOW(), 2),
-
--- Tarea 3 en 'Terminado' (Front) - Creada por Ana
-('Configurar Vite', 3, 'Instalación inicial y limpieza', TRUE, NOW(), 3),
-
--- Tarea 4 en 'Backlog' (Back) - Creada por Carlos
-('Diseñar Entidad User', 2, 'Definir campos y relaciones JPA', FALSE, NOW(), 4),
-
--- Tarea 5 en 'En Revisión' (Back) - Creada por Laura
-('Endpoint Login', 1, 'Solucionar problema de CORS', FALSE, NOW(), 5);
+('Maquetar Header', 1, 'Usar CSS Modules y el logo nuevo', FALSE, NOW(), 1),  -- Tarea 1
+('Componente Card', 2, 'Debe recibir props dinámicas', FALSE, NOW(), 2),      -- Tarea 2
+('Configurar Vite', 3, 'Instalación inicial y limpieza', TRUE, NOW(), 3),       -- Tarea 3
+('Diseñar Entidad User', 2, 'Definir campos y relaciones JPA', FALSE, NOW(), 4),-- Tarea 4
+('Endpoint Login', 1, 'Solucionar problema de CORS', FALSE, NOW(), 5);        -- Tarea 5
 
 -- ==========================================
--- 5. ETIQUETAS (TAGS)
+-- ✨ 5. NUEVAS ETIQUETAS (CATÁLOGO ÚNICO)
 -- ==========================================
-INSERT INTO TAG (ETIQUETA, ID_TASK) VALUES 
-('CSS', 1),          -- Para 'Maquetar Header'
-('Frontend', 1),
-('React', 2),        -- Para 'Componente Card'
-('Urgente', 5),      -- Para 'Endpoint Login'
-('Bug', 5);
+INSERT INTO TAG (ETIQUETA) VALUES 
+('CSS'),        -- ID: 1
+('Frontend'),   -- ID: 2
+('React'),      -- ID: 3
+('Urgente'),    -- ID: 4
+('Bug');        -- ID: 5
 
 -- ==========================================
--- 6. COMENTARIOS (COMMENT)
+-- ✨ 6. RELACIÓN TAREAS - ETIQUETAS (TASKTAG)
+-- ==========================================
+INSERT INTO TASKTAG (ID_TASK, ID_TAG) VALUES 
+(1, 1), -- La tarea 1 ('Maquetar Header') tiene la etiqueta 1 ('CSS')
+(1, 2), -- La tarea 1 ('Maquetar Header') tiene la etiqueta 2 ('Frontend')
+(2, 3), -- La tarea 2 ('Componente Card') tiene la etiqueta 3 ('React')
+(5, 4), -- La tarea 5 ('Endpoint Login') tiene la etiqueta 4 ('Urgente')
+(5, 5); -- La tarea 5 ('Endpoint Login') tiene la etiqueta 5 ('Bug')
+
+-- ==========================================
+-- 7. COMENTARIOS (COMMENT)
 -- ==========================================
 INSERT INTO COMMENT (AUTOR, CONTENIDO, FECHA, ID_TASK) VALUES 
--- Comentarios en la Tarea 1 (Header)
-(2, 'Recuerda hacerlo responsive para móvil', NOW(), 1), -- Carlos comenta
-(1, 'Sí, usaré media queries', NOW(), 1),               -- Laura responde
-
--- Comentario en la Tarea 5 (Endpoint Login)
-(3, 'Creo que el fallo está en el SecurityConfig', NOW(), 5); -- Ana ayuda
+(2, 'Recuerda hacerlo responsive para móvil', NOW(), 1), 
+(1, 'Sí, usaré media queries', NOW(), 1),               
+(3, 'Creo que el fallo está en el SecurityConfig', NOW(), 5);

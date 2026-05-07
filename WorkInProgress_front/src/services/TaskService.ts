@@ -49,5 +49,10 @@ export const TaskService = {
     addComment: async (comentario: newElementTO, idTablero: number, idLista: number, idTarea: number, idUser: number) => {
         const response = await axiosClient.post<CommentTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/user/${idUser}/nuevo_comentario`, comentario);
         return response.data;
-    }
+    },
+
+    addEtiqueta: async (etiqueta: newElementTO, idTablero: number, idLista: number, idTarea: number, idUser: number) => {
+        const response = await axiosClient.post<TagTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/user/${idUser}/nueva_etiqueta`, etiqueta);
+        return response.data;
+    },
 }

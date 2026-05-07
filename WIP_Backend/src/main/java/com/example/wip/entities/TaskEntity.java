@@ -11,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -47,7 +49,12 @@ public class TaskEntity implements Serializable{
     @JoinColumn(name = "AUTOR")
     private UserEntity autor;
 
-    @OneToMany(mappedBy = "tarea")
+    @ManyToMany
+    @JoinTable(
+        name = "TASKTAG",
+        joinColumns = @JoinColumn(name = "ID_TASK"),
+        inverseJoinColumns = @JoinColumn(name = "ID_TAG")
+    )
     private Set<TagEntity> etiquetas = new HashSet<TagEntity>();
 
     @OneToMany(mappedBy = "tarea")

@@ -1,6 +1,7 @@
 package com.example.wip.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,9 +26,8 @@ public class TagEntity implements Serializable {
     @Column(name = "ETIQUETA")
     private String etiqueta;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_TASK")
-    private TaskEntity tarea;
+    @ManyToMany(mappedBy = "etiquetas")
+    private List<TaskEntity> tareas;
 
     public long getIdEtiqueta() {
         return idEtiqueta;
@@ -45,12 +45,12 @@ public class TagEntity implements Serializable {
         this.etiqueta = etiqueta;
     }
 
-    public TaskEntity getTarea() {
-        return tarea;
+    public List<TaskEntity> getTareas() {
+        return tareas;
     }
 
-    public void setTarea(TaskEntity tarea) {
-        this.tarea = tarea;
+    public void setTareas(List<TaskEntity> tareas) {
+        this.tareas = tareas;
     }
 
 
