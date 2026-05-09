@@ -23,8 +23,9 @@ export const TaskQueueService = {
         return response.data;
     },
 
-    updateTask: async (id : number, estado: boolean) => {
-        const response = await axiosClient.patch<TaskTO>(`/tareas/${id}`, {estado});
+    editarNombreLista: async (nuevoNombre: newElementTO, idTablero: number, idLista: number) => {
+        const response = await axiosClient.put<TaskQueueTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/editar`, nuevoNombre);
         return response.data;
-    },
+    }, 
+
 }

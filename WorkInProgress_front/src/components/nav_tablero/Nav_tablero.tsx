@@ -1,22 +1,88 @@
 import styles from './Nav_Tablero.module.css'
 import LogoWip from './../../assets/img/WIP_SinLetra.png'
 import { EllipsisVertical, Pencil, XCircle, Share2, Bell, Filter, X } from 'lucide-react'
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
+import { useAuthStore } from '../../store/Auth';
+import { TaskBoardService } from '../../services/TaskBoardService';
 
 interface NavTableroProps {
-    tittle : String | undefined;
+    tittle : string | undefined;
     id : number | undefined;
+    idWS: number | undefined;
 }
 
 
-export function Nav_tablero( {tittle, id}: NavTableroProps) {
+export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
 
     const [optionsActive, setOptionsActive] = useState(false);
+    const user: number = useAuthStore((state) => state.idUsuario);
+    const [currentTitle, setCurrentTitle] = useState(tittle || "");
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+    const [newTitle, setNewTitle] = useState("");
+
 
     const toggleOptionsActive = () => {
         setOptionsActive(!optionsActive);
     }
+
+    const handleEditTitle = async () => {
+        // Validación básica
+        if (newTitle.trim() === "" || newTitle === currentTitle) {
+            setIsEditingTitle(false);
+            setNewTitle(currentTitle);
+            return;
+        }
+
+        // Si faltan datos vitales, no hacemos la llamada
+        if (!id || !idWS || !user) return;
+
+        try {
+            // Llamamos a tu servicio (Fíjate en el orden de los parámetros según tu TaskBoardService)
+            await TaskBoardService.editarNombreTablero({ tittle: newTitle }, user, id, idWS);
+            
+            // Actualizamos la vista
+            setCurrentTitle(newTitle);
+            setIsEditingTitle(false);
+        } catch (error) {
+            console.error("Error al renombrar el tablero:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (tittle) {
+            setCurrentTitle(tittle);
+            setNewTitle(tittle);
+        }
+    }, [tittle]);
+
+
+    const renderTitulo = () => {
+        if (isEditingTitle) {
+            return (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <input 
+                        type="text"
+                        className={styles.edit_title_input}
+                        value={newTitle}
+                        onChange={(e) => setNewTitle(e.target.value)}
+                        onBlur={handleEditTitle} // Guarda al pinchar fuera
+                        onKeyDown={(e) => e.key === "Enter" && handleEditTitle()} // Guarda con Enter
+                        autoFocus
+                    />
+                    <span className={styles.titulo_tablero}>#{id}</span>
+                </div>
+            );
+        }
+
+        return (
+            <h3 
+                className={`${styles.titulo_tablero} ${styles.editable_title}`}
+                onClick={() => setIsEditingTitle(true)}
+            >
+                {currentTitle} #{id}
+            </h3>
+        );
+    };
 
   return (
     <>
@@ -24,7 +90,7 @@ export function Nav_tablero( {tittle, id}: NavTableroProps) {
             <div className={styles.left_section}>
 
                 <div className={styles.desktop_left_section}>
-                    <h3 className={styles.titulo_tablero}>{tittle} #{id}</h3>
+                    {renderTitulo()}
                     <a href="" className={styles.logo_container}>
                         <img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/>
                     </a>
@@ -35,7 +101,7 @@ export function Nav_tablero( {tittle, id}: NavTableroProps) {
                         <X size={28} />
                     </button>
                     <div className={styles.mobile_tittles}>
-                        <h3 className={styles.titulo_tablero}>{tittle} #{id}</h3>
+                        {renderTitulo()}
                         <span className={styles.subtitulo_tablero}>Espacio de trabajo de USER</span>
                     </div>
                 </div>
@@ -55,9 +121,15 @@ export function Nav_tablero( {tittle, id}: NavTableroProps) {
                     <EllipsisVertical/>
                     </button>
 
-                    {optionsActive && ( /* o también optionsActive ? true : false */
+                    {optionsActive && (
                         <div className={styles.dropdown_menu}>
-                            <button className={styles.dropdown_item}>
+                            <button 
+                                className={styles.dropdown_item}
+                                onClick={() => {
+                                    setIsEditingTitle(true);
+                                    setOptionsActive(false);
+                                }}
+                            >
                                 <Pencil size={18} />
                                 <span>Renombrar</span>
                             </button>

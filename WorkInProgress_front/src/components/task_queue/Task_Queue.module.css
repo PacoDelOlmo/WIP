@@ -219,6 +219,36 @@
     color: #d9534f; 
 }
 
+.editable_title {
+    font-size: 2vh; 
+    cursor: pointer;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.4rem;
+    margin-left: -0.4rem; 
+    transition: background-color 0.2s ease;
+    word-break: break-word;
+    flex: 1; 
+}
+
+.editable_title:hover {
+    background-color: var(--gris-claro);
+}
+
+.edit_title_input {
+    font-size: 2vh;
+    font-weight: bold;
+    font-family: var(--fuente-principal);
+    color: var(--color-texto-primario);
+    background-color: white; 
+    border: 2px solid var(--color-primario);
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.4rem;
+    margin-left: -0.4rem;
+    width: 85%; 
+    outline: none;
+    box-shadow: 0 0 0 2px var(--verde-clarito);
+}
+
 /* ------------------- Animaciones -------------------- */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }

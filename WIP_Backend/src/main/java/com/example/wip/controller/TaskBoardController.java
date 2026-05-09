@@ -64,8 +64,8 @@ public class TaskBoardController {
     }
 
     @PutMapping("/tablero/{id}/lista/{idl}/editar")
-    public TaskQueueDTO editarLista(@PathVariable long id, @PathVariable long idl, @RequestBody NewElementDTO lista) {
-        return tqService.editarLista(id, idl, lista);
+    public TaskQueueDTO editarLista(@PathVariable long id, @PathVariable long idl, @RequestBody NewElementDTO nuevoNombre) {
+        return tqService.editarLista(id, idl, nuevoNombre);
     }
     
     @PutMapping("/tablero/{id}/lista/{idl}/borrar")
@@ -79,8 +79,8 @@ public class TaskBoardController {
     }
 
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/editar_nombre")
-    public TaskDTO editarNombreTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @RequestBody NewElementDTO nombreTarea) {
-        return tService.editarNombreTarea(id, idl, idt, nombreTarea);
+    public TaskDTO editarNombreTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @RequestBody NewElementDTO nuevoNombre) {
+        return tService.editarNombreTarea(id, idl, idt, nuevoNombre);
     }
 
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/editar")
@@ -112,4 +112,5 @@ public class TaskBoardController {
     public TagDTO anadirEtiqueta(@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @PathVariable long idu, @RequestBody NewElementDTO etiqueta){
         return tagService.anadirEtiqueta(id, idl, idt, idu, etiqueta);
     }
+
 }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styles from './Header_logged_tablero.module.css'
 import LogoWip from './../../assets/img/WIP_SinLetra.png'
 import { Grip, BellRing, LifeBuoy, UserCircle2, Search, Settings, LogOut, LayoutDashboard } from 'lucide-react'
+import { Link } from 'react-router';
 
 
 export function Header_logged_tablero() {
@@ -18,7 +19,7 @@ export function Header_logged_tablero() {
             <nav className={styles.top_nav}>
                 <ul>
                     <li><Grip size={30} color='white' /></li>
-                    <li><a href=""><img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/></a></li>
+                    <li><Link to={"/user/home"}><img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/></Link></li>
                 </ul>
             </nav>
             <div className={styles.search_group}>
