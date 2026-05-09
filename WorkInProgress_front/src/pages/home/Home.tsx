@@ -11,6 +11,7 @@ import { useAuthStore } from '../../store/Auth'
 import { useEffect, useState } from 'react'
 import { LoginService } from '../../services/LoginService'
 import type { WorkSpaceTO } from '../../services/WorkSpaceService'
+import NotFoundInternal from '../notFoundInternal/NotFoundInternal'
 
 export type UserCompleteDTO = {
   id: number,
@@ -72,6 +73,7 @@ export function Home() {
                 <Route path='/home' element={<Home_logged usuario={user} /> }/>
                 <Route path='/tableros' element={<Tableros usuario={user} />}/>
                 <Route path='/perfil' element={<Ajustes />}/>
+                <Route path= '/*' element={<NotFoundInternal/>} />
               </Routes>
           </main>
         </> : ''}
