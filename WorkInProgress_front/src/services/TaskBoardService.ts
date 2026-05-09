@@ -17,6 +17,11 @@ export const TaskBoardService = {
         return response.data;
     },
 
+    getIdWS:  async(idTablero : number) => {
+        const response = await axiosClient.get<number>(`/users/tablero/${idTablero}`);
+        return response.data;
+    },
+
     createTablero: async(tablero: newElementTO, idUser: Number, idWorkspace: Number) => {
         const response = await axiosClient.post<BoardTO>(`/users/${idUser}/workspace/${idWorkspace}/tablero/nuevo`, tablero);
         return response.data;

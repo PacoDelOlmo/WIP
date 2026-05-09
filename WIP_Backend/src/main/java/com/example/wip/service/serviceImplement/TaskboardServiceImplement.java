@@ -102,4 +102,11 @@ public class TaskboardServiceImplement implements TaskboardService {
 
         return conversor.entityADto(tablero.get());
     }
+
+
+    @Override
+    public long obtenerIdWorkSpace(long id) {
+        Optional<TaskboardEntity> tablero = repo.findById(id);
+        return tablero.get().getEspacioTrabajo().getIdEspacioTrabajo();
+    }
 }

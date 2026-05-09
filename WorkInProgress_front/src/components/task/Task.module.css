@@ -444,6 +444,99 @@
     background-color: var(--color-terciario);
 }
 
+.circleIconClickable {
+    color: var(--color-primario);
+    min-width: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.circleIconClickable:hover {
+    transform: scale(1.1);
+    color: var(--color-acento);
+}
+
+.editableText {
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    padding: 2px 4px; 
+    margin-left: -4px; 
+}
+
+.editableText:hover {
+    background-color: var(--gris-claro);
+}
+
+.editTitleInput {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--fuente-principal);
+    color: var(--color-texto-primario);
+    width: 100%;
+    border: 2px solid var(--color-primario);
+    border-radius: 4px;
+    padding: 2px 4px;
+    outline: none;
+    margin-left: -4px;
+}
+
+/* --- Edición de Descripción --- */
+.descEditContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-left: 2rem;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.descTextarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.8rem;
+    border: 1px solid var(--color-primario);
+    border-radius: 4px;
+    font-family: var(--fuente-principal);
+    font-size: 0.95rem;
+    resize: vertical;
+    outline: none;
+    box-shadow: 0 0 0 2px var(--verde-clarito);
+}
+
+.descActions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btnSaveDesc {
+    background-color: var(--color-primario);
+    color: var(--color-secundario);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s;
+}
+
+.btnSaveDesc:hover {
+    background-color: var(--color-terciario);
+}
+
+.btnCancelDesc {
+    background-color: transparent;
+    color: var(--color-texto-secundario);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s;
+}
+
+.btnCancelDesc:hover {
+    background-color: var(--gris-claro);
+}
 
 
 /* RESPONSIVE DESIGN */

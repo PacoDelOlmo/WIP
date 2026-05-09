@@ -20,6 +20,7 @@ import {
     Server,
     Monitor,
     Terminal,
+    CircleCheckBig,
 } from "lucide-react";
 import Styles from "./Task.module.css";
 import { useState } from "react";
@@ -88,12 +89,17 @@ const obtenerIconoEtiqueta = (nombreEtiqueta: string) => {
 export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
     
     const [isOpen, setIsOpen] = useState(false);
+    const [currentTask, setCurrentTask] = useState<TaskTO>(taskData);
     const [nuevoComentario, setNuevoComentario] = useState("");
     const [comentarios, setComentarios] = useState(taskData.comentarios || []);
     const [nuevaEtiqueta, setNuevaEtiqueta] = useState("");
     const [etiquetas, setEtiquetas] = useState(taskData.etiquetas || []);
     const [isAddingEtiqueta, setIsAddingEtiqueta] = useState(false);
     const idUsuario = useAuthStore((state) => state.idUsuario);
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+    const [newTitle, setNewTitle] = useState(currentTask.titulo);
+    const [isEditingDesc, setIsEditingDesc] = useState(false);
+    const [newDesc, setNewDesc] = useState(currentTask.descripcion || "");
 
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -138,6 +144,45 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
         }
     };
 
+    const handleToggleEstado = async () => {
+        console.log(currentTask.completada);
+        try {
+            const updatedTask = await TaskService.actualizarEstadoTarea(taskBoardID, listID, currentTask.id);
+            setCurrentTask(updatedTask); 
+        } catch (error) {
+            console.error("Error al actualizar estado:", error);
+        }
+    };
+
+    const handleEditTitle = async () => {
+        if (newTitle.trim() === "" || newTitle === currentTask.titulo) {
+            setIsEditingTitle(false);
+            return;
+        }
+        try {
+            const updatedTask = await TaskService.editarNombreTarea({ tittle: newTitle }, taskBoardID, listID, currentTask.id);
+            setCurrentTask(updatedTask);
+            setIsEditingTitle(false);
+        } catch (error) {
+            console.error("Error al editar título:", error);
+        }
+    };
+
+    const handleEditDesc = async () => {
+        if (newDesc === currentTask.descripcion) {
+            setIsEditingDesc(false);
+            return;
+        }
+        try {
+            const payload = { ...currentTask, descripcion: newDesc };
+            const updatedTask = await TaskService.editarTarea(payload, taskBoardID, listID, currentTask.id);
+            setCurrentTask(updatedTask);
+            setIsEditingDesc(false);
+        } catch (error) {
+            console.error("Error al editar descripción:", error);
+        }
+    };
+
     const cardClass = `${Styles.tarea} ${isOpen ? Styles.tareaSeleccionada : ""}`;
 
 
@@ -146,14 +191,14 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
         <>
             <div className={cardClass} onClick={toggleOpen}>
                 <div className={Styles.titulo_check}>
-                    {taskData.completada ? (
-                            <input type="checkbox" checked onClick={(e) => e.stopPropagation()} />
-                        ) : (
-                            <input type="checkbox" onClick={(e) => e.stopPropagation()} />
-                        ) 
-                    }
+                    <input 
+                        type="checkbox" 
+                        checked={currentTask.completada || false} 
+                        onChange={handleToggleEstado}
+                        onClick={(e) => e.stopPropagation()}
+                    />
                     
-                    <h4>{taskData.titulo}</h4>
+                    <h4>{currentTask.titulo}</h4>
                 </div>
                 <button>
                     <SquarePen />
@@ -182,8 +227,29 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
                             <div className={Styles.cardBody}>
                                 <div className={Styles.mainColumn}>
                                     <div className={Styles.titleSection}>
-                                        <Circle size={24} className={Styles.circleIcon} />
-                                        <h2>{taskData.titulo}</h2>
+                                        {currentTask.completada ? 
+                                            <CircleCheckBig size={24} className={Styles.circleIcon} onClick={(e)=> { e.stopPropagation(); handleToggleEstado();}}/>
+                                        :
+                                            <Circle size={24} className={Styles.circleIcon} onClick={(e)=> { e.stopPropagation(); handleToggleEstado();}}/>
+                                        }
+                                        {isEditingTitle ? (
+                                            <input 
+                                                type="text"
+                                                value={newTitle}
+                                                onChange={(e) => setNewTitle(e.target.value)}
+                                                onBlur={handleEditTitle} // Guarda al pinchar fuera
+                                                onKeyDown={(e) => e.key === "Enter" && handleEditTitle()}
+                                                autoFocus
+                                                className={Styles.editTitleInput}
+                                            />
+                                        ) : (
+                                            <h2 
+                                                className={Styles.editableText} 
+                                                onClick={() => setIsEditingTitle(true)}
+                                            >
+                                                {currentTask.titulo}
+                                            </h2>
+                                        )}
                                     </div>
 
                                     <div className={Styles.metaActions}>
@@ -227,11 +293,43 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
                                                 <SquarePen size={20} />
                                                 <h3>Descripción</h3>
                                             </div>
-                                            <button className={Styles.btnEdit}>Editar</button>
+                                            {!isEditingDesc && (
+                                                <button className={Styles.btnEdit} onClick={() => setIsEditingDesc(true)}>
+                                                    Editar
+                                                </button>
+                                            )}
                                         </div>
-                                        <p className={Styles.descText}>
-                                            {taskData.descripcion}
-                                        </p>
+
+                                        {isEditingDesc ? (
+                                            <div className={Styles.descEditContainer}>
+                                                <textarea 
+                                                    className={Styles.descTextarea}
+                                                    value={newDesc}
+                                                    onChange={(e) => setNewDesc(e.target.value)}
+                                                    placeholder="Añade una descripción más detallada..."
+                                                    autoFocus
+                                                />
+                                                <div className={Styles.descActions}>
+                                                    <button className={Styles.btnSaveDesc} onClick={handleEditDesc}>Guardar</button>
+                                                    <button 
+                                                        className={Styles.btnCancelDesc} 
+                                                        onClick={() => { 
+                                                            setIsEditingDesc(false); 
+                                                            setNewDesc(currentTask.descripcion || ""); 
+                                                        }}
+                                                    >
+                                                        Cancelar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <p 
+                                                className={`${Styles.descText} ${Styles.editableText}`} 
+                                                onClick={() => setIsEditingDesc(true)}
+                                            >
+                                                {currentTask.descripcion || "Haz clic para añadir una descripción detallada..."}
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
 
@@ -282,7 +380,7 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
                                         </div>
                                         <div className={Styles.activityText}>
                                             <p>
-                                                <strong>{taskData.creador.nickname}</strong> ha añadido esta tarea a{" "}
+                                                <strong>{currentTask.creador.nickname}</strong> ha añadido esta tarea a{" "}
                                                 <strong>{listaName}</strong>
                                             </p>
                                         </div>

@@ -136,7 +136,7 @@ export function Header_logged({usuario} : HeaderProps) {
                     </li>
 
                     <li>
-                        <Link to="/user/workspace" className={styles.WIP_button_container}>
+                        <Link to="/user/home" className={styles.WIP_button_container}>
                             <img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/>
                         </Link> 
                         <span className={styles.WIP_text}>WIP</span>

@@ -11,4 +11,5 @@ public interface TaskboardService {
     TaskboardDTO obtenerTablero (long indice);
     TaskboardDTO nuevoTablero(long id, long idw, NewElementDTO tablero);
     TaskboardDTO editarTablero(long id, long idw, long idt, NewElementDTO nuevoNombre);
+    long obtenerIdWorkSpace(long id);
 }

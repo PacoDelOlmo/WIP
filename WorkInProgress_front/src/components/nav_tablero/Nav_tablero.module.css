@@ -171,6 +171,37 @@
     opacity: 0.5;
 }
 
+.editable_title {
+    cursor: pointer;
+    border-radius: 0.3rem;
+    padding: 0.2rem 0.4rem;
+    margin-left: -0.4rem;
+    transition: background-color 0.2s ease;
+}
+
+/* Oscurecemos un poquito el fondo al pasar el ratón para que se note que es clicable */
+.editable_title:hover {
+    background-color: rgba(0, 0, 0, 0.15); 
+}
+
+.edit_title_input {
+    font-size: 1.17em; /* Tamaño por defecto de un h3 */
+    font-weight: 600;
+    font-family: var(--fuente-principal);
+    color: var(--color-secundario); /* Letra blanca/clara */
+    background-color: rgba(0, 0, 0, 0.2); /* Fondo semitransparente oscuro */
+    border: 1px solid var(--color-secundario); /* Borde clarito */
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.4rem;
+    margin-left: -0.4rem;
+    outline: none;
+    width: 200px; /* Un ancho base para que no sea muy pequeño */
+}
+
+.edit_title_input:focus {
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
 
 
 /* ---------- Responsive design ------------ */
@@ -239,6 +270,10 @@
         cursor: pointer;
     }
 
+    .edit_title_input {
+        width: 150px;
+        font-size: 1rem;
+    }
 }
 
 

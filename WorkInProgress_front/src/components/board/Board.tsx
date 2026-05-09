@@ -16,6 +16,7 @@ export function Board() {
   const { id } = useParams();
   const [board, setBoard] = useState<BoardTO | null>(null);
   const [error, setError] = useState<String | null>();
+  const [idWS, setIdWs] = useState<number>(-1);
 
   const [isAddingList, setIsAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
@@ -31,10 +32,22 @@ export function Board() {
     }
   }
 
+  async function obtenerIdWorkspace(idTablero: number) {
+    try {
+      let response = await TaskBoardService.getIdWS(idTablero);
+      setIdWs(response);
+      console.log(response);
+    } catch (e) {
+      console.error(e);
+      setError('Error de conexión con el servidor');
+    }
+  }
+
   useEffect(() => {
     if (id) {
       let idTablero = Number(id);
       obtenerTablero(idTablero);
+      obtenerIdWorkspace(idTablero);
     }
   }, [id]);
 
@@ -63,7 +76,7 @@ export function Board() {
 
   return (
     <div className={styles.board}>
-      <Nav_tablero tittle={board?.nombreTablero} id={board?.id} />
+      <Nav_tablero tittle={board?.nombreTablero} id={board?.id} idWS={idWS}/>
 
       <section className={styles.board_lists}>
 

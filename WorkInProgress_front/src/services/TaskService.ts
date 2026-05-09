@@ -62,7 +62,7 @@ export const TaskService = {
     }, 
 
     editarTarea: async (tareaEditada: TaskTO, idTablero: number, idLista: number, idTarea: number) =>{
-        const response = await axiosClient.put<TaskTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/editar_nombre`, tareaEditada);
+        const response = await axiosClient.put<TaskTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/editar`, tareaEditada);
         return response.data;
     },
 
