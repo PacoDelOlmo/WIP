@@ -26,7 +26,7 @@ export function Workspace({ usuario }: UserProps) {
                 }
             }
         });
-    }, [usuario]);
+    }, [usuario, id]);
 
     const handleCrearTablero = async () => {
         if (newBoardTitle.trim() === "" || !workspace) return;

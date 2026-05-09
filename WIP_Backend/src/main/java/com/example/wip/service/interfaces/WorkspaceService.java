@@ -8,7 +8,7 @@ import com.example.wip.model.WorkspaceDTO;
 
 public interface WorkspaceService {
     List<WorkspaceDTO> obtenerTodosWorkspace ();
-    List<WorkspaceDTO> obtenerWorkspaceUsuario(String user);
+    List<WorkspaceDTO> obtenerWorkspaceUsuario(long user);
     WorkspaceDTO nuevoWorkspace(long id, NewElementDTO workspace);
     WorkspaceDTO editarWorkspace(long id, long idw, NewElementDTO nuevoNombre);
 }

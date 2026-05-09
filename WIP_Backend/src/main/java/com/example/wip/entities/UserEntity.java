@@ -1,7 +1,9 @@
 package com.example.wip.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -40,13 +42,13 @@ public class UserEntity implements Serializable{
     private String contrasena;
 
     @OneToMany(mappedBy = "propietario")
-    private Set<WorkspaceEntity> espaciosTrabajo = new HashSet<WorkspaceEntity>();
+    private List<WorkspaceEntity> espaciosTrabajo = new ArrayList<WorkspaceEntity>();
 
     @OneToMany(mappedBy = "autor")
-    private Set<TaskEntity> tareas = new HashSet<TaskEntity>();
+    private List<TaskEntity> tareas = new ArrayList<TaskEntity>();
 
     @OneToMany(mappedBy = "autor")
-    private Set<CommentEntity> comentarios = new HashSet<CommentEntity>();
+    private List<CommentEntity> comentarios = new ArrayList<CommentEntity>();
 
     public long getIdUsuario() {
         return idUsuario;
@@ -96,27 +98,27 @@ public class UserEntity implements Serializable{
         this.contrasena = contrasena;
     }
 
-    public Set<WorkspaceEntity> getEspaciosTrabajo() {
+    public List<WorkspaceEntity> getEspaciosTrabajo() {
         return espaciosTrabajo;
     }
 
-    public void setEspaciosTrabajo(Set<WorkspaceEntity> espaciosTrabajo) {
+    public void setEspaciosTrabajo(List<WorkspaceEntity> espaciosTrabajo) {
         this.espaciosTrabajo = espaciosTrabajo;
     }
 
-    public Set<TaskEntity> getTareas() {
+    public List<TaskEntity> getTareas() {
         return tareas;
     }
 
-    public void setTareas(Set<TaskEntity> tareas) {
+    public void setTareas(List<TaskEntity> tareas) {
         this.tareas = tareas;
     }
 
-    public Set<CommentEntity> getComentarios() {
+    public List<CommentEntity> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(Set<CommentEntity> comentarios) {
+    public void setComentarios(List<CommentEntity> comentarios) {
         this.comentarios = comentarios;
     }
 

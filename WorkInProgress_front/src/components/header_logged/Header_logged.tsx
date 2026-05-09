@@ -22,9 +22,9 @@ export function Header_logged({usuario} : HeaderProps) {
     const logout = useAuthStore((state) => state.logout)
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const [workspaceMenuOpen, setWorkspaceMenuOpen] = useState(false);
-      const [isAddingWS, setIsAddingWS] = useState(false);
-      const [newWorkSpaceTitle, setNewWorkSpaceTitle] = useState("");
-      const [workspaces, setWorkspaces] = useState<WorkSpaceTO[]>(usuario.workspace);
+    const [isAddingWS, setIsAddingWS] = useState(false);
+    const [newWorkSpaceTitle, setNewWorkSpaceTitle] = useState("");
+    const [workspaces, setWorkspaces] = useState<WorkSpaceTO[]>(usuario.workspace);
 
     const toggleWorkspaceMenu = () => {
         setWorkspaceMenuOpen(!workspaceMenuOpen);
