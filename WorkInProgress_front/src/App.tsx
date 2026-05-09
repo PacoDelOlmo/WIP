@@ -6,6 +6,7 @@ import { SignUp } from './pages/signUp/SignUp'
 import { Home } from './pages/home/Home'
 import { Taskboard } from './pages/taskboard/Taskboard'
 import { Protected_Route } from './components/protected_route/Protected_Route'
+import NotFound from './pages/notFound/NotFound'
 
 function App() {
   
@@ -24,6 +25,7 @@ function App() {
           <Taskboard />
         </Protected_Route>
         } />
+        <Route path='/*' element={<NotFound />}/>
     </Routes>
   )
 }

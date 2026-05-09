@@ -1,0 +1,183 @@
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw;
+    background: radial-gradient(circle at top right, var(--subnavbar-bg) 0%, var(--color-primario) 100%);
+    position: relative;
+    overflow: hidden;
+    font-family: var(--fuente-principal);
+    color: var(--color-secundario);
+}
+
+.content_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+    max-width: 600px;
+    padding: 2rem;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.error_code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.error_code h1 {
+    font-size: 8rem;
+    font-weight: 900;
+    margin: 0;
+    color: var(--color-secundario);
+    text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* El '0' convertido en tarjeta flotante */
+.animated_zero {
+    width: 100px;
+    height: 130px;
+    animation: floatCard 4s ease-in-out infinite;
+}
+
+.zero_card {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg-navBar);
+    border-radius: 0.6rem;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.8rem;
+    border: 2px solid var(--bg-verde);
+}
+
+.card_header {
+    width: 100%;
+    height: 10px;
+    background-color: var(--color-acento);
+    border-radius: 0.2rem;
+    margin-bottom: 1rem;
+}
+
+.question_icon {
+    color: var(--color-primario);
+    margin-bottom: 1rem;
+}
+
+.card_line {
+    width: 100%;
+    height: 6px;
+    background-color: var(--gris-medio);
+    border-radius: 0.2rem;
+    margin-bottom: 0.4rem;
+}
+
+.card_line_short {
+    width: 60%;
+    height: 6px;
+    background-color: var(--gris-medio);
+    border-radius: 0.2rem;
+    align-self: flex-start;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-bg-navBar);
+}
+
+.description {
+    font-size: 1rem;
+    color: var(--verde-clarito);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+.btn_home {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--color-texto-app); /* El tono verde agua resalta genial */
+    color: var(--color-texto-primario);
+    padding: 0.8rem 1.8rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+
+.btn_home:hover {
+    background-color: var(--bg-verde);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.floating_task {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.5rem;
+    z-index: 1;
+}
+
+.task_1 {
+    width: 120px;
+    height: 80px;
+    top: 20%;
+    left: 15%;
+    animation: floatBackground 6s ease-in-out infinite;
+    transform: rotate(-15deg);
+}
+
+.task_2 {
+    width: 90px;
+    height: 120px;
+    bottom: 25%;
+    right: 20%;
+    animation: floatBackground 8s ease-in-out infinite 1s; /* Retardo para desincronizar */
+    transform: rotate(25deg);
+}
+
+.task_3 {
+    width: 150px;
+    height: 100px;
+    top: 60%;
+    left: 10%;
+    animation: floatBackground 7s ease-in-out infinite 2s;
+    transform: rotate(10deg);
+}
+
+/* --- KEYFRAMES --- */
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+@keyframes floatBackground {
+    0%, 100% { transform: translateY(0) rotate(inherit); }
+    50% { transform: translateY(-25px) rotate(inherit); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 576px) {
+    .error_code h1 { font-size: 6rem; }
+    .animated_zero { width: 80px; height: 105px; }
+    .question_icon { width: 35px; height: 35px; }
+    .title { font-size: 1.5rem; }
+    .floating_task { display: none; } /* Ocultamos el fondo en móvil para no saturar */
+}
