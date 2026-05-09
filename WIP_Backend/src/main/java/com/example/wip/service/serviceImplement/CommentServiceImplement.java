@@ -36,7 +36,6 @@ public class CommentServiceImplement implements CommentService{
 
     @Override
     public CommentDTO anadirComentario(long idTablero, long idLista, long idTarea, long idUsuario, NewElementDTO comentario) {
-        //Comprobar si coinciden los ids recuperando la tarea y asignar el comentario a la tarea así como el autor al comentario;
             Optional<TaskEntity> tarea = tRepo.findById(idTarea); 
             Optional<UserEntity> usuario = uRepo.findById(idUsuario); 
 

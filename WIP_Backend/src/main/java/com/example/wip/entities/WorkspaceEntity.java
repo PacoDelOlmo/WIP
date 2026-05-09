@@ -1,7 +1,9 @@
 package com.example.wip.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -33,7 +35,7 @@ public class WorkspaceEntity implements Serializable{
     private UserEntity propietario;
 
     @OneToMany(mappedBy = "espacioTrabajo")
-    private Set<TaskboardEntity> tableros = new HashSet<TaskboardEntity>();
+    private List<TaskboardEntity> tableros = new ArrayList<TaskboardEntity>();
 
     public long getIdEspacioTrabajo() {
         return idEspacioTrabajo;
@@ -59,11 +61,11 @@ public class WorkspaceEntity implements Serializable{
         this.propietario = propietario;
     }
 
-    public Set<TaskboardEntity> getTableros() {
+    public List<TaskboardEntity> getTableros() {
         return tableros;
     }
 
-    public void setTableros(Set<TaskboardEntity> tableros) {
+    public void setTableros(List<TaskboardEntity> tableros) {
         this.tableros = tableros;
     }
 

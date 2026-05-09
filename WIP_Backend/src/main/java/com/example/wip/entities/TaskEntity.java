@@ -2,7 +2,9 @@ package com.example.wip.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -56,10 +58,10 @@ public class TaskEntity implements Serializable{
         joinColumns = @JoinColumn(name = "ID_TASK"),
         inverseJoinColumns = @JoinColumn(name = "ID_TAG")
     )
-    private Set<TagEntity> etiquetas = new HashSet<TagEntity>();
+    private List<TagEntity> etiquetas = new ArrayList<TagEntity>();
 
     @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CommentEntity> comentarios = new HashSet<CommentEntity>();
+    private List<CommentEntity> comentarios = new ArrayList<CommentEntity>();
 
     public long getIdTarea() {
         return idTarea;
@@ -117,19 +119,19 @@ public class TaskEntity implements Serializable{
         this.autor = autor;
     }
 
-    public Set<TagEntity> getEtiquetas() {
+    public List<TagEntity> getEtiquetas() {
         return etiquetas;
     }
 
-    public void setEtiquetas(Set<TagEntity> etiquetas) {
+    public void setEtiquetas(List<TagEntity> etiquetas) {
         this.etiquetas = etiquetas;
     }
 
-    public Set<CommentEntity> getComentarios() {
+    public List<CommentEntity> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(Set<CommentEntity> comentarios) {
+    public void setComentarios(List<CommentEntity> comentarios) {
         this.comentarios = comentarios;
     }
 

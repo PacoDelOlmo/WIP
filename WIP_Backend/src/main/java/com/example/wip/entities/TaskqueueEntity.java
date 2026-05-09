@@ -2,7 +2,9 @@ package com.example.wip.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -40,7 +42,7 @@ public class TaskqueueEntity implements Serializable{
     private TaskboardEntity tablero;
 
     @OneToMany(mappedBy = "listaTareas", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<TaskEntity> tareas = new HashSet<TaskEntity>();
+    private List<TaskEntity> tareas = new ArrayList<TaskEntity>();
 
     public long getIdListaTareas() {
         return idListaTareas;
@@ -74,11 +76,11 @@ public class TaskqueueEntity implements Serializable{
         this.tablero = tablero;
     }
 
-    public Set<TaskEntity> getTareas() {
+    public List<TaskEntity> getTareas() {
         return tareas;
     }
 
-    public void setTareas(Set<TaskEntity> tareas) {
+    public void setTareas(List<TaskEntity> tareas) {
         this.tareas = tareas;
     }
 
