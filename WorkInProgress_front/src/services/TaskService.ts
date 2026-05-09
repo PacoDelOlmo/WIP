@@ -69,6 +69,11 @@ export const TaskService = {
     actualizarEstadoTarea: async (idTablero: number, idLista: number, idTarea: number) => {
         const response = await axiosClient.put<TaskTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/actualizar_estado`);
         return response.data;
-    }, 
+    },
+    
+    deleteTarea: async (idTablero: number, idLista: number, idTarea: number) => {
+        const response = await axiosClient.put<boolean>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/borrar`);
+        return response.data;
+    }
     
 }

@@ -16,5 +16,5 @@ public interface TaskService {
     TaskDTO editarTarea(long id, long idl, long idt, TaskDTO tarea);
     TaskDTO moverTarea(long id, long idl, long idt);
     TaskDTO actualizarEstadoTarea(long id, long idl, long idt);
-    TaskDTO borrarTarea(long id, long idl, long idt);
+    boolean borrarTarea(long id, long idl, long idt);
 }

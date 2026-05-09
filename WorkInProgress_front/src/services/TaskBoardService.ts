@@ -32,4 +32,10 @@ export const TaskBoardService = {
         return response.data;
     }, 
 
+    deleteTablero: async (idTablero : number) =>{
+        const response = await axiosClient.put<boolean>(`/taskboard/tablero/${idTablero}/borrar`);
+        return response.data;
+    }
+
+
 }

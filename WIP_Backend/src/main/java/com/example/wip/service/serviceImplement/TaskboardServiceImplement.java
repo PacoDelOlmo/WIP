@@ -109,4 +109,17 @@ public class TaskboardServiceImplement implements TaskboardService {
         Optional<TaskboardEntity> tablero = repo.findById(id);
         return tablero.get().getEspacioTrabajo().getIdEspacioTrabajo();
     }
+
+
+    @Override
+    public boolean borrarTablero(long id) {
+        Optional<TaskboardEntity> tablero = repo.findById(id);
+
+        if (tablero.isPresent()){
+            repo.delete(tablero.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

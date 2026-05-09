@@ -21,6 +21,7 @@ import {
     Monitor,
     Terminal,
     CircleCheckBig,
+    Trash2,
 } from "lucide-react";
 import Styles from "./Task.module.css";
 import { useState } from "react";
@@ -100,6 +101,7 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
     const [newTitle, setNewTitle] = useState(currentTask.titulo);
     const [isEditingDesc, setIsEditingDesc] = useState(false);
     const [newDesc, setNewDesc] = useState(currentTask.descripcion || "");
+    const [isDeleted, setIsDeleted] = useState(false);
 
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -183,6 +185,25 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
         }
     };
 
+    const handleDeleteTask = async () => {
+        const confirmar = window.confirm(`¿Estás seguro de que deseas eliminar la tarea "${currentTask.titulo}" de forma permanente?`);
+        if (!confirmar) return;
+
+        try {
+            await TaskService.deleteTarea(taskBoardID, listID, currentTask.id);
+
+            setIsOpen(false);
+            setIsDeleted(true);
+        } catch (error) {
+            console.error("Error al borrar la tarea:", error);
+            alert("No se pudo eliminar la tarea. Comprueba tu conexión.");
+        }
+    };
+
+    if (isDeleted) {
+        return null;
+    }
+
     const cardClass = `${Styles.tarea} ${isOpen ? Styles.tareaSeleccionada : ""}`;
 
 
@@ -212,8 +233,8 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
                             <div className={Styles.cardHeader}>
                                 <span className={Styles.nombreLista}>{listaName}</span>
                                 <div className={Styles.headerActions}>
-                                    <button title="Cover">
-                                        <ImageIcon size={18} />
+                                    <button title="Borrar" onClick={handleDeleteTask} className={Styles.btnDanger}>
+                                        <Trash2 size={18} />
                                     </button>
                                     <button title="Menu">
                                         <MoreHorizontal size={18} />

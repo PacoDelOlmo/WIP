@@ -4,6 +4,7 @@ import { EllipsisVertical, Pencil, XCircle, Share2, Bell, Filter, X } from 'luci
 import { useState, useEffect } from 'react'
 import { useAuthStore } from '../../store/Auth';
 import { TaskBoardService } from '../../services/TaskBoardService';
+import { useNavigate } from 'react-router';
 
 interface NavTableroProps {
     tittle : string | undefined;
@@ -19,6 +20,7 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
     const [currentTitle, setCurrentTitle] = useState(tittle || "");
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [newTitle, setNewTitle] = useState("");
+    const navigate = useNavigate();
 
 
     const toggleOptionsActive = () => {
@@ -26,7 +28,7 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
     }
 
     const handleEditTitle = async () => {
-        // Validación básica
+
         if (newTitle.trim() === "" || newTitle === currentTitle) {
             setIsEditingTitle(false);
             setNewTitle(currentTitle);
@@ -37,14 +39,28 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
         if (!id || !idWS || !user) return;
 
         try {
-            // Llamamos a tu servicio (Fíjate en el orden de los parámetros según tu TaskBoardService)
             await TaskBoardService.editarNombreTablero({ tittle: newTitle }, user, id, idWS);
             
-            // Actualizamos la vista
             setCurrentTitle(newTitle);
             setIsEditingTitle(false);
         } catch (error) {
             console.error("Error al renombrar el tablero:", error);
+        }
+    };
+
+    const handleDeleteTablero = async () => {
+        if (!id) return; 
+
+        const confirmar = window.confirm("¿Estás seguro de que deseas eliminar este tablero y todas sus tareas?");
+        if (!confirmar) return;
+
+        try {
+            const response = await TaskBoardService.deleteTablero(id);
+            console.log(response);
+            navigate('/user/home'); 
+        } catch (error) {
+            console.error("Error al borrar el tablero:", error);
+            alert("No se pudo eliminar el tablero. Inténtalo de nuevo.");
         }
     };
 
@@ -141,9 +157,9 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
                             
                             <hr className={styles.separator} />
 
-                            <button className={`${styles.dropdown_item} ${styles.danger}`}>
+                            <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteTablero}>
                                 <XCircle size={18} />
-                                <span>Cerrar tablero</span>
+                                <span>Borrar tablero</span>
                             </button>
                         </div>
                     )}
