@@ -8,5 +8,5 @@ public interface TaskQueueService {
     
     TaskQueueDTO nuevaLista(long id, NewElementDTO lista);
     TaskQueueDTO editarLista(long id, long idl, NewElementDTO lista);
-    TaskQueueDTO borrarLista(long id, long idl);
+    boolean borrarLista(long id, long idl);
 }

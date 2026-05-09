@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,7 +39,7 @@ public class TaskqueueEntity implements Serializable{
     @JoinColumn(name = "ID_TASKBOARD")
     private TaskboardEntity tablero;
 
-    @OneToMany(mappedBy = "listaTareas")
+    @OneToMany(mappedBy = "listaTareas", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TaskEntity> tareas = new HashSet<TaskEntity>();
 
     public long getIdListaTareas() {

@@ -25,6 +25,7 @@ export function Task_Queue({ queueData, idTablero }: TaskQueueProps) {
   const [currentTitle, setCurrentTitle] = useState(queueData.titulo);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(currentTitle);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   const toggleOptions = () => {
     setOptionsOpen(!optionsOpen);
@@ -68,6 +69,24 @@ export function Task_Queue({ queueData, idTablero }: TaskQueueProps) {
     }
   };
 
+  const handleDeleteLista = async () => {
+    const confirmar = window.confirm(`¿Estás seguro de que deseas eliminar la lista "${currentTitle}" y todas las tarjetas que contiene?`);
+    if (!confirmar) return;
+
+    try {
+      await TaskQueueService.deleteLista(idTablero, queueData.id);
+
+      setIsDeleted(true);
+    } catch (error) {
+      console.error("Error al borrar la lista:", error);
+      alert("No se pudo eliminar la lista. Comprueba tu conexión.");
+    }
+  };
+
+  if (isDeleted){
+    return null;
+  }
+
   return (
     <section className={styles.pila_tareas}>
       <div className={styles.titulo_opciones}>
@@ -107,7 +126,7 @@ export function Task_Queue({ queueData, idTablero }: TaskQueueProps) {
               <span>Renombrar</span>
             </button>
             <hr className={styles.separator} />
-            <button className={`${styles.dropdown_item} ${styles.danger}`}>
+            <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteLista}>
               <Trash size={18} />
               <span>Borrar Lista</span>
             </button>
@@ -119,7 +138,7 @@ export function Task_Queue({ queueData, idTablero }: TaskQueueProps) {
         <Task key={index} taskData={tarea} listaName={currentTitle} listID={queueData.id} taskBoardID={idTablero}/>
       ))}
 
-      {/* Lógica condicional de la interfaz (Input vs Botón) */}
+
       {isAdding ? (
         <div className={styles.add_task_form}>
           <input

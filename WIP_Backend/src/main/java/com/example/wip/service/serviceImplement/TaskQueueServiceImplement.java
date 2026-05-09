@@ -70,18 +70,19 @@ public class TaskQueueServiceImplement implements TaskQueueService{
 
 
     @Override
-    public TaskQueueDTO borrarLista(long id, long idl) {
+    public boolean borrarLista(long id, long idl) {
         Optional<TaskboardEntity> tablero = tbRepo.findById(id);
         Optional<TaskqueueEntity> listaTareas = tqRepo.findById(idl);
 
         if (tablero.isPresent() && listaTareas.isPresent()){
             if (tablero.get() == listaTareas.get().getTablero()){
                 tqRepo.delete(listaTareas.get());
+                return true;
             }
 
         }
 
-        return conversor.entityADto(listaTareas.get()); 
+        return false;
     }
 
 }

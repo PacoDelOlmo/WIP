@@ -58,6 +58,11 @@ public class TaskBoardController {
         return tbService.obtenerTablero(id);
     }
 
+    @PutMapping("tablero/{id}/borrar")
+    public boolean borrarTablero(@PathVariable long id) {
+        return tbService.borrarTablero(id);
+    }
+
     @PostMapping("/tablero/{id}/nueva_lista")
     public TaskQueueDTO nuevaLista(@PathVariable long id, @RequestBody NewElementDTO lista) {
         return tqService.nuevaLista(id, lista);
@@ -69,7 +74,7 @@ public class TaskBoardController {
     }
     
     @PutMapping("/tablero/{id}/lista/{idl}/borrar")
-    public TaskQueueDTO borrarLista(@PathVariable long id, @PathVariable long idl) {
+    public boolean borrarLista(@PathVariable long id, @PathVariable long idl) {
         return tqService.borrarLista(id, idl);
     }
 
@@ -99,7 +104,7 @@ public class TaskBoardController {
     }
     
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/borrar")
-    public TaskDTO borrarTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt) {
+    public boolean borrarTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt) {
         return tService.borrarTarea(id, idl, idt);
     }
     

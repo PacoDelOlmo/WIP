@@ -172,7 +172,7 @@ public class TaskServiceImplement implements TaskService {
 
 
     @Override
-    public TaskDTO borrarTarea(long id, long idl, long idt) {
+    public boolean borrarTarea(long id, long idl, long idt) {
         Optional<TaskboardEntity> tablero = repo.findById(id);
         Optional<TaskqueueEntity> listaTareas = tqRepo.findById(idl);
         Optional<TaskEntity> task = tRepo.findById(idt);
@@ -181,11 +181,12 @@ public class TaskServiceImplement implements TaskService {
             if (tablero.get() == listaTareas.get().getTablero() && task.get().getListaTareas() == listaTareas.get()){
                 listaTareas.get().getTareas().remove(task.get());
                 tRepo.delete(task.get());
+                return true;
             }
 
         }
 
-        return conversor.entityADto(task.get());
+        return false;
     }
     
 

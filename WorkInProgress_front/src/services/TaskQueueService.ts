@@ -28,4 +28,9 @@ export const TaskQueueService = {
         return response.data;
     }, 
 
+    deleteLista: async ( idTablero: number, idLista: number) =>{
+        const response = await axiosClient.put<boolean>(`/taskboard/tablero/${idTablero}/lista/${idLista}/borrar`);
+        return response.data;
+    }
+
 }

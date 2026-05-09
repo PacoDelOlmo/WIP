@@ -538,6 +538,14 @@
     background-color: var(--gris-claro);
 }
 
+.btnDanger {
+    transition: all 0.2s ease;
+}
+
+.btnDanger:hover {
+    background-color: #ffeaea !important;
+    color: #d9534f !important;
+}
 
 /* RESPONSIVE DESIGN */
 @media (max-width: 576px) {
