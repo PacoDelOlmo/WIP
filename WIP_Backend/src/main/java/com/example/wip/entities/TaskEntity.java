@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -57,7 +58,7 @@ public class TaskEntity implements Serializable{
     )
     private Set<TagEntity> etiquetas = new HashSet<TagEntity>();
 
-    @OneToMany(mappedBy = "tarea")
+    @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CommentEntity> comentarios = new HashSet<CommentEntity>();
 
     public long getIdTarea() {
