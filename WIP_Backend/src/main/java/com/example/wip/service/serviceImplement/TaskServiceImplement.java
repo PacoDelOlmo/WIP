@@ -145,6 +145,8 @@ public class TaskServiceImplement implements TaskService {
 
         }
 
+        tRepo.save(task.get());
+
         return conversor.entityADto(task.get());
     }
 
@@ -162,6 +164,8 @@ public class TaskServiceImplement implements TaskService {
             }
 
         }
+
+        tRepo.save(task.get());
 
         return conversor.entityADto(task.get());
     }

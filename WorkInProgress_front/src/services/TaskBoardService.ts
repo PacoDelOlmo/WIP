@@ -22,4 +22,9 @@ export const TaskBoardService = {
         return response.data;
     },
 
+    editarNombreTablero: async (nuevoNombre: newElementTO, idUser: number, idTablero: number, idWs: number, ) => {
+        const response = await axiosClient.put<BoardTO>(`/users/${idUser}/workspace/${idWs}/tablero/${idTablero}/editar`, nuevoNombre);
+        return response.data;
+    }, 
+
 }

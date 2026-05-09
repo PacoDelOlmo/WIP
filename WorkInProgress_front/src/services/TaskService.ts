@@ -55,4 +55,20 @@ export const TaskService = {
         const response = await axiosClient.post<TagTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/user/${idUser}/nueva_etiqueta`, etiqueta);
         return response.data;
     },
+
+    editarNombreTarea: async (nuevoNombre: newElementTO, idTablero: number, idLista: number, idTarea: number) => {
+        const response = await axiosClient.put<TaskTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/editar_nombre`, nuevoNombre);
+        return response.data;
+    }, 
+
+    editarTarea: async (tareaEditada: TaskTO, idTablero: number, idLista: number, idTarea: number) =>{
+        const response = await axiosClient.put<TaskTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/editar_nombre`, tareaEditada);
+        return response.data;
+    },
+
+    actualizarEstadoTarea: async (idTablero: number, idLista: number, idTarea: number) => {
+        const response = await axiosClient.put<TaskTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/actualizar_estado`);
+        return response.data;
+    }, 
+    
 }
