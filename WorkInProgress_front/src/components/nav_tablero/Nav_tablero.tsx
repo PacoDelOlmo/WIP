@@ -4,7 +4,7 @@ import { EllipsisVertical, Pencil, XCircle, Share2, Bell, Filter, X } from 'luci
 import { useState, useEffect } from 'react'
 import { useAuthStore } from '../../store/Auth';
 import { TaskBoardService } from '../../services/TaskBoardService';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 interface NavTableroProps {
     tittle : string | undefined;
@@ -95,7 +95,7 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
                 className={`${styles.titulo_tablero} ${styles.editable_title}`}
                 onClick={() => setIsEditingTitle(true)}
             >
-                {currentTitle} #{id}
+                {currentTitle}  #{id}
             </h3>
         );
     };
@@ -107,9 +107,9 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
 
                 <div className={styles.desktop_left_section}>
                     {renderTitulo()}
-                    <a href="" className={styles.logo_container}>
+                    <Link to={`/user/workspace/${idWS}`} className={styles.logo_container}>
                         <img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/>
-                    </a>
+                    </Link>
                 </div>
 
                 <div className={styles.mobile_left_section}>

@@ -25,7 +25,7 @@ public class WorkspaceController {
     }
     
     @GetMapping("/usuario/{user}")
-    public List<WorkspaceDTO> getTablerosPorUsuario(@PathVariable String user){
+    public List<WorkspaceDTO> getWorkSpacesPorUsuario(@PathVariable long user){
         return service.obtenerWorkspaceUsuario(user);
     }
 }

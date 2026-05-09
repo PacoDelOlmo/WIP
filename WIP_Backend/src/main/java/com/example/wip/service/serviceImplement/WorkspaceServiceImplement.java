@@ -42,12 +42,12 @@ public class WorkspaceServiceImplement implements WorkspaceService {
     }
 
     @Override
-    public List<WorkspaceDTO> obtenerWorkspaceUsuario(String usuario) {
+    public List<WorkspaceDTO> obtenerWorkspaceUsuario(long usuario) {
         List<WorkspaceDTO> espaciosTrabajo = new ArrayList<WorkspaceDTO>();
         List<WorkspaceEntity> espaciosEntity = new ArrayList<WorkspaceEntity>(repo.findAll());
 
         for (WorkspaceEntity w : espaciosEntity){
-            if (w.getPropietario().getNombreUsuario().equals(usuario)){
+            if (w.getPropietario().getIdUsuario() == usuario){
                 espaciosTrabajo.add(conversor.entityADto(w));
             }
         }
