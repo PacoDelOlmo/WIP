@@ -7,6 +7,15 @@ export interface BoardTO{
     listaTareas: TaskQueueTO[],
 }
 
+export interface OrdenListas{
+    idTablero: number;
+    listas: number[];
+}
+
+export interface OrdenTareas{
+    idLista: number;
+    tareas: number[];
+}
 
 
 
@@ -31,6 +40,16 @@ export const TaskBoardService = {
         const response = await axiosClient.put<BoardTO>(`/users/${idUser}/workspace/${idWs}/tablero/${idTablero}/editar`, nuevoNombre);
         return response.data;
     }, 
+
+    updateOrdenListas: async (idTablero: number, nuevasOrden: OrdenListas) => {
+        const response = await axiosClient.put<boolean>(`/taskboard/tablero/${idTablero}/actualizar_orden`, nuevasOrden);
+        return response.data;
+    },
+
+    updateOrdenTareasLista: async (idTablero: number, idLista: number, nuevoOrden: OrdenTareas) => {
+        const response = await axiosClient.put<boolean>(`/taskboard/tablero/${idTablero}/lista/${idLista}/actualizar_orden`, nuevoOrden);
+        return response.data;
+    },
 
     deleteTablero: async (idTablero : number) =>{
         const response = await axiosClient.put<boolean>(`/taskboard/tablero/${idTablero}/borrar`);

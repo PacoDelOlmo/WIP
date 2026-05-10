@@ -7,7 +7,7 @@ import { useParams } from 'react-router';
 import { Plus, Check, X } from 'lucide-react';
 import {TaskQueueService} from '../../services/TaskQueueService';
 
-import type { BoardTO } from '../../services/TaskBoardService';
+import type { BoardTO, OrdenListas, OrdenTareas } from '../../services/TaskBoardService';
 import type { newElementTO } from '../../services/TaskQueueService';
 
 import { DragDropContext, Droppable, Draggable, type DropResult } from '@hello-pangea/dnd';
@@ -76,6 +76,7 @@ export function Board() {
     }
   };
 
+  // FUNCIONALIDAD DRAG & DROP
   const handleDragEnd = async (result: DropResult) => {
     const {source, destination, draggableId, type} = result;
 
@@ -87,6 +88,7 @@ export function Board() {
 
     if (!board || !board.listaTareas) return;
 
+    //Modificación Orden de las listas
     if (type === 'LIST'){
       const nuevasListas = Array.from(board.listaTareas);
       
@@ -96,7 +98,21 @@ export function Board() {
 
       setBoard({...board, listaTareas: nuevasListas});
 
-      //Llamada a la API para actualizar estado
+      try {
+        let ordenListas : number[] = [];
+        nuevasListas.map(lista => ordenListas.push(lista.id));
+        console.log(ordenListas);
+
+        const nuevoOrden: OrdenListas = { 
+          idTablero: Number(id),
+          listas: ordenListas
+        };
+
+        const ordenActualizado = await TaskBoardService.updateOrdenListas(Number(id), nuevoOrden);
+        console.log(ordenActualizado);
+      } catch (e) {
+        console.error("Error al actualizar el tablero", e);
+      }
       return;
     }
 
@@ -125,11 +141,26 @@ export function Board() {
 
       setBoard({...board, listaTareas: nuevasListas});
 
-      // Llamada a la API pasandole el estado global del tablero.
+      try {
+        let ordenTareasLista : number[] = [];
+        nuevasTareas.map(tarea => ordenTareasLista.push(tarea.id));
+        console.log(ordenTareasLista);
+
+        const nuevoOrden: OrdenTareas = { 
+          idLista: sourceListId,
+          tareas: ordenTareasLista,
+        };
+
+        const ordenActualizado = await TaskBoardService.updateOrdenTareasLista(Number(id), sourceListId, nuevoOrden);
+        console.log(ordenActualizado);
+      } catch (e) {
+        console.error("Error al actualizar el tablero", e);
+      }
+
       return;
     }
 
-    //Mover fuera de la lista
+    //Mover entre listas
     if (sourceListId !== destinationListId){
       const sourceTareas = Array.from(sourceList.tareas || []);
       const destinationTareas = Array.from(destinationList.tareas || []);
@@ -149,7 +180,34 @@ export function Board() {
 
       setBoard({...board, listaTareas: nuevasListas});
 
-      // Llamada a la API pasandole el estado global del tablero.
+      // Llamada a la API pasandole el orden nuevo del tablero.
+      try {
+        let ordenTareasListaOrigen : number[] = [];
+        sourceTareas.map(tarea => ordenTareasListaOrigen.push(tarea.id));
+        console.log(ordenTareasListaOrigen);
+
+        let ordenTareasListaDestino : number[] = [];
+        destinationTareas.map(tarea => ordenTareasListaDestino.push(tarea.id));
+        console.log(ordenTareasListaDestino);
+
+        const nuevoOrdenOrigen: OrdenTareas = { 
+          idLista: sourceListId,
+          tareas: ordenTareasListaOrigen,
+        };
+
+        const nuevoOrdenDestino: OrdenTareas = { 
+          idLista: destinationListId,
+          tareas: ordenTareasListaDestino,
+        };
+
+        const ordenActualizadoOrigen = await TaskBoardService.updateOrdenTareasLista(Number(id), sourceListId, nuevoOrdenOrigen);
+        console.log(ordenActualizadoOrigen);
+
+        const ordenActualizadoDestino = await TaskBoardService.updateOrdenTareasLista(Number(id), destinationListId, nuevoOrdenDestino);
+        console.log(ordenActualizadoDestino);
+      } catch (e) {
+        console.error("Error al actualizar el tablero", e);
+      }
       return;
     }
   }
