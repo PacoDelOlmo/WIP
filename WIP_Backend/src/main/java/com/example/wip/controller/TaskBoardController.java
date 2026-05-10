@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.wip.model.CommentDTO;
 import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.NewTaskDTO;
+import com.example.wip.model.OrdenListasDTO;
+import com.example.wip.model.OrdenTareasListaDTO;
 import com.example.wip.model.TagDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.model.TaskQueueDTO;
@@ -116,6 +118,16 @@ public class TaskBoardController {
     @PostMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/user/{idu}/nueva_etiqueta")
     public TagDTO anadirEtiqueta(@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @PathVariable long idu, @RequestBody NewElementDTO etiqueta){
         return tagService.anadirEtiqueta(id, idl, idt, idu, etiqueta);
+    }
+
+    @PutMapping("/tablero/{id}/actualizar_orden")
+    public boolean actualizarOrdenListas(@PathVariable long id, @RequestBody OrdenListasDTO nuevoOrden) {
+        return tbService.actualizarOrdenListas(id, nuevoOrden);
+    }
+
+        @PutMapping("/tablero/{id}/lista/{idl}/actualizar_orden")
+    public boolean actuaizarOrdenTareasLista(@PathVariable long id, @PathVariable long idl, @RequestBody OrdenTareasListaDTO nuevoOrden) {
+        return tbService.actuaizarOrdenTareasLista(id, idl, nuevoOrden);
     }
 
 }

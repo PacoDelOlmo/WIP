@@ -9,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-
+import com.example.wip.entities.TaskEntity;
 import com.example.wip.entities.TaskboardEntity;
+import com.example.wip.entities.TaskqueueEntity;
 import com.example.wip.entities.UserEntity;
 import com.example.wip.entities.WorkspaceEntity;
 import com.example.wip.model.NewElementDTO;
+import com.example.wip.model.OrdenListasDTO;
+import com.example.wip.model.OrdenTareasListaDTO;
 import com.example.wip.model.TaskboardDTO;
 import com.example.wip.repository.TaskRepository;
 import com.example.wip.repository.TaskboardRepository;
@@ -121,5 +124,65 @@ public class TaskboardServiceImplement implements TaskboardService {
         } else {
             return false;
         }
+    }
+
+
+    @Override
+    public boolean actualizarOrdenListas(long id, OrdenListasDTO nuevoOrden) {
+        boolean actualizado = false; 
+        Optional<TaskboardEntity> tablero = repo.findById(id); 
+
+        if (tablero.isPresent()){
+            List<TaskqueueEntity> listasOrdenadas = new ArrayList<TaskqueueEntity>();
+
+            for (int i = 0; i < nuevoOrden.getListas().size(); i++){
+                for (TaskqueueEntity lista : tablero.get().getListasTareas()){
+                    if (lista.getIdListaTareas() == nuevoOrden.getListas().get(i)) {
+                        listasOrdenadas.add(lista); 
+                    }
+                }
+            }
+
+            tablero.get().getListasTareas().clear();
+            tablero.get().getListasTareas().addAll(listasOrdenadas);
+            repo.save(tablero.get());
+
+            actualizado = true;
+        }
+
+
+
+        return actualizado;
+    }
+
+
+    @Override
+    public boolean actuaizarOrdenTareasLista(long idTablero, long idLista, OrdenTareasListaDTO nuevoOrden) {
+        boolean actualizado = false; 
+        Optional<TaskboardEntity> tablero = repo.findById(idTablero); 
+
+        if (tablero.isPresent()){
+            List<TaskEntity> listaOrdenada = new ArrayList<TaskEntity>();
+
+            for (int i = 0; i < nuevoOrden.getTareas().size(); i++){
+                Optional<TaskEntity> tarea = tRepo.findById(nuevoOrden.getTareas().get(i));
+
+                if (tarea.isPresent()){
+                    listaOrdenada.add(tarea.get());
+                }
+            }
+
+            for (TaskqueueEntity lista : tablero.get().getListasTareas()){
+                if (lista.getIdListaTareas() == idLista) {
+                    lista.getTareas().clear();
+                    lista.getTareas().addAll(listaOrdenada);
+                }
+            }
+
+            repo.save(tablero.get());
+            actualizado = true;
+        }
+
+        return actualizado;
     }
 }
