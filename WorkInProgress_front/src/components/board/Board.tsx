@@ -10,6 +10,8 @@ import {TaskQueueService} from '../../services/TaskQueueService';
 import type { BoardTO } from '../../services/TaskBoardService';
 import type { newElementTO } from '../../services/TaskQueueService';
 
+import { DragDropContext, Droppable, Draggable, type DropResult } from '@hello-pangea/dnd';
+
 
 export function Board() {
 
@@ -74,48 +76,154 @@ export function Board() {
     }
   };
 
+  const handleDragEnd = async (result: DropResult) => {
+    const {source, destination, draggableId, type} = result;
+
+    if (!destination) return;
+
+    if (source.droppableId === destination.droppableId && source.index === destination.index){
+      return;
+    }
+
+    if (!board || !board.listaTareas) return;
+
+    if (type === 'LIST'){
+      const nuevasListas = Array.from(board.listaTareas);
+      
+      const [listaMovida] = nuevasListas.splice(source.index, 1);
+
+      nuevasListas.splice(destination.index, 0, listaMovida);
+
+      setBoard({...board, listaTareas: nuevasListas});
+
+      //Llamada a la API para actualizar estado
+      return;
+    }
+
+    const sourceListId = Number(source.droppableId);
+    const destinationListId = Number(destination.droppableId);
+
+    const sourceList = board.listaTareas.find(lista => lista.id === sourceListId);
+    const destinationList = board.listaTareas.find(lista => lista.id === destinationListId);
+
+    if (!sourceList || !destinationList) return;
+
+    // Mover dentro de la misma lista
+    if (sourceListId === destinationListId){
+      const nuevasTareas = Array.from(sourceList.tareas || []);
+
+      const [tareaMovida] = nuevasTareas.splice(source.index, 1);
+      
+      nuevasTareas.splice(destination.index, 0, tareaMovida);
+
+      const nuevasListas = board.listaTareas.map(lista => {
+        if (lista.id === sourceListId) {
+          return {...lista, tareas: nuevasTareas}
+        }
+        return lista;
+      });
+
+      setBoard({...board, listaTareas: nuevasListas});
+
+      // Llamada a la API pasandole el estado global del tablero.
+      return;
+    }
+
+    //Mover fuera de la lista
+    if (sourceListId !== destinationListId){
+      const sourceTareas = Array.from(sourceList.tareas || []);
+      const destinationTareas = Array.from(destinationList.tareas || []);
+
+      const [tareaMovida] = sourceTareas.splice(source.index, 1);
+      destinationTareas.splice(destination.index, 0, tareaMovida);
+
+      const nuevasListas = board.listaTareas.map(lista => {
+        if (lista.id === sourceListId) {
+          return { ...lista, tareas: sourceTareas }; 
+        }
+        if (lista.id === destinationListId) {
+          return { ...lista, tareas: destinationTareas };
+        }
+        return lista;
+      });
+
+      setBoard({...board, listaTareas: nuevasListas});
+
+      // Llamada a la API pasandole el estado global del tablero.
+      return;
+    }
+  }
+
   return (
     <div className={styles.board}>
       <Nav_tablero tittle={board?.nombreTablero} id={board?.id} idWS={idWS}/>
 
-      <section className={styles.board_lists}>
+      <DragDropContext onDragEnd={handleDragEnd} >
+        <section className={styles.board_lists}>
+          <Droppable droppableId="board-lists" direction="horizontal" type="LIST">
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                style={{ display: 'flex', gap: '1rem', height: '100%', alignItems: 'flex-start' }}
+              >
+                {board?.listaTareas?.map((lista, index) => (
+                  <Draggable key={lista.id} draggableId={`list-${lista.id}`} index={index}>
+                    {(providedDraggable) => (
+                      <div
+                        ref={providedDraggable.innerRef}
+                        {...providedDraggable.draggableProps}
+                        style={{
+                          ...providedDraggable.draggableProps.style,
+                          height: 'fit-content' 
+                        }}
+                      >
+                        <Task_Queue
+                          queueData={lista}
+                          idTablero={board.id}
+                          dragHandleProps={providedDraggable.dragHandleProps}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
 
-        {board?.listaTareas?.map((lista, index) => (
-          <Task_Queue
-            key={lista.id || index} 
-            queueData={lista}
-            idTablero={board.id}
-          />
-        ))}
-
-        <div className={styles.add_list_container}>
-          {isAddingList ? (
-            <div className={styles.add_list_form}>
-              <input
-                type="text"
-                placeholder="Introduzca el título de la lista..."
-                value={newListTitle}
-                onChange={(e) => setNewListTitle(e.target.value)}
-                autoFocus
-                onKeyDown={(e) => e.key === "Enter" && handleCrearLista()}
-              />
-              <div className={styles.form_actions}>
-                <button className={styles.btn_confirm} onClick={handleCrearLista}>
-                  <Check size={18} /> Añadir lista
-                </button>
-                <button className={styles.btn_cancel} onClick={() => setIsAddingList(false)}>
-                  <X size={18} />
-                </button>
+                ))}
+                {provided.placeholder}
               </div>
-            </div>
-          ) : (
-            <button className={styles.btn_add_list} onClick={() => setIsAddingList(true)}>
-              <Plus size={20} /> Añadir otra lista
-            </button>
-          )}
-        </div>
+            )}
+          </Droppable>
+          
 
-      </section>
+          <div className={styles.add_list_container}>
+            {isAddingList ? (
+              <div className={styles.add_list_form}>
+                <input
+                  type="text"
+                  placeholder="Introduzca el título de la lista..."
+                  value={newListTitle}
+                  onChange={(e) => setNewListTitle(e.target.value)}
+                  autoFocus
+                  onKeyDown={(e) => e.key === "Enter" && handleCrearLista()}
+                />
+                <div className={styles.form_actions}>
+                  <button className={styles.btn_confirm} onClick={handleCrearLista}>
+                    <Check size={18} /> Añadir lista
+                  </button>
+                  <button className={styles.btn_cancel} onClick={() => setIsAddingList(false)}>
+                    <X size={18} />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button className={styles.btn_add_list} onClick={() => setIsAddingList(true)}>
+                <Plus size={20} /> Añadir otra lista
+              </button>
+            )}
+          </div>
+
+        </section>
+      </DragDropContext>
+      
     </div>
   )
 }

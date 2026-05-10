@@ -1,7 +1,7 @@
 import { Check, EllipsisVertical, Pencil, Plus, Trash, X } from "lucide-react";
 import { Task } from "../task/Task";
 import styles from "./Task_Queue.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import  { TaskQueueService, type TaskQueueTO } from "../../services/TaskQueueService";
 import {
   TaskService,
@@ -9,13 +9,15 @@ import {
   type newTaskTO,
 } from "../../services/TaskService";
 import { useAuthStore } from "../../store/Auth";
+import { Droppable } from "@hello-pangea/dnd";
 
 interface TaskQueueProps {
   queueData: TaskQueueTO;
   idTablero: number;
+  dragHandleProps?: any;
 }
 
-export function Task_Queue({ queueData, idTablero }: TaskQueueProps) {
+export function Task_Queue({ queueData, idTablero, dragHandleProps }: TaskQueueProps) {
 
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [tareas, setTareas] = useState<TaskTO[]>(queueData.tareas || []);
@@ -87,9 +89,13 @@ export function Task_Queue({ queueData, idTablero }: TaskQueueProps) {
     return null;
   }
 
+  useEffect(() => {
+    setTareas(queueData.tareas || []);
+  }, [queueData.tareas])
+
   return (
     <section className={styles.pila_tareas}>
-      <div className={styles.titulo_opciones}>
+      <div className={styles.titulo_opciones} {...dragHandleProps}>
         {isEditingTitle ? (
             <input 
                 type="text"
@@ -134,9 +140,28 @@ export function Task_Queue({ queueData, idTablero }: TaskQueueProps) {
         )}
       </div>
 
-      {tareas?.map((tarea, index) => (
-        <Task key={index} taskData={tarea} listaName={currentTitle} listID={queueData.id} taskBoardID={idTablero}/>
-      ))}
+      <Droppable droppableId={String(queueData.id)} type="TASK">
+        {(provided) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            style={{ minHeight: "20px" }} 
+          >
+            {queueData.tareas?.map((tarea, index) => (
+              <Task 
+                key={tarea.id || index} 
+                taskData={tarea} 
+                listaName={currentTitle} 
+                listID={queueData.id} 
+                taskBoardID={idTablero}
+                index={index}
+              />
+            ))}
+            
+            {provided.placeholder} 
+          </div>
+        )}
+      </Droppable>
 
 
       {isAdding ? (

@@ -24,15 +24,17 @@ import {
     Trash2,
 } from "lucide-react";
 import Styles from "./Task.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TaskService, type TaskTO } from "../../services/TaskService";
 import { useAuthStore } from "../../store/Auth";
+import { Draggable } from "@hello-pangea/dnd";
 
 interface TaskProps{
     taskData : TaskTO;
     listaName: string;
     listID: number;
     taskBoardID: number;
+    index: number;
 }
 
 const obtenerIconoEtiqueta = (nombreEtiqueta: string) => {
@@ -87,7 +89,7 @@ const obtenerIconoEtiqueta = (nombreEtiqueta: string) => {
 };
 
 
-export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
+export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskProps) {
     
     const [isOpen, setIsOpen] = useState(false);
     const [currentTask, setCurrentTask] = useState<TaskTO>(taskData);
@@ -204,27 +206,52 @@ export function Task({ taskData, listaName, listID, taskBoardID }: TaskProps) {
         return null;
     }
 
+    useEffect(() =>{
+        setCurrentTask(taskData);
+        setNewTitle(taskData.titulo);
+        setNewDesc(taskData.descripcion || "");
+        setComentarios(taskData.comentarios || []);
+        setEtiquetas(taskData.etiquetas || []);
+    }, [taskData])
+
+
+
     const cardClass = `${Styles.tarea} ${isOpen ? Styles.tareaSeleccionada : ""}`;
 
 
 
     return (
         <>
-            <div className={cardClass} onClick={toggleOpen}>
-                <div className={Styles.titulo_check}>
-                    <input 
-                        type="checkbox" 
-                        checked={currentTask.completada || false} 
-                        onChange={handleToggleEstado}
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                    
-                    <h4>{currentTask.titulo}</h4>
-                </div>
-                <button>
-                    <SquarePen />
-                </button>
-            </div>
+            <Draggable draggableId={String(taskData.id)} index={index}>
+                {(provided, snapshot) => (
+                    <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps} 
+                        className={`${cardClass} ${snapshot.isDragging ? Styles.tarjetaVolando : ""}`}
+                        onClick={toggleOpen}
+                        style={{
+                            ...provided.draggableProps.style,
+                            cursor: snapshot.isDragging ? "grabbing" : "pointer" 
+                        }}
+                    >
+                        <div className={Styles.titulo_check}>
+                            <input 
+                                type="checkbox" 
+                                checked={currentTask.completada || false} 
+                                onChange={handleToggleEstado}
+                                onClick={(e) => e.stopPropagation()} 
+                                onMouseDown={(e) => e.stopPropagation()} 
+                            />
+                            
+                            <h4>{currentTask.titulo}</h4>
+                        </div>
+                        <button>
+                            <SquarePen />
+                        </button>
+                    </div>
+                )}
+            </Draggable>
 
             {isOpen && (
                 <div className={Styles.modalOverlay} onClick={toggleOpen}>
