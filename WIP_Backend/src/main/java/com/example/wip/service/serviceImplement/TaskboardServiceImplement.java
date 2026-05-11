@@ -9,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-
+import com.example.wip.entities.TaskEntity;
 import com.example.wip.entities.TaskboardEntity;
+import com.example.wip.entities.TaskqueueEntity;
 import com.example.wip.entities.UserEntity;
 import com.example.wip.entities.WorkspaceEntity;
 import com.example.wip.model.NewElementDTO;
+import com.example.wip.model.OrdenListasDTO;
+import com.example.wip.model.OrdenTareasListaDTO;
 import com.example.wip.model.TaskboardDTO;
 import com.example.wip.repository.TaskRepository;
 import com.example.wip.repository.TaskboardRepository;
@@ -122,4 +125,74 @@ public class TaskboardServiceImplement implements TaskboardService {
             return false;
         }
     }
+
+
+    @Override
+    public boolean actualizarOrdenListas(long id, OrdenListasDTO nuevoOrden) {
+        boolean actualizado = false; 
+        Optional<TaskboardEntity> tablero = repo.findById(id); 
+
+        if (tablero.isPresent()){
+
+            for (int i = 0; i < nuevoOrden.getListas().size(); i++){
+                for (TaskqueueEntity lista : tablero.get().getListasTareas()){
+                    if (lista.getIdListaTareas() == nuevoOrden.getListas().get(i)) {
+                        lista.setPosicion(i);
+                    }
+                }
+            }
+
+            repo.save(tablero.get());
+
+            actualizado = true;
+        }
+
+
+
+        return actualizado;
+    }
+
+
+    @Override
+    public boolean actuaizarOrdenTareasLista(long idTablero, long idLista, OrdenTareasListaDTO nuevoOrden) {
+        Optional<TaskboardEntity> tableroOpt = repo.findById(idTablero); 
+
+    if (tableroOpt.isPresent()) {
+        TaskboardEntity tablero = tableroOpt.get();
+        TaskqueueEntity listaActual = null;
+
+        for (TaskqueueEntity l : tablero.getListasTareas()) {
+            if (l.getIdListaTareas() == idLista) {
+                listaActual = l;
+                break;
+            }
+        }
+
+        if (listaActual != null) {
+            List<TaskEntity> listaOrdenada = new ArrayList<>();
+
+            for (int i = 0; i < nuevoOrden.getTareas().size(); i++) {
+                Optional<TaskEntity> tareaOpt = tRepo.findById(nuevoOrden.getTareas().get(i));
+
+                if (tareaOpt.isPresent()) {
+                    TaskEntity tarea = tareaOpt.get();
+                    
+                    tarea.setPosicion(i); 
+                    tarea.setListaTareas(listaActual); 
+                    
+                    listaOrdenada.add(tarea);
+                }
+            }
+
+            listaActual.getTareas().clear();
+            listaActual.getTareas().addAll(listaOrdenada);
+            
+            repo.save(tablero);
+            return true;
+            }
+        }
+        
+        return false;
+    }
 }
+

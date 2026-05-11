@@ -44,6 +44,9 @@ public class TaskEntity implements Serializable{
     @Column(name = "FECHA_CREACION")
     private LocalDateTime fechaCreacion;
 
+    @Column(name = "POSICION")
+    private long posicion; 
+
     @ManyToOne
     @JoinColumn(name = "ID_TASKQUEUE")
     private TaskqueueEntity listaTareas;
@@ -101,6 +104,14 @@ public class TaskEntity implements Serializable{
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public long getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(long posicion) {
+        this.posicion = posicion;
     }
 
     public TaskqueueEntity getListaTareas() {
