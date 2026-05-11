@@ -84,6 +84,7 @@ public class TaskServiceImplement implements TaskService {
                 newTarea.setAutor(creador.get());
                 newTarea.setDescripcion("");
                 newTarea.setFechaCreacion(LocalDateTime.now());
+                newTarea.setPosicion(listaTareas.get().getTareas().size());
                 newTarea = tRepo.save(newTarea);
 
                 listaTareas.get().getTareas().add(newTarea);

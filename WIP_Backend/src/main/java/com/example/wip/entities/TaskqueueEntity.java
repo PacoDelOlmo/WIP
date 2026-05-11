@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 
 @Entity
@@ -37,11 +38,15 @@ public class TaskqueueEntity implements Serializable{
     @Column(name = "FECHA_CREACION")
     private LocalDateTime fechaCreacion;
 
+    @Column(name = "POSICION")
+    private long posicion;
+
     @ManyToOne
     @JoinColumn(name = "ID_TASKBOARD")
     private TaskboardEntity tablero;
 
     @OneToMany(mappedBy = "listaTareas", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("posicion ASC")
     private List<TaskEntity> tareas = new ArrayList<TaskEntity>();
 
     public long getIdListaTareas() {
@@ -66,6 +71,14 @@ public class TaskqueueEntity implements Serializable{
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public long getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(long posicion) {
+        this.posicion = posicion;
     }
 
     public TaskboardEntity getTablero() {

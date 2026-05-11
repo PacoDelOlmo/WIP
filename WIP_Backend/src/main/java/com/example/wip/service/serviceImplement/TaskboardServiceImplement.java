@@ -133,18 +133,15 @@ public class TaskboardServiceImplement implements TaskboardService {
         Optional<TaskboardEntity> tablero = repo.findById(id); 
 
         if (tablero.isPresent()){
-            List<TaskqueueEntity> listasOrdenadas = new ArrayList<TaskqueueEntity>();
 
             for (int i = 0; i < nuevoOrden.getListas().size(); i++){
                 for (TaskqueueEntity lista : tablero.get().getListasTareas()){
                     if (lista.getIdListaTareas() == nuevoOrden.getListas().get(i)) {
-                        listasOrdenadas.add(lista); 
+                        lista.setPosicion(i);
                     }
                 }
             }
 
-            tablero.get().getListasTareas().clear();
-            tablero.get().getListasTareas().addAll(listasOrdenadas);
             repo.save(tablero.get());
 
             actualizado = true;
@@ -158,31 +155,44 @@ public class TaskboardServiceImplement implements TaskboardService {
 
     @Override
     public boolean actuaizarOrdenTareasLista(long idTablero, long idLista, OrdenTareasListaDTO nuevoOrden) {
-        boolean actualizado = false; 
-        Optional<TaskboardEntity> tablero = repo.findById(idTablero); 
+        Optional<TaskboardEntity> tableroOpt = repo.findById(idTablero); 
 
-        if (tablero.isPresent()){
-            List<TaskEntity> listaOrdenada = new ArrayList<TaskEntity>();
+    if (tableroOpt.isPresent()) {
+        TaskboardEntity tablero = tableroOpt.get();
+        TaskqueueEntity listaActual = null;
 
-            for (int i = 0; i < nuevoOrden.getTareas().size(); i++){
-                Optional<TaskEntity> tarea = tRepo.findById(nuevoOrden.getTareas().get(i));
-
-                if (tarea.isPresent()){
-                    listaOrdenada.add(tarea.get());
-                }
+        for (TaskqueueEntity l : tablero.getListasTareas()) {
+            if (l.getIdListaTareas() == idLista) {
+                listaActual = l;
+                break;
             }
-
-            for (TaskqueueEntity lista : tablero.get().getListasTareas()){
-                if (lista.getIdListaTareas() == idLista) {
-                    lista.getTareas().clear();
-                    lista.getTareas().addAll(listaOrdenada);
-                }
-            }
-
-            repo.save(tablero.get());
-            actualizado = true;
         }
 
-        return actualizado;
+        if (listaActual != null) {
+            List<TaskEntity> listaOrdenada = new ArrayList<>();
+
+            for (int i = 0; i < nuevoOrden.getTareas().size(); i++) {
+                Optional<TaskEntity> tareaOpt = tRepo.findById(nuevoOrden.getTareas().get(i));
+
+                if (tareaOpt.isPresent()) {
+                    TaskEntity tarea = tareaOpt.get();
+                    
+                    tarea.setPosicion(i); 
+                    tarea.setListaTareas(listaActual); 
+                    
+                    listaOrdenada.add(tarea);
+                }
+            }
+
+            listaActual.getTareas().clear();
+            listaActual.getTareas().addAll(listaOrdenada);
+            
+            repo.save(tablero);
+            return true;
+            }
+        }
+        
+        return false;
     }
 }
+

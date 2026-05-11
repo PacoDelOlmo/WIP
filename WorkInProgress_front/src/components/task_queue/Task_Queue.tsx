@@ -15,9 +15,10 @@ interface TaskQueueProps {
   queueData: TaskQueueTO;
   idTablero: number;
   dragHandleProps?: any;
+  onTareaCreada: (idLista: number, nuevaTarea: TaskTO) => void;
 }
 
-export function Task_Queue({ queueData, idTablero, dragHandleProps }: TaskQueueProps) {
+export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCreada }: TaskQueueProps) {
 
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [tareas, setTareas] = useState<TaskTO[]>(queueData.tareas || []);
@@ -45,7 +46,7 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps }: TaskQueueP
       const tareaCreada = await TaskService.createTask(nuevaTareaPayLoad,idTablero,queueData.id,);
       console.log(tareaCreada);
 
-      setTareas([...tareas, tareaCreada]);
+      onTareaCreada(queueData.id, tareaCreada);
 
       setNuevaTareaTit("");
       setIsAdding(false);

@@ -11,6 +11,7 @@ import type { BoardTO, OrdenListas, OrdenTareas } from '../../services/TaskBoard
 import type { newElementTO } from '../../services/TaskQueueService';
 
 import { DragDropContext, Droppable, Draggable, type DropResult } from '@hello-pangea/dnd';
+import type { TaskTO } from '../../services/TaskService';
 
 
 export function Board() {
@@ -199,18 +200,34 @@ export function Board() {
           idLista: destinationListId,
           tareas: ordenTareasListaDestino,
         };
-
-        const ordenActualizadoOrigen = await TaskBoardService.updateOrdenTareasLista(Number(id), sourceListId, nuevoOrdenOrigen);
-        console.log(ordenActualizadoOrigen);
-
+        
         const ordenActualizadoDestino = await TaskBoardService.updateOrdenTareasLista(Number(id), destinationListId, nuevoOrdenDestino);
         console.log(ordenActualizadoDestino);
+        const ordenActualizadoOrigen = await TaskBoardService.updateOrdenTareasLista(Number(id), sourceListId, nuevoOrdenOrigen);
+        console.log(ordenActualizadoOrigen);
+        
       } catch (e) {
         console.error("Error al actualizar el tablero", e);
       }
       return;
     }
   }
+
+  const handleAñadirTareaALista = (idLista: number, nuevaTarea: TaskTO) => {
+    if (!board || !board.listaTareas) return;
+
+    const nuevasListas = board.listaTareas.map((lista) => {
+      if (lista.id === idLista) {
+        return {
+          ...lista,
+          tareas: [...(lista.tareas || []), nuevaTarea],
+        };
+      }
+      return lista;
+    });
+
+    setBoard({ ...board, listaTareas: nuevasListas });
+  };
 
   return (
     <div className={styles.board}>
@@ -240,6 +257,7 @@ export function Board() {
                           queueData={lista}
                           idTablero={board.id}
                           dragHandleProps={providedDraggable.dragHandleProps}
+                          onTareaCreada={handleAñadirTareaALista}
                         />
                       </div>
                     )}
