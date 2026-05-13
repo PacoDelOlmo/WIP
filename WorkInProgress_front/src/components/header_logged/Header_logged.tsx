@@ -15,9 +15,10 @@ import type { newElementTO } from '../../services/TaskQueueService'
 
 interface HeaderProps {
     usuario: UserCompleteDTO,
+    onWorkspaceCreated: (ws: WorkSpaceTO) => void;
 }
 
-export function Header_logged({usuario} : HeaderProps) {
+export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
 
     const logout = useAuthStore((state) => state.logout)
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -47,6 +48,7 @@ export function Header_logged({usuario} : HeaderProps) {
                     // Llamamos al backend
                     const espacioTrabajoCreado = await WorkSpaceService.createEspacioTrabajo(payload, idUsuario);
                     
+                    onWorkspaceCreated(espacioTrabajoCreado);
                     setWorkspaces([...workspaces, espacioTrabajoCreado]);
         
                     setNewWorkSpaceTitle("");
@@ -76,8 +78,8 @@ export function Header_logged({usuario} : HeaderProps) {
                                 </div>
                                 <hr />
                                 <ul className={styles.dropdown_list}>
-                                    {workspaces?.length > 0 ? (
-                                        workspaces.map((ws, index) => (
+                                    {usuario?.workspace?.length > 0 ? (
+                                        usuario.workspace.map((ws, index) => (
                                             <li key={`${ws.nombre}-${index}`}>
                                                 <Link to={`/user/workspace/${ws.id}`} onClick={() => setWorkspaceMenuOpen(false)}>
                                                     <Briefcase size={16} style={{marginRight: '8px'}}/> 

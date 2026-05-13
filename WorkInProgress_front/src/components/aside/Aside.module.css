@@ -26,11 +26,22 @@
 .aside{
     background-color: var(--gris-claro);
     width: 25%;
+    min-width: 220px; /* Evita que colapse demasiado en pantallas medianas */
     padding: 1rem;
-    height: 110vh;
+    
+    min-height: 100%; 
+    height: auto; 
+    
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    transition: width 0.3s ease;
 }
 
-.asideElement, .aside {
+.asideElement {
     margin-bottom: 0.5rem;
 }
 
@@ -43,16 +54,26 @@ ul{
     list-style: none;
 }
 
-div>ul{
+.accordionContent ul{
     margin-left: 2rem;
 }
 
 .dropdown{
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    animation: fadeIn 0.2s ease-in-out;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
 
+    box-sizing: border-box;
+    margin-left: 1.4rem;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
 }
 
 .dropdown,
@@ -97,7 +118,6 @@ button{
 .asideElement a{
     display: flex;
     align-content: center;
-
     span{
         margin-left: .5rem;
     }

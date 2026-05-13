@@ -74,7 +74,7 @@ export function Home() {
     <>
         {user ? 
         <>
-          <Header_logged usuario={user}/> 
+          <Header_logged usuario={user} onWorkspaceCreated={handleAddWorkspace}/> 
           <main className={styles.body}>
               {user ? <Aside usuario={user}/> : ''}
               <Routes>

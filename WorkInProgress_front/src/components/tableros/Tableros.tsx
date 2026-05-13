@@ -15,8 +15,7 @@ export function Tableros({ usuario }: UserProps) {
   const tablerosRecientes =
     usuario.workspace?.flatMap((ws) => ws.tableros).slice(0, 2) || [];
   const [workspace, setWorkspace] = useState<WorkspaceType | null>(null);
-  const [isAddingBoard, setIsAddingBoard] = useState(false);
-  const [newBoardTitle, setNewBoardTitle] = useState("");
+
 
   useEffect(() => {
     usuario.workspace?.map((ws, key) => {
@@ -26,31 +25,6 @@ export function Tableros({ usuario }: UserProps) {
     });
   }, [usuario]);
 
-  const handleCrearTablero = async () => {
-    if (newBoardTitle.trim() === "" || !workspace) return;
-
-    const payload: newElementTO = { tittle: newBoardTitle };
-
-    const idUsuario = usuario.id;
-
-    try {
-      const tableroCreado = await TaskBoardService.createTablero(
-        payload,
-        idUsuario,
-        workspace.id,
-      );
-
-      setWorkspace({
-        ...workspace,
-        tableros: [...workspace.tableros, tableroCreado],
-      });
-
-      setNewBoardTitle("");
-      setIsAddingBoard(false);
-    } catch (error) {
-      console.error("Error al crear el tablero:", error);
-    }
-  };
 
   return (
     <section className={styles.content_section}>
@@ -120,47 +94,11 @@ export function Tableros({ usuario }: UserProps) {
                   {tablero.nombreTablero}
                 </Link>
               </div>
-            ))}
+            )).slice(0, 3)}
 
-            <div className={styles.board_button_add}>
-              {isAddingBoard ? (
-                <div className={styles.add_board_form}>
-                  <input
-                    type="text"
-                    placeholder="Nombre del tablero..."
-                    className={styles.add_board_input}
-                    value={newBoardTitle}
-                    onChange={(e) => setNewBoardTitle(e.target.value)}
-                    autoFocus
-                    onKeyDown={(e) => e.key === "Enter" && handleCrearTablero()}
-                  />
-                  <div className={styles.form_actions}>
-                    <button
-                      className={styles.btn_confirm}
-                      onClick={handleCrearTablero}
-                    >
-                      <Check size={16} /> Añadir
-                    </button>
-                    <button
-                      className={styles.btn_cancel}
-                      onClick={() => setIsAddingBoard(false)}
-                    >
-                      <X size={16} />
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <button
-                  className={styles.btn_trigger_add}
-                  onClick={() => setIsAddingBoard(true)}
-                >
-                  + Nuevo tablero
-                </button>
-              )}
-            </div>
           </div>
           <footer>
-            <button className={styles.secondary_button}> Ver todo</button>
+            <button className={styles.secondary_button}> <Link to={`/user/workspace/${ws.id}`}>Ver todo</Link> </button>
           </footer>
         </article>
       ))}
