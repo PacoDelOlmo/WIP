@@ -40,6 +40,7 @@
 .user_boards {
     margin: 1vw;
     display: flex;
+    flex-wrap: wrap;
     gap: 1vw;
 }
 

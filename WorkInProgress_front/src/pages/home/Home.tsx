@@ -45,6 +45,15 @@ export function Home() {
   
   const [user , setUser] = useState<UserCompleteDTO | null>(null);
 
+  const handleAddWorkspace = (nuevoWorkspace: WorkSpaceTO) => {
+    if (!user) return; 
+
+    setUser({
+      ...user,
+        workspace: [...user.workspace, nuevoWorkspace]
+    })
+  }
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -65,12 +74,12 @@ export function Home() {
     <>
         {user ? 
         <>
-          <Header_logged usuario={user}/> 
+          <Header_logged usuario={user} onWorkspaceCreated={handleAddWorkspace}/> 
           <main className={styles.body}>
               {user ? <Aside usuario={user}/> : ''}
               <Routes>
                 <Route path='/workspace/:id' element={<Workspace usuario={user}/>} />
-                <Route path='/home' element={<Home_logged usuario={user} /> }/>
+                <Route path='/home' element={<Home_logged usuario={user} onWorkspaceCreated={handleAddWorkspace} /> }/>
                 <Route path='/tableros' element={<Tableros usuario={user} />}/>
                 <Route path='/perfil' element={<Ajustes />}/>
                 <Route path= '/*' element={<NotFoundInternal/>} />

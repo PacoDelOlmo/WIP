@@ -10,15 +10,16 @@ import type { newElementTO } from '../../services/TaskQueueService';
 import { WorkSpaceService, type WorkSpaceTO } from '../../services/WorkSpaceService'
 
 interface UserProps {
-    usuario: UserCompleteDTO
+    usuario: UserCompleteDTO;
+    onWorkspaceCreated: (ws: WorkSpaceTO) => void;
 }
 
-export function Home_logged({ usuario }: UserProps) {
+export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
 
   const navigate = useNavigate();
   const [isAddingWS, setIsAddingWS] = useState(false);
   const [newWorkSpaceTitle, setNewWorkSpaceTitle] = useState("");
-  const [workspaces, setWorkspaces] = useState<WorkSpaceTO[]>(usuario.workspace);
+  const [workspaces, setWorkspaces] = useState<WorkSpaceTO[]>(usuario.workspace.slice(0,2));
 
     const actividadesRecientes = usuario.workspace.flatMap(ws => 
         ws.tableros.flatMap(tablero => 
@@ -33,6 +34,7 @@ export function Home_logged({ usuario }: UserProps) {
         )
     ).slice(0, 3);
 
+
     const handleCrearWorkSpace = async () => {
             if (newWorkSpaceTitle.trim() === "") return;
     
@@ -41,10 +43,10 @@ export function Home_logged({ usuario }: UserProps) {
             const idUsuario = usuario.id;
     
             try {
-                // Llamamos al backend
                 const espacioTrabajoCreado = await WorkSpaceService.createEspacioTrabajo(payload, idUsuario);
                 
-                setWorkspaces([...workspaces, espacioTrabajoCreado]);
+                onWorkspaceCreated(espacioTrabajoCreado);
+                //setWorkspaces([...workspaces, espacioTrabajoCreado]);
     
                 setNewWorkSpaceTitle("");
                 setIsAddingWS(false);
@@ -121,7 +123,7 @@ export function Home_logged({ usuario }: UserProps) {
                     </div>
                 </div>
                 <footer>
-                    <button className={styles.secondary_button}> Ver todo</button>
+                    <button className={styles.secondary_button}> <Link to={`/user/tableros`}>Ver todo</Link> </button>
                 </footer>
             </article>
 

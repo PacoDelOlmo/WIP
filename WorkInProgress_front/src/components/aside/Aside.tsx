@@ -41,7 +41,7 @@ export function Aside({usuario} : HeaderProps) {
                                 onClick={() => toggleEspacios(ws.id)} 
                                 style={{ cursor: 'pointer' }}
                             >
-                                <a href="#" onClick={(e) => e.preventDefault()}>
+                                <a onClick={(e) => e.preventDefault()}>
                                     <FolderKanban /> <span>{ws.nombre}</span>
                                 </a>
                                 <button>{isOpen ? <ChevronDown /> : <ChevronUp />}</button>
