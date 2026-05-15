@@ -10,6 +10,7 @@ import {
 } from "../../services/TaskService";
 import { useAuthStore } from "../../store/Auth";
 import { Droppable } from "@hello-pangea/dnd";
+import { ConfirmModal } from "../modalConfirm/ConfirmModal";
 
 interface TaskQueueProps {
   queueData: TaskQueueTO;
@@ -29,6 +30,7 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(currentTitle);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
 
   const toggleOptions = () => {
     setOptionsOpen(!optionsOpen);
@@ -79,12 +81,19 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
     try {
       await TaskQueueService.deleteLista(idTablero, queueData.id);
 
+      setIsConfirmModalOpen(false);
       setIsDeleted(true);
     } catch (error) {
       console.error("Error al borrar la lista:", error);
       alert("No se pudo eliminar la lista. Comprueba tu conexión.");
     }
   };
+
+      const handleDeleteClick = (e: React.MouseEvent) => {
+        e.stopPropagation(); 
+        setIsConfirmModalOpen(true);
+        setOptionsOpen(false);
+    };
 
   useEffect(() => {
     setTareas(queueData.tareas || []);
@@ -95,108 +104,119 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
   }
 
   return (
-    <section className={styles.pila_tareas}>
-      <div className={styles.titulo_opciones} {...dragHandleProps}>
-        {isEditingTitle ? (
-            <input 
-                type="text"
-                className={styles.edit_title_input}
-                value={newTitle}
-                onChange={(e) => setNewTitle(e.target.value)}
-                onBlur={handleEditTitle} 
-                onKeyDown={(e) => e.key === "Enter" && handleEditTitle()} 
-                autoFocus
-            />
-        ) : (
-            <h3 
-                className={styles.editable_title} 
-                onClick={() => setIsEditingTitle(true)}
-            >
-                {currentTitle}
-            </h3>
-        )}
-
-        <button className={styles.option_button} onClick={toggleOptions}>
-          <EllipsisVertical />
-        </button>
-
-        {optionsOpen && (
-          <div className={styles.dropdown_menu}>
-            <button 
-                className={styles.dropdown_item} 
-                onClick={() => {
-                    setIsEditingTitle(true);
-                    setOptionsOpen(false); // Cerramos el menú al darle a renombrar
-                }}
-            >
-              <Pencil size={18} />
-              <span>Renombrar</span>
-            </button>
-            <hr className={styles.separator} />
-            <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteLista}>
-              <Trash size={18} />
-              <span>Borrar Lista</span>
-            </button>
-          </div>
-        )}
-      </div>
-
-      <Droppable droppableId={String(queueData.id)} type="TASK">
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            style={{ minHeight: "20px" }} 
-          >
-            {queueData.tareas?.map((tarea, index) => (
-              <Task 
-                key={tarea.id || index} 
-                taskData={tarea} 
-                listaName={currentTitle} 
-                listID={queueData.id} 
-                taskBoardID={idTablero}
-                index={index}
+    <>
+      <section className={styles.pila_tareas}>
+        <div className={styles.titulo_opciones} {...dragHandleProps}>
+          {isEditingTitle ? (
+              <input 
+                  type="text"
+                  className={styles.edit_title_input}
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  onBlur={handleEditTitle} 
+                  onKeyDown={(e) => e.key === "Enter" && handleEditTitle()} 
+                  autoFocus
               />
-            ))}
-            
-            {provided.placeholder} 
-          </div>
-        )}
-      </Droppable>
+          ) : (
+              <h3 
+                  className={styles.editable_title} 
+                  onClick={() => setIsEditingTitle(true)}
+              >
+                  {currentTitle}
+              </h3>
+          )}
 
+          <button className={styles.option_button} onClick={toggleOptions}>
+            <EllipsisVertical />
+          </button>
 
-      {isAdding ? (
-        <div className={styles.add_task_form}>
-          <input
-            type="text"
-            placeholder="Introduce el título de la tarea..."
-            value={nuevaTareaTit}
-            onChange={(e) => setNuevaTareaTit(e.target.value)}
-            autoFocus
-            onKeyDown={(e) => e.key === "Enter" && handleCrearTarea()}
-          />
-          {/* Usamos las nuevas clases aquí */}
-          <div className={styles.form_actions}>
-            <button className={styles.btn_confirm} onClick={handleCrearTarea}>
-              <Check size={18} />
-            </button>
-            <button
-              className={styles.btn_cancel}
-              onClick={() => setIsAdding(false)}
-            >
-              <X size={18} />
-            </button>
-          </div>
+          {optionsOpen && (
+            <div className={styles.dropdown_menu}>
+              <button 
+                  className={styles.dropdown_item} 
+                  onClick={() => {
+                      setIsEditingTitle(true);
+                      setOptionsOpen(false);
+                  }}
+              >
+                <Pencil size={18} />
+                <span>Renombrar</span>
+              </button>
+              <hr className={styles.separator} />
+              <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteClick}>
+                <Trash size={18} />
+                <span>Borrar Lista</span>
+              </button>
+            </div>
+          )}
         </div>
-      ) : (
-        <button
-          className={styles.btn_nueva_tarea}
-          onClick={() => setIsAdding(true)}
-        >
-          <Plus />
-          <span> Añadir una tarjeta</span>
-        </button>
-      )}
-    </section>
+
+        <Droppable droppableId={String(queueData.id)} type="TASK">
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              style={{ minHeight: "20px" }} 
+            >
+              {queueData.tareas?.map((tarea, index) => (
+                <Task 
+                  key={tarea.id || index} 
+                  taskData={tarea} 
+                  listaName={currentTitle} 
+                  listID={queueData.id} 
+                  taskBoardID={idTablero}
+                  index={index}
+                />
+              ))}
+              
+              {provided.placeholder} 
+            </div>
+          )}
+        </Droppable>
+
+
+        {isAdding ? (
+          <div className={styles.add_task_form}>
+            <input
+              type="text"
+              placeholder="Introduce el título de la tarea..."
+              value={nuevaTareaTit}
+              onChange={(e) => setNuevaTareaTit(e.target.value)}
+              autoFocus
+              onKeyDown={(e) => e.key === "Enter" && handleCrearTarea()}
+            />
+
+            <div className={styles.form_actions}>
+              <button className={styles.btn_confirm} onClick={handleCrearTarea}>
+                <Check size={18} />
+              </button>
+              <button
+                className={styles.btn_cancel}
+                onClick={() => setIsAdding(false)}
+              >
+                <X size={18} />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button
+            className={styles.btn_nueva_tarea}
+            onClick={() => setIsAdding(true)}
+          >
+            <Plus />
+            <span> Añadir una tarjeta</span>
+          </button>
+        )}
+      </section>
+    
+      <ConfirmModal 
+                    isOpen={isConfirmModalOpen}
+                    title="Eliminar Lista"
+                    message="¿Estás seguro de que deseas eliminar esta lista de forma permanente? Esta acción no se puede deshacer."
+                    itemName={queueData.titulo}
+                    onConfirm={handleDeleteLista}
+                    onCancel={() => setIsConfirmModalOpen(false)}
+                />
+    </>
   );
 }

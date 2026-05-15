@@ -28,6 +28,7 @@ import { useState, useEffect } from "react";
 import { TaskService, type TaskTO } from "../../services/TaskService";
 import { useAuthStore } from "../../store/Auth";
 import { Draggable } from "@hello-pangea/dnd";
+import { ConfirmModal } from "../modalConfirm/ConfirmModal";
 
 interface TaskProps{
     taskData : TaskTO;
@@ -104,6 +105,7 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
     const [isEditingDesc, setIsEditingDesc] = useState(false);
     const [newDesc, setNewDesc] = useState(currentTask.descripcion || "");
     const [isDeleted, setIsDeleted] = useState(false);
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
 
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -188,18 +190,21 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
     };
 
     const handleDeleteTask = async () => {
-        const confirmar = window.confirm(`¿Estás seguro de que deseas eliminar la tarea "${currentTask.titulo}" de forma permanente?`);
-        if (!confirmar) return;
 
         try {
             await TaskService.deleteTarea(taskBoardID, listID, currentTask.id);
-
+            setIsConfirmModalOpen(false);
             setIsOpen(false);
             setIsDeleted(true);
         } catch (error) {
             console.error("Error al borrar la tarea:", error);
             alert("No se pudo eliminar la tarea. Comprueba tu conexión.");
         }
+    };
+
+    const handleDeleteClick = (e: React.MouseEvent) => {
+        e.stopPropagation(); 
+        setIsConfirmModalOpen(true);
     };
 
     useEffect(() =>{
@@ -258,7 +263,7 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
                             <div className={Styles.cardHeader}>
                                 <span className={Styles.nombreLista}>{listaName}</span>
                                 <div className={Styles.headerActions}>
-                                    <button title="Borrar" onClick={handleDeleteTask} className={Styles.btnDanger}>
+                                    <button title="Borrar" onClick={handleDeleteClick} className={Styles.btnDanger}>
                                         <Trash2 size={18} />
                                     </button>
                                     <button title="Menu">
@@ -409,7 +414,6 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
                                             onChange={(e) => setNuevoComentario(e.target.value)}
                                             onKeyDown={(e) => e.key === "Enter" && handleAddComment()}
                                         />
-                                        {/* Añadimos un botón visible (opcional) o confiamos en el "Enter" */}
                                         {nuevoComentario.trim() !== "" && (
                                             <button 
                                                 className={Styles.btnSaveComment} 
@@ -437,6 +441,15 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
                     </div>
                 </div>
             )}
+
+            <ConfirmModal 
+                isOpen={isConfirmModalOpen}
+                title="Eliminar Tarea"
+                message="¿Estás seguro de que deseas eliminar esta tarea de forma permanente? Esta acción no se puede deshacer."
+                itemName={currentTask.titulo}
+                onConfirm={handleDeleteTask}
+                onCancel={() => setIsConfirmModalOpen(false)}
+            />
         </>
     );
 }
