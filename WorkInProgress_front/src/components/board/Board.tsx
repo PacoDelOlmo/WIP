@@ -12,6 +12,7 @@ import type { newElementTO } from '../../services/TaskQueueService';
 
 import { DragDropContext, Droppable, Draggable, type DropResult } from '@hello-pangea/dnd';
 import type { TaskTO } from '../../services/TaskService';
+import { ConfirmModal } from '../modalConfirm/ConfirmModal';
 
 
 export function Board() {
@@ -23,6 +24,7 @@ export function Board() {
 
   const [isAddingList, setIsAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
+
 
   async function obtenerTablero(idTablero: number) {
     try {
@@ -53,6 +55,8 @@ export function Board() {
       obtenerIdWorkspace(idTablero);
     }
   }, [id]);
+
+  
 
   const handleCrearLista = async () => {
     if (newListTitle.trim() === "") return;
@@ -230,76 +234,78 @@ export function Board() {
   };
 
   return (
-    <div className={styles.board}>
-      <Nav_tablero tittle={board?.nombreTablero} id={board?.id} idWS={idWS}/>
+    <>
+      <div className={styles.board}>
+        <Nav_tablero tittle={board?.nombreTablero} id={board?.id} idWS={idWS}/>
 
-      <DragDropContext onDragEnd={handleDragEnd} >
-        <section className={styles.board_lists}>
-          <Droppable droppableId="board-lists" direction="horizontal" type="LIST">
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                style={{ display: 'flex', gap: '1rem', height: '100%', alignItems: 'flex-start' }}
-              >
-                {board?.listaTareas?.map((lista, index) => (
-                  <Draggable key={lista.id} draggableId={`list-${lista.id}`} index={index}>
-                    {(providedDraggable) => (
-                      <div
-                        ref={providedDraggable.innerRef}
-                        {...providedDraggable.draggableProps}
-                        style={{
-                          ...providedDraggable.draggableProps.style,
-                          height: 'fit-content' 
-                        }}
-                      >
-                        <Task_Queue
-                          queueData={lista}
-                          idTablero={board.id}
-                          dragHandleProps={providedDraggable.dragHandleProps}
-                          onTareaCreada={handleAñadirTareaALista}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
+        <DragDropContext onDragEnd={handleDragEnd} >
+          <section className={styles.board_lists}>
+            <Droppable droppableId="board-lists" direction="horizontal" type="LIST">
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  style={{ display: 'flex', gap: '1rem', height: '100%', alignItems: 'flex-start' }}
+                >
+                  {board?.listaTareas?.map((lista, index) => (
+                    <Draggable key={lista.id} draggableId={`list-${lista.id}`} index={index}>
+                      {(providedDraggable) => (
+                        <div
+                          ref={providedDraggable.innerRef}
+                          {...providedDraggable.draggableProps}
+                          style={{
+                            ...providedDraggable.draggableProps.style,
+                            height: 'fit-content' 
+                          }}
+                        >
+                          <Task_Queue
+                            queueData={lista}
+                            idTablero={board.id}
+                            dragHandleProps={providedDraggable.dragHandleProps}
+                            onTareaCreada={handleAñadirTareaALista}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
 
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-          
-
-          <div className={styles.add_list_container}>
-            {isAddingList ? (
-              <div className={styles.add_list_form}>
-                <input
-                  type="text"
-                  placeholder="Introduzca el título de la lista..."
-                  value={newListTitle}
-                  onChange={(e) => setNewListTitle(e.target.value)}
-                  autoFocus
-                  onKeyDown={(e) => e.key === "Enter" && handleCrearLista()}
-                />
-                <div className={styles.form_actions}>
-                  <button className={styles.btn_confirm} onClick={handleCrearLista}>
-                    <Check size={18} /> Añadir lista
-                  </button>
-                  <button className={styles.btn_cancel} onClick={() => setIsAddingList(false)}>
-                    <X size={18} />
-                  </button>
+                  ))}
+                  {provided.placeholder}
                 </div>
-              </div>
-            ) : (
-              <button className={styles.btn_add_list} onClick={() => setIsAddingList(true)}>
-                <Plus size={20} /> Añadir otra lista
-              </button>
-            )}
-          </div>
+              )}
+            </Droppable>
+            
 
-        </section>
-      </DragDropContext>
-      
-    </div>
+            <div className={styles.add_list_container}>
+              {isAddingList ? (
+                <div className={styles.add_list_form}>
+                  <input
+                    type="text"
+                    placeholder="Introduzca el título de la lista..."
+                    value={newListTitle}
+                    onChange={(e) => setNewListTitle(e.target.value)}
+                    autoFocus
+                    onKeyDown={(e) => e.key === "Enter" && handleCrearLista()}
+                  />
+                  <div className={styles.form_actions}>
+                    <button className={styles.btn_confirm} onClick={handleCrearLista}>
+                      <Check size={18} /> Añadir lista
+                    </button>
+                    <button className={styles.btn_cancel} onClick={() => setIsAddingList(false)}>
+                      <X size={18} />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button className={styles.btn_add_list} onClick={() => setIsAddingList(true)}>
+                  <Plus size={20} /> Añadir otra lista
+                </button>
+              )}
+            </div>
+
+          </section>
+        </DragDropContext>
+        
+      </div>
+    </>
   )
 }

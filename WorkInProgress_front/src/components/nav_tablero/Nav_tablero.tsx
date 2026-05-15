@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { useAuthStore } from '../../store/Auth';
 import { TaskBoardService } from '../../services/TaskBoardService';
 import { Link, useNavigate } from 'react-router';
+import { ConfirmModal } from '../modalConfirm/ConfirmModal';
 
 interface NavTableroProps {
     tittle : string | undefined;
@@ -21,6 +22,7 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [newTitle, setNewTitle] = useState("");
     const navigate = useNavigate();
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
 
 
     const toggleOptionsActive = () => {
@@ -35,7 +37,6 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
             return;
         }
 
-        // Si faltan datos vitales, no hacemos la llamada
         if (!id || !idWS || !user) return;
 
         try {
@@ -51,9 +52,6 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
     const handleDeleteTablero = async () => {
         if (!id) return; 
 
-        const confirmar = window.confirm("¿Estás seguro de que deseas eliminar este tablero y todas sus tareas?");
-        if (!confirmar) return;
-
         try {
             const response = await TaskBoardService.deleteTablero(id);
             console.log(response);
@@ -62,6 +60,12 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
             console.error("Error al borrar el tablero:", error);
             alert("No se pudo eliminar el tablero. Inténtalo de nuevo.");
         }
+    };
+
+    const handleDeleteClick = (e: React.MouseEvent) => {
+        e.stopPropagation(); 
+        setIsConfirmModalOpen(true);
+        setOptionsActive(false);
     };
 
     useEffect(() => {
@@ -81,8 +85,8 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
                         className={styles.edit_title_input}
                         value={newTitle}
                         onChange={(e) => setNewTitle(e.target.value)}
-                        onBlur={handleEditTitle} // Guarda al pinchar fuera
-                        onKeyDown={(e) => e.key === "Enter" && handleEditTitle()} // Guarda con Enter
+                        onBlur={handleEditTitle}
+                        onKeyDown={(e) => e.key === "Enter" && handleEditTitle()} 
                         autoFocus
                     />
                     <span className={styles.titulo_tablero}>#{id}</span>
@@ -157,7 +161,7 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
                             
                             <hr className={styles.separator} />
 
-                            <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteTablero}>
+                            <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteClick}>
                                 <XCircle size={18} />
                                 <span>Borrar tablero</span>
                             </button>
@@ -166,6 +170,15 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
                 </div>
             </div>
         </nav>
+
+        <ConfirmModal 
+                isOpen={isConfirmModalOpen}
+                title="Eliminar Tablero"
+                message="¿Estás seguro de que deseas eliminar este tablero de forma permanente? Esta acción no se puede deshacer."
+                itemName={tittle}
+                onConfirm={handleDeleteTablero}
+                onCancel={() => setIsConfirmModalOpen(false)}
+            />
     </>
   )
 }
