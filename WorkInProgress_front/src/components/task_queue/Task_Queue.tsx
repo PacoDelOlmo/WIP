@@ -86,13 +86,13 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
     }
   };
 
-  if (isDeleted){
-    return null;
-  }
-
   useEffect(() => {
     setTareas(queueData.tareas || []);
   }, [queueData.tareas])
+
+  if (isDeleted){
+    return null;
+  }
 
   return (
     <section className={styles.pila_tareas}>

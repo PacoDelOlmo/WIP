@@ -202,10 +202,6 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
         }
     };
 
-    if (isDeleted) {
-        return null;
-    }
-
     useEffect(() =>{
         setCurrentTask(taskData);
         setNewTitle(taskData.titulo);
@@ -214,7 +210,9 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
         setEtiquetas(taskData.etiquetas || []);
     }, [taskData])
 
-
+    if (isDeleted) {
+        return null;
+    }
 
     const cardClass = `${Styles.tarea} ${isOpen ? Styles.tareaSeleccionada : ""}`;
 
