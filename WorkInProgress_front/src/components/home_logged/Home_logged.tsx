@@ -46,7 +46,6 @@ export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
                 const espacioTrabajoCreado = await WorkSpaceService.createEspacioTrabajo(payload, idUsuario);
                 
                 onWorkspaceCreated(espacioTrabajoCreado);
-                //setWorkspaces([...workspaces, espacioTrabajoCreado]);
     
                 setNewWorkSpaceTitle("");
                 setIsAddingWS(false);
@@ -76,14 +75,14 @@ export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
             <article className={styles.boards_section}>
                 <div className={styles.user_boards}>
                     
-                    {workspaces?.flatMap((ws, index) => 
+                    {usuario.workspace?.flatMap((ws, index) => 
                             <div key={`${ws.nombre}-${index}`} className={styles.board_button_link}>
                                 <div className={styles.board_draw}></div>
                                 <Link to={`/user/workspace/${ws.id}`} className={styles.board_name}>
                                     {ws.nombre}
                                 </Link>
                             </div>
-                    )}
+                    ).slice(0,2)}
 
                     <div className={styles.board_button_add}>
                               {isAddingWS ? (
