@@ -126,6 +126,12 @@ public class ConversorService {
             dto.getWorkspace().add(entityADto(we));
         }
 
+        for (UserWorkSpaceEntity colaboracion : entity.getParticipacionesWorkspace()){
+            if (colaboracion.getRol().equalsIgnoreCase("Colaborador")){
+                dto.getWorkspace().add(entityADto(colaboracion.getWorkspace()));
+            }
+        }
+
         return dto;
     }
 
