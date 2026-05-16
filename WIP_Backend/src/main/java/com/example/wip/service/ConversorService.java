@@ -1,6 +1,8 @@
 package com.example.wip.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.wip.entities.CommentEntity;
 import com.example.wip.entities.TagEntity;
@@ -8,6 +10,7 @@ import com.example.wip.entities.TaskEntity;
 import com.example.wip.entities.TaskboardEntity;
 import com.example.wip.entities.TaskqueueEntity;
 import com.example.wip.entities.UserEntity;
+import com.example.wip.entities.UserWorkSpaceEntity;
 import com.example.wip.entities.WorkspaceEntity;
 import com.example.wip.model.CommentDTO;
 import com.example.wip.model.NewUserDTO;
@@ -17,6 +20,7 @@ import com.example.wip.model.TaskQueueDTO;
 import com.example.wip.model.TaskboardDTO;
 import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
+import com.example.wip.model.UserWorkSpaceDTO;
 import com.example.wip.model.WorkspaceDTO;
 
 public class ConversorService {
@@ -46,6 +50,7 @@ public class ConversorService {
         for (TaskboardEntity tb : entidad.getTableros()){
             dto.getTableros().add(entityADto(tb));
         }
+        dto.setIdPropietario(entidad.getPropietario().getIdUsuario());
 
         return dto;
     }
@@ -124,6 +129,20 @@ public class ConversorService {
         return dto;
     }
 
+        public List<UserWorkSpaceDTO> entityADto(List<UserWorkSpaceEntity> miembros) {
+        List<UserWorkSpaceDTO> permisos = new ArrayList<UserWorkSpaceDTO>();
+        
+        for(UserWorkSpaceEntity colaborador : miembros){
+            UserWorkSpaceDTO miembro = new UserWorkSpaceDTO();
+            miembro.setUsuario(entityADto(colaborador.getUsuario()));
+            miembro.setRol(colaborador.getRol());
+            permisos.add(miembro);
+        }
+
+
+        return permisos;
+    }
+
     /*------------------------------
     ----------- DTO a ENTITY ------
     --------------------------------*/
@@ -158,6 +177,8 @@ public class ConversorService {
 
         return tag;
     }
+
+
 
     
 }

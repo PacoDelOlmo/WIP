@@ -37,6 +37,9 @@ public class WorkspaceEntity implements Serializable{
     @OneToMany(mappedBy = "espacioTrabajo")
     private List<TaskboardEntity> tableros = new ArrayList<TaskboardEntity>();
 
+    @OneToMany(mappedBy = "workspace")
+    private List<UserWorkSpaceEntity> miembros = new ArrayList<UserWorkSpaceEntity>();
+
     public long getIdEspacioTrabajo() {
         return idEspacioTrabajo;
     }
@@ -69,5 +72,11 @@ public class WorkspaceEntity implements Serializable{
         this.tableros = tableros;
     }
 
-    
+    public List<UserWorkSpaceEntity> getMiembros() {
+        return miembros;
+    }
+
+    public void setMiembros(List<UserWorkSpaceEntity> miembros) {
+        this.miembros = miembros;
+    }
 }

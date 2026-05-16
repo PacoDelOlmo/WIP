@@ -8,6 +8,7 @@ public class WorkspaceDTO {
     private long id;
     private String nombre;
     private List<TaskboardDTO> tableros;
+    private long idPropietario;
 
     public WorkspaceDTO(){
         this.setTableros(new ArrayList<TaskboardDTO>());
@@ -15,10 +16,11 @@ public class WorkspaceDTO {
 
     
 
-    public WorkspaceDTO(long id, String nombre, List<TaskboardDTO> tableros) {
+    public WorkspaceDTO(long id, String nombre, List<TaskboardDTO> tableros, long idPropietario) {
         this.id = id;
         this.nombre = nombre;
         this.tableros = tableros;
+        this.idPropietario = idPropietario;
     }
 
 
@@ -43,7 +45,13 @@ public class WorkspaceDTO {
     public void setId(long id) {
         this.id = id;
     }
-    
 
-    
+    public long getIdPropietario() {
+        return idPropietario;
+    }
+
+    public void setIdPropietario(long idPropietario) {
+        this.idPropietario = idPropietario;
+    }
+
 }
