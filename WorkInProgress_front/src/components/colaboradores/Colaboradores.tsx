@@ -5,6 +5,8 @@ import { WorkSpaceService, type UserWorkSpaceTO, type WorkSpaceTO } from '../../
 import type { UserCompleteDTO } from '../../pages/home/Home';
 import styles from './Colaboradores.module.css';
 import { ToastNotification } from '../toastNotification/ToastNotification';
+import { AccessDeniedInternal } from '../../pages/accesDeneidInternal/AccessDeniedInternal';
+import { useAuthStore } from '../../store/Auth';
 
 interface ColaboradoresProps {
     usuario: UserCompleteDTO;
@@ -23,6 +25,8 @@ export function Colaboradores({ usuario }: ColaboradoresProps) {
         message: "",
         type: "success"
     });
+    const usuarioLogged = useAuthStore((state)=> state.idUsuario);
+    const [isPropietaio, setIsPropietario] = useState<boolean>(false);
 
     useEffect(() => {
         if (id) {
@@ -34,7 +38,7 @@ export function Colaboradores({ usuario }: ColaboradoresProps) {
         try {
             const wsData = await WorkSpaceService.getEspacioTrabajo(idWs);
             setWorkspace(wsData);
-            
+            setIsPropietario(wsData.idPropietario === usuarioLogged);
             const colabs = await WorkSpaceService.getUsuariosPermisos(idWs);
             setColaboradores(Array.isArray(colabs) ? colabs : [colabs as any]);
         } catch (e) {
@@ -65,6 +69,10 @@ export function Colaboradores({ usuario }: ColaboradoresProps) {
     const showToast = (message: string, type: 'success' | 'error') => {
         setToastConfig({ isVisible: true, message, type });
     };
+
+    if(!isPropietaio){
+        return <AccessDeniedInternal mensaje="Solo los propietarios del espacio pueden acceder a los ajustes y gestión de accesos." />;
+    }
 
     return (
         <section className={styles.container}>
