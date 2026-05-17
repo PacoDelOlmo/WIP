@@ -29,7 +29,12 @@ public class WorkspaceController {
     public List<WorkspaceDTO> getTableros() {
         return service.obtenerTodosWorkspace();
     }
-    
+
+    @GetMapping("/obtener/{id}")
+    public WorkspaceDTO getWorkSpacePorID(@PathVariable long id) {
+        return service.obtenerWorkSpace(id);
+    }
+
     @GetMapping("/usuario/{user}")
     public List<WorkspaceDTO> getWorkSpacesPorUsuario(@PathVariable long user){
         return service.obtenerWorkspaceUsuario(user);

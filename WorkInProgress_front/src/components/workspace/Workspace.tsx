@@ -6,13 +6,14 @@ import type { UserCompleteDTO, WorkspaceType } from "../../pages/home/Home";
 import { useEffect, useState } from "react";
 import { TaskBoardService } from "../../services/TaskBoardService"; // ✨ Importamos el servicio
 import type { newElementTO } from "../../services/TaskQueueService";
+import type { WorkSpaceTO } from "../../services/WorkSpaceService";
 
 interface UserProps {
     usuario: UserCompleteDTO;
 }
 
 export function Workspace({ usuario }: UserProps) {
-    const [workspace, setWorkspace] = useState<WorkspaceType | null>(null);
+    const [workspace, setWorkspace] = useState<WorkSpaceTO | null>(null);
     const { id } = useParams();
 
     const [isAddingBoard, setIsAddingBoard] = useState(false);
@@ -112,42 +113,47 @@ export function Workspace({ usuario }: UserProps) {
                             </p>
                         )}
 
-                            <div className={styles.board_button_add}>
-                              {isAddingBoard ? (
-                                <div className={styles.add_board_form}>
-                                    <input 
-                                        type="text" 
-                                        placeholder="Nombre del tablero..." 
-                                        className={styles.add_board_input}
-                                        value={newBoardTitle}
-                                        onChange={(e) => setNewBoardTitle(e.target.value)}
-                                        autoFocus
-                                        onKeyDown={(e) => e.key === "Enter" && handleCrearTablero()}
-                                    />
-                                    <div className={styles.form_actions}>
-                                        <button 
-                                            className={styles.btn_confirm} 
-                                            onClick={handleCrearTablero}
-                                        >
-                                            <Check size={16} /> Añadir
-                                        </button>
-                                        <button 
-                                            className={styles.btn_cancel} 
-                                            onClick={() => setIsAddingBoard(false)}
-                                        >
-                                            <X size={16} />
-                                        </button>
+                            {usuario.id === workspace.idPropietario ? (
+                                <div className={styles.board_button_add}>
+                                {isAddingBoard ? (
+                                    <div className={styles.add_board_form}>
+                                        <input 
+                                            type="text" 
+                                            placeholder="Nombre del tablero..." 
+                                            className={styles.add_board_input}
+                                            value={newBoardTitle}
+                                            onChange={(e) => setNewBoardTitle(e.target.value)}
+                                            autoFocus
+                                            onKeyDown={(e) => e.key === "Enter" && handleCrearTablero()}
+                                        />
+                                        <div className={styles.form_actions}>
+                                            <button 
+                                                className={styles.btn_confirm} 
+                                                onClick={handleCrearTablero}
+                                            >
+                                                <Check size={16} /> Añadir
+                                            </button>
+                                            <button 
+                                                className={styles.btn_cancel} 
+                                                onClick={() => setIsAddingBoard(false)}
+                                            >
+                                                <X size={16} />
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                ) : (
+                                    <button 
+                                        className={styles.btn_trigger_add} 
+                                        onClick={() => setIsAddingBoard(true)}
+                                    >
+                                        + Nuevo tablero
+                                    </button>
+                                )}
+                            </div>
                             ) : (
-                                <button 
-                                    className={styles.btn_trigger_add} 
-                                    onClick={() => setIsAddingBoard(true)}
-                                >
-                                    + Nuevo tablero
-                                </button>
+                                <></>
                             )}
-                        </div>
+                            
                     </div>
 
                     <footer>

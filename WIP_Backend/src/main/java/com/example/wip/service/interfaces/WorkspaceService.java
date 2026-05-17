@@ -15,4 +15,5 @@ public interface WorkspaceService {
     boolean compartirTableros(long id, String correo);
     boolean quitarAcceso(long id, long idUser);
     List<UserWorkSpaceDTO> mostrarPermisos(long id);
+    WorkspaceDTO obtenerWorkSpace(long id);
 }

@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react'
 import { LoginService } from '../../services/LoginService'
 import type { WorkSpaceTO } from '../../services/WorkSpaceService'
 import NotFoundInternal from '../notFoundInternal/NotFoundInternal'
+import { Colaboradores } from '../../components/colaboradores/Colaboradores'
+import { AjustesWorkspace } from '../../components/ajustesWorkspace/AjustesWorkspace'
 
 export type UserCompleteDTO = {
   id: number,
@@ -54,10 +56,19 @@ export function Home() {
     })
   }
 
+  const handleUpdateWorkspace = (idWs: number, nuevoNombre: string) => {
+    if (!user) return;
+    const workspacesActualizados = user.workspace.map(ws => 
+      ws.id === idWs ? { ...ws, nombre: nuevoNombre } : ws
+    );
+    setUser({ ...user, workspace: workspacesActualizados });
+  }
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         let datosUsuario = await LoginService.getUserById(userLogged);
+        console.log(datosUsuario);
         setUser(datosUsuario);
       } catch (e) {
         console.error("Error cargando usuario:", e)
@@ -82,6 +93,11 @@ export function Home() {
                 <Route path='/home' element={<Home_logged usuario={user} onWorkspaceCreated={handleAddWorkspace} /> }/>
                 <Route path='/tableros' element={<Tableros usuario={user} />}/>
                 <Route path='/perfil' element={<Ajustes />}/>
+                <Route path='/workspace/:id/colaboradores' element={<Colaboradores usuario={user}/>} />
+                <Route 
+                    path='/workspace/:id/ajustes' 
+                    element={<AjustesWorkspace usuario={user} onUpdateWorkspace={handleUpdateWorkspace}/>} 
+                />
                 <Route path= '/*' element={<NotFoundInternal/>} />
               </Routes>
           </main>

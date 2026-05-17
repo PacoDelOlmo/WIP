@@ -106,35 +106,40 @@ public class WorkspaceServiceImplement implements WorkspaceService {
     @Override
     public boolean compartirTableros(long id, String correo) {
         boolean compartido = false;
-        UserEntity user = uRepo.findByCorreo(correo);
-        Optional<WorkspaceEntity> workspace = repo.findById(id);
+        try {
+            UserEntity user = uRepo.findByCorreo(correo);
+            Optional<WorkspaceEntity> workspace = repo.findById(id);
 
-        if ( user.getCorreo().equals(correo)  && workspace.isPresent()){
-            boolean tienePermisos = false;
+            if ( user.getCorreo().equals(correo)  && workspace.isPresent() && user != null){
+                boolean tienePermisos = false;
 
-            for (UserWorkSpaceEntity miembro : workspace.get().getMiembros()){
-                if(miembro.getUsuario().getIdUsuario() == user.getIdUsuario()){
-                    tienePermisos = true;
+                for (UserWorkSpaceEntity miembro : workspace.get().getMiembros()){
+                    if(miembro.getUsuario().getIdUsuario() == user.getIdUsuario()){
+                        tienePermisos = true;
+                    }
+                }
+
+                if(!tienePermisos){
+                    UserWorkSpaceEntity nuevoMiembro = new UserWorkSpaceEntity();
+                    nuevoMiembro.setRol("Colaborador");
+                    nuevoMiembro.setUsuario(user);
+                    nuevoMiembro.setWorkspace(workspace.get());
+
+                    nuevoMiembro = uWsRepo.save(nuevoMiembro);
+
+                    user.getParticipacionesWorkspace().add(nuevoMiembro);
+                    workspace.get().getMiembros().add(nuevoMiembro);
+
+                    uRepo.save(user);
+                    repo.save(workspace.get());
+
+                    compartido = true;
                 }
             }
-
-            if(!tienePermisos){
-                UserWorkSpaceEntity nuevoMiembro = new UserWorkSpaceEntity();
-                nuevoMiembro.setRol("Colaborador");
-                nuevoMiembro.setUsuario(user);
-                nuevoMiembro.setWorkspace(workspace.get());
-
-                nuevoMiembro = uWsRepo.save(nuevoMiembro);
-
-                user.getParticipacionesWorkspace().add(nuevoMiembro);
-                workspace.get().getMiembros().add(nuevoMiembro);
-
-                uRepo.save(user);
-                repo.save(workspace.get());
-
-                compartido = true;
-            }
+        } catch (Exception e) {
+            System.out.println("Error al encontrar el usuario: " +e);
         }
+        
 
         return compartido;
     }
@@ -187,6 +192,18 @@ public class WorkspaceServiceImplement implements WorkspaceService {
 
 
         return permisos;
+    }
+
+    @Override
+    public WorkspaceDTO obtenerWorkSpace(long id) {
+        Optional <WorkspaceEntity> workSpace = repo.findById(id);
+        WorkspaceDTO wsDto = new WorkspaceDTO();
+
+        if (workSpace.isPresent()){
+            wsDto = conversor.entityADto(workSpace.get());
+        }
+
+        return wsDto;
     }
 
 

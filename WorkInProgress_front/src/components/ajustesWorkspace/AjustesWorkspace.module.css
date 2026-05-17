@@ -1,0 +1,156 @@
+.container {
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: var(--color-bg-navBar);
+}
+
+.header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--gris-claro);
+}
+
+.titleGroup {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.iconTitle {
+    color: var(--color-texto-secundario);
+    background: var(--gris-claro);
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.gridContent {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    width: 90%;
+    max-width: 1400px;
+}
+
+.ajusteCard {
+    background: white;
+    border: 1px solid var(--gris-claro);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.cardTitle {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-texto-primario);
+}
+
+.cardDesc {
+    color: var(--color-texto-secundario);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    max-width: 500px;
+}
+
+.inputGroup label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-texto-secundario);
+}
+
+.inputGroup input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--gris-medio);
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.inputGroup input:focus {
+    border-color: var(--color-primario);
+}
+
+.btnSave {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--color-primario);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.btnSave:hover:not(:disabled) { background-color: var(--color-terciario); }
+.btnSave:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cardHeaderWithIcon {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.dangerIcon {
+    color: #d9534f;
+    background: #fbeee6;
+    padding: 0.5rem;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+}
+
+.dangerList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.dangerListItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--gris-claro);
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.userInfo strong { color: var(--color-texto-primario); }
+.userInfo span { font-size: 0.85rem; color: var(--color-texto-secundario); }
+
+.propietarioLabel {
+    font-size: 0.8rem;
+    color: #b8860b;
+    font-weight: 600;
+}
+
+.btnRemove {
+    background: transparent;
+    color: var(--gris-oscuro);
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.btnRemove:hover {
+    background: #fbeee6;
+    color: #d9534f;
+}
