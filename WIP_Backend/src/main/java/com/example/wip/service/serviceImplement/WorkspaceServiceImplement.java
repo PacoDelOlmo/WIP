@@ -9,10 +9,13 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.wip.entities.UserEntity;
+import com.example.wip.entities.UserWorkSpaceEntity;
 import com.example.wip.entities.WorkspaceEntity;
 import com.example.wip.model.WorkspaceDTO;
 import com.example.wip.model.NewElementDTO;
+import com.example.wip.model.UserWorkSpaceDTO;
 import com.example.wip.repository.UserRepository;
+import com.example.wip.repository.UserWorkSpaceRepository;
 import com.example.wip.repository.WorkspaceRepository;
 import com.example.wip.service.ConversorService;
 import com.example.wip.service.interfaces.WorkspaceService;
@@ -26,6 +29,9 @@ public class WorkspaceServiceImplement implements WorkspaceService {
 
     @Autowired
     UserRepository uRepo;
+
+    @Autowired
+    UserWorkSpaceRepository uWsRepo;
 
     ConversorService conversor = new ConversorService();
 
@@ -63,6 +69,19 @@ public class WorkspaceServiceImplement implements WorkspaceService {
         if (usuario.isPresent()){
             nuevoWorkspace.setPropietario(usuario.get());
             nuevoWorkspace.setNombreEspacioTrabajo(workspace.getTittle());
+            nuevoWorkspace = repo.save(nuevoWorkspace);
+
+            UserWorkSpaceEntity nuevoMiembro = new UserWorkSpaceEntity();
+            nuevoMiembro.setRol("Propietario");
+            nuevoMiembro.setUsuario(usuario.get());
+            nuevoMiembro.setWorkspace(nuevoWorkspace);
+
+            nuevoMiembro = uWsRepo.save(nuevoMiembro);
+
+            usuario.get().getParticipacionesWorkspace().add(nuevoMiembro);
+            nuevoWorkspace.getMiembros().add(nuevoMiembro);
+
+            uRepo.save(usuario.get());
             repo.save(nuevoWorkspace);
         }
 
@@ -83,4 +102,109 @@ public class WorkspaceServiceImplement implements WorkspaceService {
 
         return conversor.entityADto(workspace.get());
     }
+
+    @Override
+    public boolean compartirTableros(long id, String correo) {
+        boolean compartido = false;
+        try {
+            UserEntity user = uRepo.findByCorreo(correo);
+            Optional<WorkspaceEntity> workspace = repo.findById(id);
+
+            if ( user.getCorreo().equals(correo)  && workspace.isPresent() && user != null){
+                boolean tienePermisos = false;
+
+                for (UserWorkSpaceEntity miembro : workspace.get().getMiembros()){
+                    if(miembro.getUsuario().getIdUsuario() == user.getIdUsuario()){
+                        tienePermisos = true;
+                    }
+                }
+
+                if(!tienePermisos){
+                    UserWorkSpaceEntity nuevoMiembro = new UserWorkSpaceEntity();
+                    nuevoMiembro.setRol("Colaborador");
+                    nuevoMiembro.setUsuario(user);
+                    nuevoMiembro.setWorkspace(workspace.get());
+
+                    nuevoMiembro = uWsRepo.save(nuevoMiembro);
+
+                    user.getParticipacionesWorkspace().add(nuevoMiembro);
+                    workspace.get().getMiembros().add(nuevoMiembro);
+
+                    uRepo.save(user);
+                    repo.save(workspace.get());
+
+                    compartido = true;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error al encontrar el usuario: " +e);
+        }
+        
+
+        return compartido;
+    }
+
+    @Override
+    public boolean quitarAcceso(long id, long idUser) {
+        boolean revocado = false;
+        Optional<UserEntity> user = uRepo.findById(idUser);
+        Optional<WorkspaceEntity> workspace = repo.findById(id);
+
+        if ( user.isPresent() && workspace.isPresent()){
+            boolean tienePermisos = false;
+
+            for (UserWorkSpaceEntity miembro : workspace.get().getMiembros()){
+                if(miembro.getUsuario().getIdUsuario() == user.get().getIdUsuario() && miembro.getRol().equalsIgnoreCase("Colaborador")){
+                    tienePermisos = true;
+                }
+            }
+
+            if(tienePermisos){
+                List<UserWorkSpaceEntity> colaborador = uWsRepo.findByUsuarioAndWorkspace(user.get(), workspace.get());
+                
+                if (!colaborador.isEmpty()){
+                    if (colaborador.get(0).getUsuario().getIdUsuario() == idUser && colaborador.get(0).getWorkspace().getIdEspacioTrabajo() == id){
+                        uWsRepo.delete(colaborador.get(0));
+                    }
+                }
+
+                user.get().getParticipacionesWorkspace().remove(colaborador.get(0));
+                workspace.get().getMiembros().remove(colaborador.get(0));
+
+                uRepo.save(user.get());
+                repo.save(workspace.get());
+
+                revocado = true;
+            }
+        }
+
+        return revocado;
+    }
+
+    @Override
+    public List<UserWorkSpaceDTO> mostrarPermisos(long id) {
+        Optional<WorkspaceEntity> workspace = repo.findById(id);
+        List<UserWorkSpaceDTO> permisos = new ArrayList<UserWorkSpaceDTO>();
+
+        if (!workspace.get().getMiembros().isEmpty()){
+            permisos = conversor.entityADto(workspace.get().getMiembros());
+        }
+
+
+        return permisos;
+    }
+
+    @Override
+    public WorkspaceDTO obtenerWorkSpace(long id) {
+        Optional <WorkspaceEntity> workSpace = repo.findById(id);
+        WorkspaceDTO wsDto = new WorkspaceDTO();
+
+        if (workSpace.isPresent()){
+            wsDto = conversor.entityADto(workSpace.get());
+        }
+
+        return wsDto;
+    }
+
+
 }

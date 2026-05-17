@@ -19,6 +19,15 @@ CREATE TABLE WORKSPACE(
     CONSTRAINT FK_WORKSPACE_USER FOREIGN KEY (PROPIETARIO) REFERENCES APP_USER(ID_USUARIO)
 );
 
+CREATE TABLE USER_WORKSPACE(
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ID_USUARIO BIGINT NOT NULL,
+    ID_WORKSPACE BIGINT NOT NULL,
+    ROL VARCHAR(50) NOT NULL,
+    CONSTRAINT FK_UW_USER FOREIGN KEY (ID_USUARIO) REFERENCES APP_USER(ID_USUARIO),
+    CONSTRAINT FK_UW_WORKSPACE FOREIGN KEY (ID_WORKSPACE) REFERENCES WORKSPACE(ID_WORKSPACE)
+);
+
 CREATE TABLE TASKBOARD(
     ID_TASKBOARD BIGINT AUTO_INCREMENT PRIMARY KEY,
     NOMBRE VARCHAR(255),
@@ -85,49 +94,56 @@ INSERT INTO APP_USER (NOMBRE, APELLIDO, NOMBRE_USUARIO, CORREO, CONTRASENA)
 VALUES ('Ana', 'Martínez', 'anam', 'ana.martinez@test.com', 'admin_pass');
 
 -- ==========================================
--- 1. CREACIÓN DE WORKSPACE
+-- 1. CREACIÓN DE WORKSPACE 
 -- ==========================================
 INSERT INTO WORKSPACE (NOMBRE, PROPIETARIO) VALUES ('Desarrollo TFG WIP', 1);
 
 -- ==========================================
--- 2. CREACIÓN DE TABLEROS (TASKBOARD)
+-- 2. ASIGNACIÓN DE ROLES (USER_WORKSPACE)
+-- ==========================================
+INSERT INTO USER_WORKSPACE (ID_USUARIO, ID_WORKSPACE, ROL) VALUES 
+(1, 1, 'Propietario'),  
+(2, 1, 'Colaborador');  
+
+-- ==========================================
+-- 3. CREACIÓN DE TABLEROS (TASKBOARD)
 -- ==========================================
 INSERT INTO TASKBOARD (NOMBRE, FECHA_CREACION, ID_WORKSPACE) VALUES 
 ('Frontend - React', NOW(), 1),      
 ('Backend - Spring Boot', NOW(), 1); 
 
 -- ==========================================
--- 3. CREACIÓN DE PILAS DE TAREAS (TASKQUEUE) CON POSICIÓN
+-- 4. CREACIÓN DE PILAS DE TAREAS (TASKQUEUE) CON POSICIÓN
 -- ==========================================
 INSERT INTO TASKQUEUE (NOMBRE, FECHA_CREACION, POSICION, ID_TASKBOARD) VALUES 
-('Por hacer', NOW(), 0, 1),       -- Posición 0 dentro del Tablero 1
-('En Progreso', NOW(), 1, 1),     -- Posición 1 dentro del Tablero 1
-('Terminado', NOW(), 2, 1),       -- Posición 2 dentro del Tablero 1
-('Backlog', NOW(), 0, 2),         -- Posición 0 dentro del Tablero 2
-('En Revisión', NOW(), 1, 2);     -- Posición 1 dentro del Tablero 2
+('Por hacer', NOW(), 0, 1),       
+('En Progreso', NOW(), 1, 1),     
+('Terminado', NOW(), 2, 1),       
+('Backlog', NOW(), 0, 2),         
+('En Revisión', NOW(), 1, 2);     
 
 -- ==========================================
--- 4. CREACIÓN DE TAREAS (TASK) CON POSICIÓN
+-- 5. CREACIÓN DE TAREAS (TASK) CON POSICIÓN
 -- ==========================================
 INSERT INTO TASK (TITULO, AUTOR, DESCRIPCION, COMPLETADA, FECHA_CREACION, POSICION, ID_TASKQUEUE) VALUES 
-('Maquetar Header', 1, 'Usar CSS Modules y el logo nuevo', FALSE, NOW(), 0, 1),  -- Posición 0 en la Lista 1
-('Componente Card', 2, 'Debe recibir props dinámicas', FALSE, NOW(), 0, 2),      -- Posición 0 en la Lista 2
-('Configurar Vite', 3, 'Instalación inicial y limpieza', TRUE, NOW(), 0, 3),     -- Posición 0 en la Lista 3
-('Diseñar Entidad User', 2, 'Definir campos y relaciones JPA', FALSE, NOW(), 0, 4),-- Posición 0 en la Lista 4
-('Endpoint Login', 1, 'Solucionar problema de CORS', FALSE, NOW(), 0, 5);        -- Posición 0 en la Lista 5
+('Maquetar Header', 1, 'Usar CSS Modules y el logo nuevo', FALSE, NOW(), 0, 1),  
+('Componente Card', 2, 'Debe recibir props dinámicas', FALSE, NOW(), 0, 2),      
+('Configurar Vite', 3, 'Instalación inicial y limpieza', TRUE, NOW(), 0, 3),     
+('Diseñar Entidad User', 2, 'Definir campos y relaciones JPA', FALSE, NOW(), 0, 4),
+('Endpoint Login', 1, 'Solucionar problema de CORS', FALSE, NOW(), 0, 5);        
 
 -- ==========================================
--- 5. NUEVAS ETIQUETAS (CATÁLOGO ÚNICO)
+-- 6. NUEVAS ETIQUETAS (CATÁLOGO ÚNICO)
 -- ==========================================
 INSERT INTO TAG (ETIQUETA) VALUES 
-('CSS'),        -- ID: 1
-('Frontend'),   -- ID: 2
-('React'),      -- ID: 3
-('Urgente'),    -- ID: 4
-('Bug');        -- ID: 5
+('CSS'),        
+('Frontend'),   
+('React'),      
+('Urgente'),    
+('Bug');        
 
 -- ==========================================
--- 6. RELACIÓN TAREAS - ETIQUETAS (TASKTAG)
+-- 7. RELACIÓN TAREAS - ETIQUETAS (TASKTAG)
 -- ==========================================
 INSERT INTO TASKTAG (ID_TASK, ID_TAG) VALUES 
 (1, 1), 
@@ -137,7 +153,7 @@ INSERT INTO TASKTAG (ID_TASK, ID_TAG) VALUES
 (5, 5); 
 
 -- ==========================================
--- 7. COMENTARIOS (COMMENT)
+-- 8. COMENTARIOS (COMMENT)
 -- ==========================================
 INSERT INTO COMMENT (AUTOR, CONTENIDO, FECHA, ID_TASK) VALUES 
 (2, 'Recuerda hacerlo responsive para móvil', NOW(), 1), 

@@ -2,9 +2,9 @@ import axiosClient from "../api/axiosClient";
 
 export interface UserTO{
     id: number,
-    nombre: String, 
-    apellido: String,
-    nickname: String,
+    nombre: string, 
+    apellido: string,
+    nickname: string,
     correcto: boolean,
 }
 

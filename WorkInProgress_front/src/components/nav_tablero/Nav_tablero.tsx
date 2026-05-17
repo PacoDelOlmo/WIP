@@ -6,6 +6,7 @@ import { useAuthStore } from '../../store/Auth';
 import { TaskBoardService } from '../../services/TaskBoardService';
 import { Link, useNavigate } from 'react-router';
 import { ConfirmModal } from '../modalConfirm/ConfirmModal';
+import { WorkSpaceService, type WorkSpaceTO } from '../../services/WorkSpaceService';
 
 interface NavTableroProps {
     tittle : string | undefined;
@@ -23,6 +24,7 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
     const [newTitle, setNewTitle] = useState("");
     const navigate = useNavigate();
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
+    const [workSpace, setWorkspace] = useState<WorkSpaceTO>();
 
 
     const toggleOptionsActive = () => {
@@ -67,6 +69,20 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
         setIsConfirmModalOpen(true);
         setOptionsActive(false);
     };
+
+    useEffect(() => {
+        const fetchWs= async () => {
+            try {
+                let workSpace = await WorkSpaceService.getEspacioTrabajo(idWS);
+                console.log(workSpace);
+                setWorkspace(workSpace);
+            } catch (e) {
+                console.error("Error cargando usuario:", e)
+            }
+        };
+        
+        fetchWs();
+    }, [idWS])
 
     useEffect(() => {
         if (tittle) {
@@ -153,18 +169,25 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
                                 <Pencil size={18} />
                                 <span>Renombrar</span>
                             </button>
-
-                            <button className={styles.dropdown_item}>
-                                <Share2 size={18} />
-                                <span>Compartir</span>
-                            </button>
                             
-                            <hr className={styles.separator} />
+                            {user === workSpace?.idPropietario ? 
+                            <>
+                                <button className={styles.dropdown_item}>
+                                    <Share2 size={18} />
+                                    <span>Compartir</span>
+                                </button>
+                                
+                                <hr className={styles.separator} />
 
-                            <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteClick}>
-                                <XCircle size={18} />
-                                <span>Borrar tablero</span>
-                            </button>
+                                <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteClick}>
+                                    <XCircle size={18} />
+                                    <span>Borrar tablero</span>
+                                </button>
+                            </>
+                            : 
+                            <></>
+                            }
+                            
                         </div>
                     )}
                 </div>

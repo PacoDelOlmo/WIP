@@ -3,6 +3,7 @@ import styles from './Aside.module.css'
 import {ChevronDown, ChevronUp, Columns4, FolderKanban, House, Settings2, Users2} from 'lucide-react'
 import type { UserCompleteDTO } from '../../pages/home/Home';
 import { Link } from 'react-router';
+import { useAuthStore } from '../../store/Auth';
 
 interface HeaderProps {
     usuario: UserCompleteDTO,
@@ -11,6 +12,7 @@ interface HeaderProps {
 export function Aside({usuario} : HeaderProps) {
 
     const [espaciosDesplegado, setEspaciosDesplegado] = useState<Record<number, boolean>>({});
+    const idUser = useAuthStore((state) => state.idUsuario);
     
     const toggleEspacios = (id: number) => {
         setEspaciosDesplegado(prev => ({
@@ -55,12 +57,18 @@ export function Aside({usuario} : HeaderProps) {
                                                 <Columns4 /> <span>Tableros</span>
                                             </Link>
                                         </li>
-                                        <li className={styles.asideElement}>
-                                            <Link to=''><Users2 /> <span>Componentes</span></Link>
-                                        </li>
-                                        <li className={styles.asideElement}>
-                                            <Link to='/user/perfil'><Settings2 /> <span>Ajustes</span></Link>
-                                        </li>
+                                        {idUser === ws.idPropietario ?
+                                            <>
+                                            <li className={styles.asideElement}>
+                                                <Link to={`/user/workspace/${ws.id}/colaboradores`}><Users2 /> <span>Componentes</span></Link>
+                                            </li>
+                                            <li className={styles.asideElement}>
+                                                <Link to={`/user/workspace/${ws.id}/ajustes`}><Settings2 /> <span>Ajustes</span></Link>
+                                            </li>
+                                            </>
+                                         : 
+                                            ""
+                                        }
                                     </ul>
                                 </div>
                             </div>

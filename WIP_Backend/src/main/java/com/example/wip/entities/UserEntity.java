@@ -50,6 +50,9 @@ public class UserEntity implements Serializable{
     @OneToMany(mappedBy = "autor")
     private List<CommentEntity> comentarios = new ArrayList<CommentEntity>();
 
+    @OneToMany(mappedBy = "usuario")
+    private List<UserWorkSpaceEntity> participacionesWorkspace = new ArrayList<UserWorkSpaceEntity>();
+
     public long getIdUsuario() {
         return idUsuario;
     }
@@ -122,5 +125,11 @@ public class UserEntity implements Serializable{
         this.comentarios = comentarios;
     }
 
-    
+    public List<UserWorkSpaceEntity> getParticipacionesWorkspace() {
+        return participacionesWorkspace;
+    }
+
+    public void setParticipacionesWorkspace(List<UserWorkSpaceEntity> participacionesWorkspace) {
+        this.participacionesWorkspace = participacionesWorkspace;
+    }
 }
