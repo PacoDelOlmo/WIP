@@ -14,6 +14,7 @@ import type { WorkSpaceTO } from '../../services/WorkSpaceService'
 import NotFoundInternal from '../notFoundInternal/NotFoundInternal'
 import { Colaboradores } from '../../components/colaboradores/Colaboradores'
 import { AjustesWorkspace } from '../../components/ajustesWorkspace/AjustesWorkspace'
+import { ResultadosBusqueda } from '../resultadosBusqueda/ResultadosBusqueda'
 
 export type UserCompleteDTO = {
   id: number,
@@ -98,6 +99,7 @@ export function Home() {
                     path='/workspace/:id/ajustes' 
                     element={<AjustesWorkspace usuario={user} onUpdateWorkspace={handleUpdateWorkspace}/>} 
                 />
+                <Route path='/resultados' element={<ResultadosBusqueda />} />
                 <Route path= '/*' element={<NotFoundInternal/>} />
               </Routes>
           </main>

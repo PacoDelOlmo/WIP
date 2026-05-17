@@ -14,48 +14,44 @@ export function Taskboard() {
   const { id } = useParams();
   const idUser = useAuthStore((state) => state.idUsuario);
   const [idWS, setIdWs] = useState<number>(-1);
-  const [user, setUser] = useState<UserCompleteDTO>();
-  const [hasAccess, setHasAccess] = useState<boolean>(false);
-
-    async function obtenerIdWorkspace(idTablero: number) {
-      try {
-        let response = await TaskBoardService.getIdWS(idTablero);
-        setIdWs(response);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    async function obtenerUserCompleto(idUser: number){
-      try {
-        let datosUsuario = await LoginService.getUserById(idUser);
-        setUser(datosUsuario);
-      } catch (e) {
-        console.error("Error cargando usuario:", e)
-      }
-    }
+  const [user, setUser] = useState<UserCompleteDTO | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (id) {
-      let idTablero = Number(id);
-      obtenerIdWorkspace(idTablero);
-      obtenerUserCompleto(idUser);
-    }
-  }, [id]);
+    async function cargarDatosGenerales() {
+      if (!id) return;
+      
+      setIsLoading(true);
+      try {
+        let idTablero = Number(id);
+        
+        const [wsIdResponse, datosUsuario] = await Promise.all([
+            TaskBoardService.getIdWS(idTablero),
+            LoginService.getUserById(idUser)
+        ]);
 
-  if (user?.workspace){
-    for (let i: number = 0; i < user?.workspace.length; i++ ){
-      for (let j: number = 0; i < user?.workspace[i].tableros.length; j++ ){
-          if (user?.workspace[i].tableros[j].id === Number(id)){
-            setHasAccess(true);
-          }
+        setIdWs(wsIdResponse);
+        setUser(datosUsuario);
+      } catch (e) {
+        console.error("Error cargando datos del tablero:", e);
+      } finally {
+        setIsLoading(false);
       }
     }
+
+    cargarDatosGenerales();
+  }, [id, idUser]);
+
+  if (isLoading) {
+      return <div className={styles.contenedor_principal}>Cargando tablero...</div>;
   }
 
+  const hasAccess = user?.workspace?.some(ws => 
+    ws.tableros.some(tablero => tablero.id === Number(id))
+  ) ?? false;
 
   if (!hasAccess){
-    return <AccessDeneid/>
+    return <AccessDeneid />
   }
 
   return (

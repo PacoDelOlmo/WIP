@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.wip.model.ConfirmationObject;
+import com.example.wip.model.ElementDTO;
 import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.TaskboardDTO;
 import com.example.wip.model.UserCompleteDTO;
@@ -97,6 +98,11 @@ public class UserController {
     @PutMapping("/{id}/workspace/{idw}/tablero/{idt}/editar")
     public TaskboardDTO editarTablero(@PathVariable long id, @PathVariable long idw, @PathVariable long idt, @RequestBody NewElementDTO nuevoNombre) {
         return tbService.editarTablero(id, idw, idt, nuevoNombre);
+    }
+    
+    @PostMapping("/{idUser}/buscar")
+    public List<ElementDTO> buscarElementos(@PathVariable long idUser, @RequestBody NewElementDTO busqueda) {
+        return userService.buscarElementos(idUser, busqueda);
     }
     
 }

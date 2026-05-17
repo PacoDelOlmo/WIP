@@ -10,12 +10,18 @@ import org.springframework.stereotype.Service;
 
 import com.example.wip.entities.UserEntity;
 import com.example.wip.model.ConfirmationObject;
+import com.example.wip.model.ElementDTO;
 import com.example.wip.model.LoginDTO;
+import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.NewUserDTO;
+import com.example.wip.model.TaskDTO;
+import com.example.wip.model.TaskQueueDTO;
+import com.example.wip.model.TaskboardDTO;
 import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.model.UserMailDTO;
 import com.example.wip.model.UserPasswordDTO;
+import com.example.wip.model.WorkspaceDTO;
 import com.example.wip.repository.UserRepository;
 import com.example.wip.service.ConversorService;
 import com.example.wip.service.interfaces.UserService;
@@ -166,6 +172,45 @@ public class UserServiceImplement implements UserService {
         }
 
         return confirmacion;
+    }
+
+    @Override
+    public List<ElementDTO> buscarElementos(long idUser, NewElementDTO busqueda) {
+        List<ElementDTO> elementosCoincidientes = new ArrayList<ElementDTO>();
+        Optional<UserEntity> usuarioDB = repo.findById(idUser);
+        UserCompleteDTO usuarioDto = new UserCompleteDTO();
+        String contenidoBusqueda = busqueda.getTittle().toLowerCase();
+
+        if (usuarioDB.isPresent()){
+            usuarioDto = conversor.userCompleteEntityADto(usuarioDB.get());
+
+            for (WorkspaceDTO ws : usuarioDto.getWorkspace()){
+
+                if (ws.getNombre().toLowerCase().contains(contenidoBusqueda)){
+                    elementosCoincidientes.add(new ElementDTO(ws.getId(), ws.getNombre(), "WorkSpace"));
+                }
+
+                for (TaskboardDTO tablero : ws.getTableros()){
+                    if (tablero.getNombreTablero().toLowerCase().contains(contenidoBusqueda)){
+                        elementosCoincidientes.add(new ElementDTO(tablero.getId(), tablero.getNombreTablero(), "TaskBoard"));
+                    }
+
+                    for (TaskQueueDTO lista : tablero.getListaTareas()){
+                        if (lista.getTitulo().toLowerCase().contains(contenidoBusqueda)){
+                            elementosCoincidientes.add(new ElementDTO(tablero.getId(), lista.getTitulo(), "TaskQueue"));
+                        }
+
+                        for(TaskDTO tarea : lista.getTareas()){
+                            if (tarea.getTitulo().toLowerCase().contains(contenidoBusqueda)){
+                                elementosCoincidientes.add(new ElementDTO(tablero.getId(), tarea.getTitulo(), "Task"));
+                            }
+                        }
+                    }
+                }
+            }
+        } 
+
+        return elementosCoincidientes;
     }
 
 }

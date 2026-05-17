@@ -187,7 +187,6 @@
         
         font-family: inherit;
 
-        /* ELIMINAR EL RECUADRO AL HACER CLIC/ESCRIBIR */
         &:focus {
             outline: none;
         }
@@ -210,9 +209,9 @@
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 
-    a{ 
+    button{ 
         font-weight: 600;
-        padding: 2rem;
+        padding-right: 1rem;
         text-decoration: none;
         color: var(--color-boton-primary);
         transition: color 0.2s ease-in-out;
@@ -225,7 +224,7 @@
     transform: translate(0.2rem, 0.3rem);
     border: 0.1rem solid var(--color-boton-primary-hover);
 
-    a{
+    button{
         color: var(--color-boton-primary-hover);
     }
 }

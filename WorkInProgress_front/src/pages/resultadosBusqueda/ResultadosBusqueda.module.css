@@ -1,0 +1,128 @@
+.container {
+    padding: 2rem 3rem;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background-color: var(--color-bg-navBar);
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    border-bottom: 2px solid var(--gris-claro);
+    padding-bottom: 1.5rem;
+}
+
+.headerIcon {
+    color: var(--color-primario);
+    background: white;
+    padding: 0.8rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.title {
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+    color: var(--color-texto-primario);
+}
+
+.subtitle {
+    margin: 0;
+    color: var(--color-texto-secundario);
+    font-size: 1.1rem;
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--gris-claro);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(57, 110, 129, 0.1);
+    border-color: var(--color-primario);
+}
+
+.iconWrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.cardInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.cardInfo h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--color-texto-primario);
+    font-weight: 600;
+}
+
+.cardInfo span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- ESTADOS DE CARGA Y VACÍO --- */
+.loadingState, .emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 0;
+    color: var(--color-texto-secundario);
+    text-align: center;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    color: var(--color-primario);
+    margin-bottom: 1rem;
+}
+
+.emptyIcon {
+    color: var(--gris-medio);
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1.5rem;
+    }
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

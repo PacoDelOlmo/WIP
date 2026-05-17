@@ -12,6 +12,7 @@ import { useAuthStore } from '../../store/Auth'
 import { Link } from 'react-router'
 import { WorkSpaceService, type WorkSpaceTO } from '../../services/WorkSpaceService'
 import type { newElementTO } from '../../services/TaskQueueService'
+import { useNavigate } from 'react-router'
 
 interface HeaderProps {
     usuario: UserCompleteDTO,
@@ -26,6 +27,8 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
     const [isAddingWS, setIsAddingWS] = useState(false);
     const [newWorkSpaceTitle, setNewWorkSpaceTitle] = useState("");
     const [workspaces, setWorkspaces] = useState<WorkSpaceTO[]>(usuario.workspace);
+    const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState("");
 
     const toggleWorkspaceMenu = () => {
         setWorkspaceMenuOpen(!workspaceMenuOpen);
@@ -38,25 +41,32 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
     }
 
     const handleCrearWorkSpace = async () => {
-                if (newWorkSpaceTitle.trim() === "") return;
-        
-                const payload : newElementTO = { tittle: newWorkSpaceTitle };
-        
-                const idUsuario = usuario.id;
-        
-                try {
-                    // Llamamos al backend
-                    const espacioTrabajoCreado = await WorkSpaceService.createEspacioTrabajo(payload, idUsuario);
-                    
-                    onWorkspaceCreated(espacioTrabajoCreado);
-                    setWorkspaces([...workspaces, espacioTrabajoCreado]);
-        
-                    setNewWorkSpaceTitle("");
-                    setIsAddingWS(false);
-                } catch (error) {
-                    console.error("Error al crear el espacio de trabajo:", error);
-                }
-            };
+        if (newWorkSpaceTitle.trim() === "") return;
+
+        const payload : newElementTO = { tittle: newWorkSpaceTitle };
+
+        const idUsuario = usuario.id;
+
+        try {
+            // Llamamos al backend
+            const espacioTrabajoCreado = await WorkSpaceService.createEspacioTrabajo(payload, idUsuario);
+            
+            onWorkspaceCreated(espacioTrabajoCreado);
+            setWorkspaces([...workspaces, espacioTrabajoCreado]);
+
+            setNewWorkSpaceTitle("");
+            setIsAddingWS(false);
+        } catch (error) {
+            console.error("Error al crear el espacio de trabajo:", error);
+        }
+    };
+
+    const handleSearch = () => {
+        if (searchTerm.trim() !== "") {
+            navigate(`/user/resultados?q=${encodeURIComponent(searchTerm)}`);
+            setSearchTerm("");
+        }
+    };
 
     return (
     <>
@@ -149,9 +159,19 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
             <div className={styles.search_group}>
                 <div className={styles.search_bar}>
                     <Search />
-                    <input type="text" placeholder="Buscar..."/>
+                    <input 
+                        type="text" 
+                        placeholder="Buscar tableros, tareas..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    />
                 </div>
-                <div className={styles.primary_button}><Link to="">Buscar</Link></div>
+                <div className={styles.primary_button}>
+                    <button onClick={handleSearch}>
+                        Buscar
+                    </button>
+                </div>
             </div>
 
             <div className={styles.btn_group}>
