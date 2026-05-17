@@ -202,29 +202,30 @@
 
 .primary_button{
     border: 0.1rem solid var(--color-boton-primary);
-    background-color: var(--color-boton-primary);
+    background-color: var(--color-boton-primary-hover);
     height: 2rem;
     border-radius: 0.2rem;
     box-shadow: 0.2rem 0.3rem 0.2rem var(--gris-oscuro);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 
-    a{ 
+    button{ 
         font-weight: 600;
-        padding: 2rem;
+        padding-right: 1rem;
         text-decoration: none;
-        color: var(--color-boton-primary-hover);
+        color: var(--color-boton-primary);
         transition: color 0.2s ease-in-out;
     }
 }
 
 .primary_button:hover{
-    background-color: var(--color-boton-primary-hover);
+    background-color: var(--color-boton-primary);
     box-shadow: 0rem 0rem 0rem transparent;
     transform: translate(0.2rem, 0.3rem);
+    border: 0.1rem solid var(--color-boton-primary-hover);
 
-    a{
-        color: var(--color-boton-primary);
+    button{
+        color: var(--color-boton-primary-hover);
     }
 }
 

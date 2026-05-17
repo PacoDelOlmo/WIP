@@ -2,17 +2,20 @@ import { useEffect, useState } from 'react'
 import styles from './Header_logged_tablero.module.css'
 import LogoWip from './../../assets/img/WIP_SinLetra.png'
 import { Grip, BellRing, LifeBuoy, UserCircle2, Search, Settings, LogOut, LayoutDashboard, Briefcase } from 'lucide-react'
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { WorkSpaceService, type WorkSpaceTO } from '../../services/WorkSpaceService';
 import { useAuthStore } from '../../store/Auth';
 
 
 export function Header_logged_tablero() {
 
+    const logout = useAuthStore((state) => state.logout)
     const [menuOpen, setMenuOpen] = useState(false);
     const [workspaceMenuOpen, setWorkspaceMenuOpen] = useState(false);
     const [workspaces, setWorkspaces] = useState<WorkSpaceTO[]>([]);
     const user = useAuthStore((state) => state.idUsuario);
+    const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState("");
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen)
@@ -36,6 +39,13 @@ export function Header_logged_tablero() {
                 console.error(e);
             }
     }
+
+    const handleSearch = () => {
+        if (searchTerm.trim() !== "") {
+            navigate(`/user/resultados?q=${encodeURIComponent(searchTerm)}`);
+            setSearchTerm("");
+        }
+    };
 
     return (
     <>
@@ -81,9 +91,19 @@ export function Header_logged_tablero() {
             <div className={styles.search_group}>
                 <div className={styles.search_bar}>
                     <Search />
-                    <input type="text" placeholder="Buscar..."/>
+                    <input 
+                        type="text" 
+                        placeholder="Buscar tableros, tareas..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    />
                 </div>
-                <div className={styles.primary_button}><a href="">Buscar</a></div>
+                <div className={styles.primary_button}>
+                    <button onClick={handleSearch}>
+                        Buscar
+                    </button>
+                </div>
             </div>
             <div className={styles.btn_group}>
                 <div className={styles.notification_button}><a href="#"><BellRing/></a></div>
@@ -110,9 +130,9 @@ export function Header_logged_tablero() {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/logout" className={styles.logout_link}>
+                                    <button onClick={logout} className={styles.logout_link}>
                                         <LogOut size={18} /> Cerrar Sesión
-                                    </a>
+                                    </button>
                                 </li>
                             </ul>
                         </div> 
@@ -123,31 +143,30 @@ export function Header_logged_tablero() {
             </div>
 
             <nav className={styles.mobile_bottom_nav}>
-                <a href="#tableros" className={styles.nav_item}>
+                <Link to="#tableros" className={styles.nav_item}>
                     <LayoutDashboard size={24} />
                     <span>Tableros</span>
-                </a>
+                </Link>
                 
-                <a href="#ayuda" className={styles.nav_item}>
+                <Link to="#ayuda" className={styles.nav_item}>
                     <LifeBuoy size={24} />
                     <span>Ayuda</span>
-                </a>
+                </Link>
 
-                {/* El buscador aquí suele abrir un modal o pantalla nueva */}
-                <a href="#buscar" className={`${styles.nav_item} ${styles.nav_search}`}>
+                <Link to="#buscar" className={`${styles.nav_item} ${styles.nav_search}`}>
                     <Search size={28} />
                     <span>Buscar</span>
-                </a>
+                </Link>
 
-                <a href="#notificaciones" className={styles.nav_item}>
+                <Link to="#notificaciones" className={styles.nav_item}>
                     <BellRing size={24} />
                     <span>Notificaciones</span>
-                </a>
+                </Link>
 
-                <a href="#perfil" className={styles.nav_item}>
+                <Link to="#perfil" className={styles.nav_item}>
                     <UserCircle2 size={24} />
                     <span>Perfil</span>
-                </a>
+                </Link>
             </nav>
         </header>
     </>

@@ -100,7 +100,7 @@ public class UserController {
         return tbService.editarTablero(id, idw, idt, nuevoNombre);
     }
     
-    @GetMapping("/{idUser}/buscar/{busqueda}")
+    @PostMapping("/{idUser}/buscar")
     public List<ElementDTO> buscarElementos(@PathVariable long idUser, @RequestBody NewElementDTO busqueda) {
         return userService.buscarElementos(idUser, busqueda);
     }
