@@ -176,7 +176,7 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
 
             <div className={styles.btn_group}>
                 <div className={styles.notification_button}><Link to="#"><BellRing/></Link></div>
-                <div className={styles.help_button}><Link to="#"><LifeBuoy/></Link></div>
+                <div className={styles.help_button}><Link to={"/user/ayuda"}><LifeBuoy/></Link></div>
                 
                 <div className={styles.profile_container}>
                     <button 
@@ -211,12 +211,12 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
             </div>
 
             <nav className={styles.mobile_bottom_nav}>
-                <Link to="/user/tableros" className={styles.nav_item}>
+                <Link to={"/user/tableros"} className={styles.nav_item}>
                     <LayoutDashboard size={24} />
                     <span>Tableros</span>
                 </Link>
                 
-                <Link to="/ayuda" className={styles.nav_item}>
+                <Link to={"/user/ayuda"} className={styles.nav_item}>
                     <LifeBuoy size={24} />
                     <span>Ayuda</span>
                 </Link>
@@ -226,12 +226,12 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
                     <span>Buscar</span>
                 </Link>
 
-                <Link to="/notificaciones" className={styles.nav_item}>
+                <Link to="#notificaciones" className={styles.nav_item}>
                     <BellRing size={24} />
                     <span>Notificaciones</span>
                 </Link>
 
-                <Link to="/user/perfil" className={styles.nav_item}>
+                <Link to={'/user/perfil'} className={styles.nav_item}>
                     <UserCircle2 size={24} />
                     <span>Perfil</span>
                 </Link>

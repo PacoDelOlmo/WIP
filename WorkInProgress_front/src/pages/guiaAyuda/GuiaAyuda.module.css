@@ -1,0 +1,227 @@
+.pageWrapper {
+    width: 100%;
+    min-height: 100%;
+    background-color: #fafafa;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 5rem;
+}
+
+/* --- BLOBS DE FONDO --- */
+.blob1, .blob2 {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.blob1 {
+    top: -100px;
+    right: -100px;
+    background: radial-gradient(circle, var(--verde-clarito) 0%, transparent 70%);
+    opacity: 0.6;
+}
+
+.blob2 {
+    bottom: -100px;
+    left: -100px;
+    background: radial-gradient(circle, #fbd5b9 0%, transparent 70%);
+    opacity: 0.5;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* --- HERO --- */
+.hero {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--verde-clarito);
+    color: var(--color-primario);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--color-primario);
+}
+
+.hero h1 {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    color: var(--color-texto-primario);
+    margin: 0 0 1rem 0;
+}
+
+.hero h1 span {
+    color: #F27A24;
+}
+
+.hero p {
+    color: var(--color-texto-secundario);
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* --- TOUR GRID --- */
+.tourGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 5rem;
+}
+
+.tourCard {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--gris-claro);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tourCard:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-primario);
+    box-shadow: 0 15px 30px rgba(57, 110, 129, 0.1);
+}
+
+.iconCircle {
+    background: var(--verde-clarito);
+    color: var(--color-primario);
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.tourCard h3 {
+    margin: 0 0 0.8rem 0;
+    color: var(--color-texto-primario);
+}
+
+.tourCard p {
+    font-size: 0.95rem;
+    color: var(--color-texto-secundario);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.tip {
+    font-size: 0.8rem;
+    background: #f8f8f8;
+    padding: 0.5rem;
+    border-radius: 6px;
+    color: var(--color-primario);
+    font-weight: 600;
+}
+
+/* --- DECÁLOGO --- */
+.decalogo {
+    margin-bottom: 5rem;
+}
+
+.decalogo h2 {
+    font-size: 2rem;
+    color: var(--color-texto-primario);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.stepsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.stepItem {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+    border-left: 5px solid #F27A24;
+}
+
+.stepNumber {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #F27A24;
+    opacity: 0.3;
+}
+
+.stepItem h4 {
+    margin: 0 0 0.3rem 0;
+    color: var(--color-texto-primario);
+}
+
+.stepItem p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-texto-secundario);
+}
+
+/* --- TABLA DE ROLES --- */
+.rolesSection {
+    background: var(--color-primario);
+    padding: 3rem;
+    border-radius: 20px;
+    color: white;
+}
+
+.rolesTableWrapper h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.rolesTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rolesTable th {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    color: #FBD5B9;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.rolesTable td {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.95rem;
+}
+
+.check {
+    color: #F27A24;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .container { padding: 2rem 1rem; }
+    .stepItem { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .rolesSection { padding: 1.5rem; overflow-x: auto; }
+}

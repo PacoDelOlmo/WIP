@@ -15,6 +15,7 @@ import NotFoundInternal from '../notFoundInternal/NotFoundInternal'
 import { Colaboradores } from '../../components/colaboradores/Colaboradores'
 import { AjustesWorkspace } from '../../components/ajustesWorkspace/AjustesWorkspace'
 import { ResultadosBusqueda } from '../resultadosBusqueda/ResultadosBusqueda'
+import { GuiaAyuda } from '../guiaAyuda/GuiaAyuda'
 
 export type UserCompleteDTO = {
   id: number,
@@ -94,6 +95,7 @@ export function Home() {
                 <Route path='/home' element={<Home_logged usuario={user} onWorkspaceCreated={handleAddWorkspace} /> }/>
                 <Route path='/tableros' element={<Tableros usuario={user} />}/>
                 <Route path='/perfil' element={<Ajustes />}/>
+                <Route path='/ayuda' element={<GuiaAyuda />}/>
                 <Route path='/workspace/:id/colaboradores' element={<Colaboradores usuario={user}/>} />
                 <Route 
                     path='/workspace/:id/ajustes' 

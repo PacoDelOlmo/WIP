@@ -107,7 +107,7 @@ export function Header_logged_tablero() {
             </div>
             <div className={styles.btn_group}>
                 <div className={styles.notification_button}><a href="#"><BellRing/></a></div>
-                <div className={styles.help_button}><a href="#"><LifeBuoy/></a></div>
+                <div className={styles.help_button}><Link to={"/user/ayuda"}><LifeBuoy/></Link></div>
                 <div className={styles.profile_container}>
                     <button 
                         className={styles.profile_button}
@@ -143,12 +143,12 @@ export function Header_logged_tablero() {
             </div>
 
             <nav className={styles.mobile_bottom_nav}>
-                <Link to="#tableros" className={styles.nav_item}>
+                <Link to={"/user/tableros"} className={styles.nav_item}>
                     <LayoutDashboard size={24} />
                     <span>Tableros</span>
                 </Link>
                 
-                <Link to="#ayuda" className={styles.nav_item}>
+                <Link to={"/user/ayuda"} className={styles.nav_item}>
                     <LifeBuoy size={24} />
                     <span>Ayuda</span>
                 </Link>
@@ -163,7 +163,7 @@ export function Header_logged_tablero() {
                     <span>Notificaciones</span>
                 </Link>
 
-                <Link to="#perfil" className={styles.nav_item}>
+                <Link to={'/user/perfil'} className={styles.nav_item}>
                     <UserCircle2 size={24} />
                     <span>Perfil</span>
                 </Link>
