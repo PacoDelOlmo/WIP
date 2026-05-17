@@ -1,0 +1,95 @@
+.pageWrapper {
+    background-color: #fafafa;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Blobs de fondo sutiles para no distraer la lectura */
+.blobShape1 {
+    position: absolute;
+    top: -5%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, var(--verde-clarito) 0%, transparent 70%);
+    opacity: 0.5;
+    animation: float 10s infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(20px, -20px); }
+}
+
+.mainContent {
+    padding: 6vw 5vw;
+    max-width: 800px; /* Más estrecho para lectura óptima de textos largos */
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.heroSection {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--gris-claro);
+}
+
+.heroIcon {
+    color: var(--color-primario);
+    margin-bottom: 1rem;
+}
+
+.heroSection h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--color-texto-primario);
+    margin-bottom: 1rem;
+    font-weight: 800;
+}
+
+.lastUpdated {
+    font-size: 0.9rem;
+    color: var(--naranja-acento);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.legalText {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 3rem;
+    border-radius: 16px;
+    border: 1px solid var(--gris-claro);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+
+.legalText h2 {
+    color: var(--color-primario);
+    font-size: 1.5rem;
+    margin: 2.5rem 0 1rem 0;
+}
+
+.legalText h2:first-child {
+    margin-top: 0;
+}
+
+.legalText p, .legalText li {
+    color: var(--color-texto-secundario);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.legalText ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .legalText { padding: 2rem 1.5rem; }
+}

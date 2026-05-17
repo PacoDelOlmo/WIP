@@ -1,0 +1,456 @@
+.pageWrapper {
+    background-color: #fafafa;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+}
+
+/* =========================================
+   BLOBS DE FONDO
+========================================= */
+.blobShape1 {
+    position: absolute;
+    top: -5%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, #fbd5b9 0%, transparent 70%);
+    opacity: 0.5;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.blobShape2 {
+    position: absolute;
+    top: 40%;
+    right: -15%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, var(--verde-clarito) 0%, transparent 70%);
+    opacity: 0.6;
+    animation: float 10s ease-in-out infinite reverse;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, -30px); }
+}
+
+/* =========================================
+   ESTRUCTURA PRINCIPAL
+========================================= */
+.mainContent {
+    padding: 6vw 5vw;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Hero Section */
+.heroSection {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.heroBadge {
+    display: inline-block;
+    background: rgba(57, 110, 129, 0.1);
+    color: var(--color-primario);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(57, 110, 129, 0.2);
+}
+
+.heroSection h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-texto-primario);
+    margin: 0 0 1rem 0;
+    font-weight: 800;
+}
+
+.leadText {
+    font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+    color: var(--color-texto-secundario);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* =========================================
+   SECCIONES COMUNES
+========================================= */
+.guideSection {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--gris-claro);
+    border-radius: 24px;
+    padding: 3rem;
+    margin-bottom: 4rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--gris-claro);
+    padding-bottom: 1rem;
+}
+
+.sectionIcon {
+    color: #F27A24; /* Naranja acento */
+}
+
+.sectionHeader h2 {
+    font-size: 1.8rem;
+    color: var(--color-primario);
+    margin: 0;
+}
+
+.sectionDescription {
+    color: var(--color-texto-secundario);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+/* =========================================
+   MUSEO DE COLORES
+========================================= */
+.colorGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.colorCard {
+    background: white;
+    border: 1px solid var(--gris-claro);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    transition: transform 0.3s;
+}
+
+.colorCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(57, 110, 129, 0.1);
+}
+
+.colorSwatch {
+    height: 120px;
+    width: 100%;
+}
+
+.colorInfo {
+    padding: 1.5rem;
+}
+
+.colorInfo h4 {
+    margin: 0 0 0.3rem 0;
+    color: var(--color-texto-primario);
+}
+
+.colorInfo span {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: var(--gris-oscuro);
+    background: var(--gris-claro);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+.colorInfo p {
+    margin: 1rem 0 0 0;
+    font-size: 0.85rem;
+    color: var(--color-texto-secundario);
+    line-height: 1.4;
+}
+
+/* =========================================
+   MUSEO TIPOGRÁFICO
+========================================= */
+.typoShowcase {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.typoItem {
+    padding: 1.5rem;
+    background: white;
+    border-left: 4px solid var(--color-primario);
+    border-radius: 0 8px 8px 0;
+}
+
+.typoLabel {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--gris-oscuro);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.fontSampleH1 { font-size: 2.5rem; font-weight: 800; color: var(--color-texto-primario); margin: 0; }
+.fontSampleH2 { font-size: 1.8rem; font-weight: 600; color: var(--color-primario); margin: 0; }
+.fontSampleP { font-size: 1rem; font-weight: 400; color: var(--color-texto-secundario); margin: 0; line-height: 1.6; }
+
+/* =========================================
+   MUSEO DE COMPONENTES
+========================================= */
+.componentsShowcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px dashed var(--gris-medio);
+}
+
+.compColumn h3 {
+    margin: 0 0 1.5rem 0;
+    color: var(--color-texto-primario);
+    font-size: 1.2rem;
+}
+
+.btnGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btnPrimary, .btnSecondary, .btnDanger {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px; /* Bordes redondeados consistentes */
+    font-family: var(--fuente-principal);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    width: fit-content;
+}
+
+.btnPrimary {
+    background: linear-gradient(135deg, var(--color-primario), var(--color-acento));
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(57, 110, 129, 0.2);
+}
+.btnPrimary:hover { background: #F27A24; transform: translateY(-2px); box-shadow: 0 8px 15px rgba(242, 122, 36, 0.3); }
+
+.btnSecondary {
+    background: transparent;
+    color: var(--color-texto-secundario);
+    border: 2px solid var(--gris-medio);
+}
+.btnSecondary:hover { border-color: var(--color-primario); color: var(--color-primario); }
+
+.btnDanger {
+    background: transparent;
+    color: #d9534f;
+    border: 2px dashed #d9534f;
+}
+.btnDanger:hover { background: #fbeee6; border-style: solid; }
+
+.inputShowcase {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inputShowcase label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-texto-secundario);
+}
+
+.inputShowcase input {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--gris-medio);
+    border-radius: 8px;
+    font-family: var(--fuente-principal);
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: #fafafa;
+}
+
+.inputShowcase input:focus {
+    outline: none;
+    border-color: #F27A24;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(242, 122, 36, 0.15); /* Efecto aura en focus */
+}
+
+/* =========================================
+   ESTRUCTURA VISUAL
+========================================= */
+.layoutShowcase {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.layoutText { flex: 1; }
+.layoutText p { color: var(--color-texto-secundario); line-height: 1.6; margin-bottom: 1rem; }
+.layoutText ul { padding-left: 1.2rem; color: var(--color-texto-secundario); line-height: 1.6; }
+.layoutText li { margin-bottom: 0.5rem; }
+.layoutText strong { color: var(--color-texto-primario); }
+
+.layoutVisual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--verde-clarito);
+    padding: 3rem;
+    border-radius: 16px;
+    border: 1px dashed var(--color-primario);
+}
+
+.mockCard {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(57, 110, 129, 0.15); /* Sombra elegante tintada */
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.mockAvatar {
+    width: 50px;
+    height: 50px;
+    background: var(--naranja-suave);
+    border-radius: 50%;
+}
+
+.mockLines { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.mLine1 { height: 10px; width: 80%; background: var(--gris-medio); border-radius: 5px; }
+.mLine2 { height: 8px; width: 50%; background: var(--gris-claro); border-radius: 4px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .guideSection { padding: 2rem; }
+    .layoutShowcase { flex-direction: column; }
+}
+
+/* =========================================
+   NUEVO: MUSEO DE ICONOGRAFÍA
+========================================= */
+.iconShowcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.iconBox {
+    background: white;
+    border: 1px dashed var(--gris-medio);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--color-texto-secundario);
+    transition: all 0.3s ease;
+}
+
+.iconBox:hover {
+    border-style: solid;
+    border-color: var(--color-primario);
+    background: var(--verde-clarito);
+    transform: translateY(-5px);
+    color: var(--color-primario);
+}
+
+.iconBox span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* =========================================
+   NUEVO: MUSEO DE MOTION & ANIMACIONES
+========================================= */
+.motionCard {
+    background: white;
+    width: 100%;
+    height: 200px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    cursor: pointer;
+    border: 1px solid var(--gris-claro);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.motionCard span {
+    font-size: 0.9rem;
+    color: var(--color-texto-secundario);
+    font-weight: 500;
+    z-index: 2;
+}
+
+.motionPulse {
+    width: 50px;
+    height: 50px;
+    background: var(--color-primario);
+    border-radius: 50%;
+    z-index: 2;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+.motionCard:hover {
+    transform: translateY(-10px); /* Elevación */
+    box-shadow: 0 20px 40px rgba(57, 110, 129, 0.15); 
+    border-color: var(--color-primario);
+}
+
+.motionCard:hover .motionPulse {
+    transform: scale(1.2); 
+    background: var(--naranja-acento); 
+}
+
+.motionCard::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 100px;
+    height: 100px;
+    background: var(--naranja-suave);
+    border-radius: 50%;
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.motionCard:hover::after {
+    opacity: 0.5; 
+}

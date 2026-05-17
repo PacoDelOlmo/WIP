@@ -1,0 +1,168 @@
+.pageWrapper {
+    background-color: #fafafa;
+    min-height: 100vh;
+}
+
+.mainContent {
+    padding: 4vw 5vw;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contactContainer {
+    display: flex;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--gris-claro);
+}
+
+.infoSide {
+    flex: 1;
+    background: linear-gradient(135deg, var(--color-primario), var(--color-acento));
+    color: white;
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.infoSide::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(242, 122, 36, 0.2);
+    border-radius: 50%;
+    filter: blur(30px);
+}
+
+.infoSide h1 {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    margin-bottom: 1rem;
+}
+
+.pitch {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    margin-bottom: 3rem;
+}
+
+.contactDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.detailItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 500;
+}
+
+.icon {
+    color: #FBD5B9;
+}
+
+.formSide {
+    flex: 1.2;
+    padding: 4rem;
+    background: white;
+}
+
+.b2bForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formRow {
+    display: flex;
+    gap: 1rem;
+}
+
+.formRow .inputGroup {
+    flex: 1;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inputGroup label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-texto-secundario);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--gris-medio);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: #fafafa;
+    box-sizing: border-box;
+}
+
+.inputGroup textarea {
+    resize: vertical;
+}
+
+.inputGroup input:focus,
+.inputGroup select:focus,
+.inputGroup textarea:focus {
+    outline: none;
+    border-color: #F27A24;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(242, 122, 36, 0.1);
+}
+
+.submitBtn {
+    background: var(--color-primario);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+}
+
+.submitBtn:hover {
+    background: #F27A24;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(242, 122, 36, 0.2);
+}
+
+@media (max-width: 900px) {
+    .contactContainer {
+        flex-direction: column;
+    }
+
+    .infoSide,
+    .formSide {
+        padding: 2rem;
+    }
+
+    .formRow {
+        flex-direction: column;
+    }
+}
