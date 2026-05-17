@@ -6,6 +6,8 @@ import type { UserCompleteDTO } from '../../pages/home/Home';
 import styles from './AjustesWorkspace.module.css';
 import { ConfirmModal } from '../modalConfirm/ConfirmModal';
 import { ToastNotification } from '../toastNotification/ToastNotification';
+import { useAuthStore } from '../../store/Auth';
+import { AccessDeniedInternal } from '../../pages/accesDeneidInternal/AccessDeniedInternal';
 
 interface AjustesProps {
     usuario: UserCompleteDTO;
@@ -25,6 +27,8 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
         message: "",
         type: "success"
     });
+    const usuarioLogged = useAuthStore((state)=> state.idUsuario);
+    const [isPropietaio, setIsPropietario] = useState<boolean>(false);
 
     useEffect(() => {
         if (id) cargarDatos(Number(id));
@@ -34,8 +38,8 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
         try {
             const wsData = await WorkSpaceService.getEspacioTrabajo(idWs);
             setWorkspace(wsData);
-            setNuevoNombre(wsData.nombre); // Inicializamos el input
-            
+            setNuevoNombre(wsData.nombre);
+            setIsPropietario(wsData.idPropietario === usuarioLogged);
             const colabs = await WorkSpaceService.getUsuariosPermisos(idWs);
             setColaboradores(Array.isArray(colabs) ? colabs : [colabs as any]);
         } catch (e) {
@@ -91,6 +95,10 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
             setUserToRemove(null);
         }
     };
+
+    if(!isPropietaio){
+        return <AccessDeniedInternal mensaje="Solo los propietarios del espacio pueden acceder a los ajustes y gestión de accesos." />;
+    }
 
     return (
         <section className={styles.container}>

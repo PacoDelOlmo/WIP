@@ -1,12 +1,20 @@
+import { Navigate } from "react-router";
 import { Card } from "../../components/card/Card";
 import { Footer } from "../../components/footer/Footer";
 import { Header } from "../../components/header/Header";
+import { useAuthStore } from "../../store/Auth";
 import styles from "./HomePage.module.css";
 
 export function HomePage() {
+    const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
     const heroTittle : string = 'Organiza tu trabajo\nSimplifica tu proceso';
     const heroText : string = 'En Work In Progress\ncada tarea te acerca a tus objetivos\n'
     +'Gestiona tus proyectos con tableros intuitivos\nlistas claras y una experiencia diseñada para fluir';
+
+    if (isLoggedIn){
+        return <Navigate to="user/home/" replace/>
+    }
+
   return (
     <>
         <Header />
