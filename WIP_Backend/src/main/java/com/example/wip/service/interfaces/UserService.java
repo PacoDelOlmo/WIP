@@ -3,7 +3,9 @@ package com.example.wip.service.interfaces;
 import java.util.List;
 
 import com.example.wip.model.ConfirmationObject;
+import com.example.wip.model.ElementDTO;
 import com.example.wip.model.LoginDTO;
+import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.NewUserDTO;
 import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
@@ -21,4 +23,5 @@ public interface UserService {
     UserCompleteDTO obtenerUsuarioPorId(long id);
     ConfirmationObject actualizarCorreo(UserMailDTO nuevoEmail);
     ConfirmationObject actualizarContrasena(UserPasswordDTO nuevaContrasena);
+    List<ElementDTO> buscarElementos(long idUser, NewElementDTO busqueda);
 }
