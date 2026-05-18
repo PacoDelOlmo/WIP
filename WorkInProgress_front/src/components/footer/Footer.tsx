@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styles from './Footer.module.css'
 import LogoWip from './../../assets/img/WIP_Logo.png'
+import { Link } from 'react-router';
 
 export function Footer() {
 
@@ -29,22 +30,22 @@ export function Footer() {
                 <div id="servicios" className={`${styles.columna_footer} ${seccionActive === 'servicios' ? styles.active : ''}`}>
                     <h3 onClick={() => handleToggle('servicios')}>Servicios</h3>
                     <ul className={styles.enlaces}>
-                        <li><a href="">Contacto</a></li>
-                        <li><a href="">Funciones</a></li>
-                        <li><a href="">Recursos</a></li>
-                        <li><a href="">Soluciones</a></li>
-                        <li><a href="">FAQs</a></li>
-                        <li><a href="">Guía de Estilos</a></li>
+                        <li><Link to={'/contacto'}>Contacto</Link></li>
+                        <li><Link to={'/funciones'}>Funciones</Link></li>
+                        <li><Link to={'/recursos'}>Recursos</Link></li>
+                        <li><Link to={'/soluciones'}>Soluciones</Link></li>
+                        <li><Link to={'/faqs'}>FAQs</Link></li>
+                        <li><Link to={'/guia_estilos'}>Guía de Estilos</Link></li>
                     </ul>
                 </div>
                 <div id="informacion" className={`${styles.columna_footer} ${seccionActive === 'informacion' ? styles.active : ''}`} >
                     <h3 onClick={() => handleToggle('informacion')}>Información</h3>
                     <ul className={styles.enlaces}>
-                        <li><a href="">¿Que es WIP?</a></li>
-                        <li><a href="">Trabaja con nosotros</a></li>
-                        <li><a href="">Política de privacidad</a></li>
-                        <li><a href="">Términos y condiciones de uso</a></li>
-                        <li><a href="">Politica de cookies</a></li>
+                        <li><Link to={'/guia_estilos'}>¿Que es WIP?</Link></li>
+                        <li><Link to={'/trabaja'}>Trabaja con nosotros</Link></li>
+                        <li><Link to={'/politica_privacidad'}>Política de privacidad</Link></li>
+                        <li><Link to={'/terminos_condiciones'}>Términos y condiciones de uso</Link></li>
+                        <li><Link to={'/politica_cookies'}>Politica de cookies</Link></li>
                     </ul>
                 </div>
                 <div id="autor" className={styles.autor}>
@@ -55,14 +56,14 @@ export function Footer() {
             <section id="enlacesCopy" className={styles.footer_bottom}>
                 <div className={styles.politicas_footer}>
                     <ul>
-                        <li><a href="" className={styles.container_logo_WIP}><img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/></a></li>
-                        <li><a href="">Términos y condiciones</a></li>
-                        <li><a href="">Política de privacidad</a></li>
-                        <li><a href="">Cookies</a></li>
+                        <li><Link to={'/'} className={styles.container_logo_WIP}><img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/></Link></li>
+                        <li><Link to={'/terminos_condiciones'}>Términos y condiciones</Link></li>
+                        <li><Link to={'/politica_privacidad'}>Política de privacidad</Link></li>
+                        <li><Link to={'/politica_cookies'}>Cookies</Link></li>
                     </ul>
                 </div>
 
-                <a href="" className={styles.container_logo_WIP_mobile}><img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/></a>
+                <Link to={'/'} className={styles.container_logo_WIP_mobile}><img src={LogoWip} alt="Logotipo WIP" className={styles.WIP_button}/></Link>
 
                 <div className={styles.copy}>
                     © {anioActual} Work In Progress | Todos los derechos reservados

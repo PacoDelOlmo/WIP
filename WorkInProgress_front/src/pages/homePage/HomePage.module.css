@@ -1,214 +1,520 @@
-main{
+/* --- VARIABLES LOCALES EXTRA (Opcionales si no están en tu root) --- */
+.pageWrapper {
+    --naranja-suave: #fbd5b9;
+    --naranja-acento: #F27A24;
+    overflow-x: hidden;
+}
+
+main {
     margin: 0;
 }
 
-.hero{
-    padding: 5vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white;
-
-    h1{
-        color: var(--color-texto-app);
-        font-size: 4.8vw;
-        font-weight: bolder;
-        text-transform: uppercase;
-        margin: 0;
-        margin-block-end: 0;
-        margin-block-start: 0;
-        text-align: center;
-        white-space: pre-line;
-    }
-
-    p{
-        color: var(--color-texto-secundario);
-        font-size: 2vw;
-        font-weight: bold;
-        text-align: center;
-        white-space: pre-line;
-    }
-}
-
-.primary_button {
-    border: 0.1rem solid var(--color-boton-primary);
-    background-color: var(--color-boton-primary);
-    border-radius: 0.5vw;
-    box-shadow: 0.2rem 0.3rem 0.2rem var(--gris-oscuro);
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    margin: 2vh;
-
-    a {
-        font-size: 1.5vw;
-        font-weight: 600;
-        padding: 2rem;
-        text-decoration: none;
-        color: var(--color-boton-primary-hover);
-        transition: color 0.2s ease-in-out;
-    }
-}
-
-.primary_button:hover {
-    background-color: var(--color-boton-secondary);
-    box-shadow: 0rem 0rem 0rem transparent;
-    transform: translate(0.2rem, 0.3rem);
-
-    a {
-        color: var(--color-boton-primary);
-    }
-}
-
-.info{
-    background-color: var(--gris-claro);
-    padding: 1vw 3vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    h4{
-        color: var(--color-texto-app);
-        font-size: 1vw;
-        font-weight: bolder;
-        text-transform: uppercase;
-        margin: 0;
-        margin-block-end: 0;
-        margin-block-start: 0;
-        text-align: center;
-        white-space: pre-line;
-    }
-
-    h2{
-        color: var(--color-texto-app);
-        font-size: 2vw;
-        font-weight: bolder;
-        text-transform: uppercase;
-        margin: 0;
-        margin-block-end: 0;
-        margin-block-start: 0;
-        text-align: center;
-        white-space: pre-line;
-    }
-
-    h3{
-        color: var(--color-texto-secundario);
-        font-size: 1.5vw;
-        margin: 0;
-        margin-block-end: 0;
-        margin-block-start: 0;
-        text-align: center;
-        white-space: pre-line;
-    }
-}
-
-.cards_section{
-    width: 100%;
+/* =========================================
+   1. HERO SECTION (Cabecera)
+========================================= */
+.hero {
+    position: relative;
+    padding: 12vh 5vw;
     display: flex;
     justify-content: center;
-    gap: 1vw;
-    margin: 1vw;
+    align-items: center;
+    min-height: 80vh;
+    background-color: #fafafa;
+    overflow: hidden;
 }
 
-.motiv{
-    background-color: var(--color-primario);
+.blobShape1 {
+    position: absolute;
+    top: -10%;
+    left: -5%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, var(--naranja-suave) 0%, transparent 70%);
+    opacity: 0.5;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+}
+
+.blobShape2 {
+    position: absolute;
+    bottom: -20%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, var(--verde-clarito) 0%, transparent 70%);
+    opacity: 0.6;
+    animation: float 10s ease-in-out infinite reverse;
+    z-index: 0;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: var(--color-secundario);
-    padding: 1vw;
+    text-align: center;
+}
 
-    h2 {
-        font-size: 2vw;
+.hero h1 {
+    color: var(--color-texto-app);
+    font-size: clamp(2.5rem, 5vw, 4.5rem); 
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 0;
+    white-space: pre-line;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.hero p {
+    color: var(--color-texto-secundario);
+    font-size: clamp(1rem, 1.8vw, 1.5rem);
+    font-weight: 500;
+    margin: 2rem 0 3rem 0;
+    white-space: pre-line;
+    line-height: 1.5;
+}
+
+/* =========================================
+   ✨ EL TABLERO FANTASMA (Animaciones CSS)
+========================================= */
+.animatedShowcase {
+    margin-top: 4rem;
+    width: 100%;
+    max-width: 800px;
+    perspective: 1000px; /* Para darle un toque 3D */
+    z-index: 10;
+}
+
+.fakeBoard {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(57, 110, 129, 0.15);
+    transform: rotateX(5deg); /* Ligeramente inclinado hacia atrás */
+}
+
+.fakeList {
+    background-color: var(--gris-claro);
+    border-radius: 8px;
+    width: 200px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.fakeListHeader {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-primario);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.fakeTask {
+    background: white;
+    height: 40px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+/* --- ANIMACIÓN 1: Expansión de Tarea --- */
+.taskExpand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+    animation: expandTaskAnim 6s infinite ease-in-out;
+}
+
+.taskLine, .taskLineShort {
+    height: 6px;
+    background-color: var(--gris-medio);
+    border-radius: 3px;
+    opacity: 0; /* Ocultas al principio */
+    transition: opacity 0.3s;
+}
+.taskLineShort { width: 60%; }
+
+@keyframes expandTaskAnim {
+    0%, 20% { height: 40px; }
+    30%, 60% { height: 90px; } /* Se abre */
+    70%, 100% { height: 40px; } /* Se cierra */
+}
+
+.taskExpand .taskLine, .taskExpand .taskLineShort {
+    animation: showLines 6s infinite ease-in-out;
+}
+
+@keyframes showLines {
+    0%, 25% { opacity: 0; }
+    35%, 60% { opacity: 1; }
+    65%, 100% { opacity: 0; }
+}
+
+/* --- ANIMACIÓN 2: Añadir Nueva Tarea --- */
+.taskNew {
+    border-left: 4px solid var(--color-primario); /* Borde de éxito */
+    animation: newTaskAnim 6s infinite ease-in-out;
+    transform-origin: top center;
+}
+
+@keyframes newTaskAnim {
+    0%, 50% { height: 0; opacity: 0; margin-bottom: -0.8rem; } /* Oculta y sin ocupar espacio */
+    55% { height: 40px; opacity: 1; margin-bottom: 0; } /* Nace de golpe */
+    90% { height: 40px; opacity: 1; margin-bottom: 0; }
+    100% { height: 0; opacity: 0; margin-bottom: -0.8rem; } /* Desaparece para reiniciar */
+}
+
+/* --- ANIMACIÓN 3: Drag & Drop Inseguro --- */
+.taskDrag {
+    border-left: 4px solid var(--naranja-acento);
+    z-index: 100;
+    animation: dragDropAnim 8s infinite ease-in-out;
+}
+
+.virtualMouse {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    opacity: 0; /* Solo aparece cuando arrastra */
+    animation: mouseFade 8s infinite ease-in-out;
+}
+
+@keyframes dragDropAnim {
+    0%, 10% { transform: translate(0, 0) scale(1) rotate(0deg); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    /* Se levanta */
+    15% { transform: translate(0, -5px) scale(1.05) rotate(-2deg); box-shadow: 0 15px 25px rgba(242, 122, 36, 0.3); } 
+    /* Duda hacia la lista de Terminados (Derecha) */
+    35% { transform: translate(220px, -40px) scale(1.05) rotate(3deg); box-shadow: 0 15px 25px rgba(242, 122, 36, 0.3); } 
+    /* Vuelve a su lista */
+    55% { transform: translate(0, -5px) scale(1.05) rotate(-2deg); box-shadow: 0 15px 25px rgba(242, 122, 36, 0.3); } 
+    /* Duda hacia arriba en la misma lista */
+    65% { transform: translate(0, -60px) scale(1.05) rotate(1deg); box-shadow: 0 15px 25px rgba(242, 122, 36, 0.3); } 
+    /* La suelta donde estaba */
+    75%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); box-shadow: 0 2px 4px rgba(0,0,0,0.05); } 
+}
+
+@keyframes mouseFade {
+    0%, 10% { opacity: 0; }
+    12%, 73% { opacity: 1; } /* Aparece justo al agarrar y desaparece al soltar */
+    75%, 100% { opacity: 0; }
+}
+
+/* =========================================
+   Ajuste Responsive para el Showcase
+========================================= */
+@media (max-width: 900px) {
+    .animatedShowcase {
+        transform: scale(0.8) rotateX(0deg); /* Lo achicamos en tablets */
+        margin-top: 2rem;
     }
-
-    p{
-        font-size: 1vw;
+}
+@media (max-width: 576px) {
+    .animatedShowcase {
+        display: none; /* En móviles pequeños lo ocultamos para que no desborde ni estorbe la lectura */
     }
 }
 
-.start{
+/* =========================================
+   🧩 ESTILOS BASE PARA LAS MINI-ANIMACIONES
+========================================= */
+.miniList {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    width: 160px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    box-shadow: 0 10px 30px rgba(57, 110, 129, 0.1);
+}
+
+.listTitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-primario);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+
+.miniTask {
+    background: white;
+    height: 35px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    position: relative;
+    width: 100%;
+}
+
+/* =========================================
+   ANIMACIÓN 1: DRAG & DROP (En el Hero)
+========================================= */
+.showcaseDrag {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 10;
+    position: relative;
+}
+
+.taskDrag {
+    border-left: 3px solid var(--naranja-acento);
+    z-index: 100;
+    animation: dragAnim 4s infinite ease-in-out;
+}
+
+.virtualMouse {
+    position: absolute;
+    top: 15px;
+    left: 40%;
+    opacity: 0;
+    animation: mouseFadeAnim 4s infinite ease-in-out;
+}
+
+@keyframes dragAnim {
+    0%, 15% { transform: translate(0, 0) scale(1) rotate(0deg); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    /* Levanta */
+    25% { transform: translate(0, -5px) scale(1.05) rotate(3deg); box-shadow: 0 10px 20px rgba(242, 122, 36, 0.2); }
+    /* Mueve a la lista de la derecha (160px ancho + 1rem gap aprox 175px) */
+    60% { transform: translate(175px, -5px) scale(1.05) rotate(3deg); box-shadow: 0 10px 20px rgba(242, 122, 36, 0.2); }
+    /* Suelta */
+    70%, 100% { transform: translate(175px, 0) scale(1) rotate(0deg); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+}
+
+@keyframes mouseFadeAnim {
+    0%, 20% { opacity: 0; }
+    25%, 65% { opacity: 1; }
+    70%, 100% { opacity: 0; }
+}
+
+
+/* =========================================
+   RESPONSIVE PARA ANIMACIONES
+========================================= */
+@media (max-width: 576px) {
+    /* En móviles muy pequeños, reducimos la escala para que no rompa el ancho de la pantalla */
+    .showcaseDrag, .showcaseExpand, .showcaseNew {
+        transform: scale(0.8);
+    }
+}
+
+/* =========================================
+   BOTÓN PRINCIPAL
+========================================= */
+.primary_button button {
+    border: none;
+    background: linear-gradient(135deg, var(--color-primario), var(--color-acento));
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 50px; /* Botones pill-shape son más modernos */
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(57, 110, 129, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-family: inherit;
+}
+
+.primary_button button:hover {
+    background: linear-gradient(135deg, var(--naranja-acento), #e06915);
+    box-shadow: 0 15px 25px rgba(242, 122, 36, 0.3);
+    transform: translateY(-3px);
+}
+
+/* =========================================
+   2. INFO & CARDS
+========================================= */
+.info {
+    background-color: white;
+    padding: 6vw 3vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2vw;
+}
 
-    h2 {
-        color: var(--color-texto-app);
-        font-size: 2vw;
+.infoHeaders {
+    text-align: center;
+    margin-bottom: 4vw;
+}
+
+.info h4 {
+    color: var(--naranja-acento); /* Toque naranja en el subtítulo */
+    font-size: clamp(0.9rem, 1vw, 1.2rem);
+    letter-spacing: 2px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+}
+
+.info h2 {
+    color: var(--color-texto-primario);
+    font-size: clamp(1.8rem, 2.5vw, 3rem);
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+}
+
+.info h3 {
+    color: var(--color-texto-secundario);
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    font-weight: 400;
+    margin: 0;
+}
+
+.cards_section {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+    margin: 0 auto;
+}
+
+.cardWrapper1, .cardWrapper2, .cardWrapper3 {
+    transition: transform 0.3s ease;
+}
+.cardWrapper1:hover, .cardWrapper2:hover, .cardWrapper3:hover {
+    transform: translateY(-10px);
+}
+
+/* =========================================
+   3. SECCIÓN MOTIVACIONAL
+========================================= */
+.motiv {
+    background: linear-gradient(135deg, var(--color-primario), #1f4553);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    padding: 6vw 2vw;
+    text-align: center;
+    position: relative;
+}
+
+.motivContent {
+    max-width: 800px;
+    z-index: 2;
+}
+
+.motiv h2 {
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    margin: 0 0 0.5rem 0;
+    font-weight: 300;
+}
+
+.motivDivider {
+    height: 4px;
+    width: 60px;
+    background-color: var(--naranja-acento);
+    margin: 2rem auto;
+    border-radius: 2px;
+}
+
+.motiv p {
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    color: rgba(255,255,255,0.8);
+    margin: 0.5rem 0;
+}
+
+/* =========================================
+   4. START SECTION (Llamada a la acción final)
+========================================= */
+.start {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8vw 2vw;
+    background-color: #fafafa;
+    position: relative;
+    overflow: hidden;
+}
+
+.startContent {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.start h2 {
+    color: var(--color-texto-app);
+    font-size: clamp(2rem, 3vw, 3.5rem);
+    margin: 0 0 1rem 0;
+    font-weight: 800;
+}
+
+.start h3 {
+    color: var(--color-texto-secundario);
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+    margin: 0 0 2.5rem 0;
+    font-weight: 400;
+}
+
+/* =========================================
+   ANIMACIONES GLOBALES
+========================================= */
+.animateFadeInUp {
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.animateFadeInUpDelay {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+}
+
+.animateFadeInUpDelay2 {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(20px, -20px); }
+}
+
+/* =========================================
+   RESPONSIVE (Móvil)
+========================================= */
+@media (max-width: 768px) {
+    .hero {
+        padding: 15vh 5vw 10vh 5vw;
     }
     
-    h3{
-        color: var(--color-texto-secundario);
-        font-size: 1.5vw;
-        margin: 0;
-        margin-block-end: 0;
-        margin-block-start: 0;
-        text-align: center;
-        white-space: pre-line;
-    }
-}
-
-
-@media (max-width: 576px){
-
-    .hero{
-        padding: 1vh;
-
-        h1{
-            font-size: 3vh;
-        }
-
-        p{
-            font-size: 1.4vh;
-        }
-    }
-
-    .primary_button{
-        padding: 1vh;
-        border-radius: 1vh;
-        a{
-            font-size: 2vh;
-        }
-    }
-
-    .info{
-        h4{
-            font-size: 1vh;
-        }
-
-        h2{
-            font-size: 1.3vh;
-        }
-
-        h3{
-            font-size: 0.9vh;
-        }
-    }
-
-    .cards_section{
+    .cards_section {
         flex-direction: column;
         align-items: center;
-        margin: 1vh;
+        gap: 3rem;
+    }
+    
+    .primary_button button {
+        width: 100%;
+        padding: 1rem 2rem;
     }
 
-    .motiv{
-        padding: 1.2vh;
-        h2{
-            font-size: 1.3vh;
-        }
-
-        p{
-            font-size: 0.7vh;
-        }
+    .info {
+        padding: 15vw 5vw;
     }
-
-    .start{
-        h2{
-            font-size: 1.8vh;
-        }
-
-        h3{
-            font-size: 1.4vh;
-        }
+    
+    .motiv {
+        padding: 15vw 5vw;
     }
 }

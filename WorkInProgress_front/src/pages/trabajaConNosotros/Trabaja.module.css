@@ -1,0 +1,196 @@
+.pageWrapper {
+    background-color: #fafafa;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.mainContent {
+    padding: 6vw 5vw;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Blobs */
+.blobShape1 {
+    position: absolute;
+    top: 0;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, #fbd5b9 0%, transparent 70%);
+    opacity: 0.5;
+    animation: float 8s infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.blobShape2 {
+    position: absolute;
+    bottom: 10%;
+    right: -15%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, var(--verde-clarito) 0%, transparent 70%);
+    opacity: 0.6;
+    animation: float 10s infinite reverse;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(30px, -30px);
+    }
+}
+
+/* Hero */
+.heroSection {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.heroBadge {
+    display: inline-block;
+    background: rgba(242, 122, 36, 0.1);
+    color: #F27A24;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.heroSection h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-texto-primario);
+    margin-bottom: 1.5rem;
+}
+
+.leadText {
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    color: var(--color-texto-secundario);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Roles Grid */
+.rolesSection {
+    margin-bottom: 6rem;
+}
+
+.rolesSection h2 {
+    text-align: center;
+    color: var(--color-primario);
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+.rolesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.roleCard {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--gris-claro);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.roleCard:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-primario);
+}
+
+.roleIcon {
+    color: #F27A24;
+    margin-bottom: 1.5rem;
+}
+
+.roleCard h3 {
+    color: var(--color-texto-primario);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.roleCard p {
+    color: var(--color-texto-secundario);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* CTA GitHub */
+.ctaSection {
+    display: flex;
+    justify-content: center;
+}
+
+.ctaBox {
+    background: linear-gradient(135deg, #24292e, #1b1f23);
+    color: white;
+    padding: 4rem;
+    border-radius: 24px;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.githubLogo {
+    color: white;
+    opacity: 0.9;
+    margin-bottom: 1rem;
+}
+
+.ctaBox h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.ctaBox p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.githubBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: white;
+    color: #24292e;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.githubBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .ctaBox {
+        padding: 2rem;
+    }
+}

@@ -21,9 +21,9 @@ export function Header() {
                   <li>
                     <Link to="/"><img src={LogoWip} alt="Logotipo WIP" className={Style.WIP_button} /></Link>
                   </li>
-                  <li><a href="">FUNCIONES</a></li>
-                  <li><a href="">RECURSOS</a></li>
-                  <li><a href="">CONTACTO</a></li>
+                  <li><Link to={'/funciones'}>FUNCIONES</Link></li>
+                  <li><Link to={'/recursos'}>RECURSOS</Link></li>
+                  <li><Link to={'/contacto'}>CONTACTO</Link></li>
               </ul>
           </nav>
 

@@ -1,0 +1,218 @@
+.pageWrapper {
+    background-color: #fafafa;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.mainContent {
+    padding: 6vw 5vw;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Blobs */
+.blobShape1 {
+    position: absolute;
+    top: 0;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, #fbd5b9 0%, transparent 70%);
+    opacity: 0.5;
+    animation: float 8s infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.blobShape2 {
+    position: absolute;
+    bottom: 10%;
+    right: -15%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, var(--verde-clarito) 0%, transparent 70%);
+    opacity: 0.6;
+    animation: float 10s infinite reverse;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(30px, -30px);
+    }
+}
+
+/* Hero */
+.heroSection {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.heroSection h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-primario);
+    margin-bottom: 1rem;
+}
+
+.leadText {
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    color: var(--color-texto-secundario);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Soluciones WIP */
+.sectionHeader {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.sectionHeader h2 {
+    font-size: 2rem;
+    color: var(--color-texto-primario);
+    margin: 0;
+}
+
+.divider {
+    width: 60px;
+    height: 4px;
+    background: #F27A24;
+    margin: 1rem auto;
+    border-radius: 2px;
+}
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 6rem;
+}
+
+.solutionCard {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--gris-claro);
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s;
+}
+
+.solutionCard:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-primario);
+}
+
+.iconWrapper {
+    color: #F27A24;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.solutionCard h3 {
+    color: var(--color-primario);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.solutionCard p {
+    color: var(--color-texto-secundario);
+    line-height: 1.6;
+}
+
+/* Create Studio */
+.agencySection {
+    background: linear-gradient(135deg, var(--color-primario), #224a59);
+    border-radius: 24px;
+    padding: 4rem;
+    color: white;
+    box-shadow: 0 20px 40px rgba(57, 110, 129, 0.2);
+}
+
+.agencyHeader {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.agencyTag {
+    display: inline-block;
+    background: rgba(242, 122, 36, 0.2);
+    color: #FBD5B9;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(242, 122, 36, 0.4);
+}
+
+.agencyHeader h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 1.5rem 0;
+}
+
+.agencyHeader p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.agencyGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.agencyService {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s;
+}
+
+.agencyService:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #F27A24;
+    transform: translateY(-5px);
+}
+
+.serviceIcon {
+    color: #F27A24;
+    margin-bottom: 1.5rem;
+}
+
+.agencyService h4 {
+    font-size: 1.2rem;
+    margin: 0 0 1rem 0;
+}
+
+.agencyService p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    line-height: 1.5;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .agencySection {
+        padding: 2rem;
+    }
+}

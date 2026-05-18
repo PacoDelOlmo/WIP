@@ -10,9 +10,11 @@
     --bg-verde: #A8D1D5;
     --verde-clarito: #E2F7FF;
     --fuente-principal: 'Poppins', sans-serif;
+    --naranja-acento: #F27A24;
+    --naranja-suave: #FBD5B9;
 }
 
-/* --- 1. ESCENARIO (Consistente con SignUp) --- */
+
 .loginPageContainer {
     min-height: 100vh;
     width: 100vw;
@@ -27,7 +29,6 @@
     overflow: hidden;
 }
 
-/* Formas de fondo (Variación sutil para diferenciar del SignUp) */
 .loginPageContainer::before {
     content: '';
     position: absolute;
@@ -35,9 +36,9 @@
     left: -10%;
     width: 60%;
     height: 60%;
-    background: linear-gradient(45deg, var(--bg-verde), var(--subnavbar-bg));
-    opacity: 0.3;
-    border-radius: 47% 53% 60% 40% / 35% 66% 34% 65%; /* Blob orgánico */
+    background: linear-gradient(45deg, var(--naranja-suave), var(--subnavbar-bg));
+    opacity: 0.35;
+    border-radius: 47% 53% 60% 40% / 35% 66% 34% 65%;
     transform: rotate(-15deg);
     z-index: 0;
     filter: blur(60px);
@@ -50,8 +51,8 @@
     right: -15%;
     width: 70%;
     height: 50%;
-    background: linear-gradient(to left, var(--color-primario), var(--color-acento));
-    opacity: 0.25;
+    background: linear-gradient(to left, var(--naranja-acento), var(--color-primario));
+    opacity: 0.15;
     border-radius: 61% 39% 54% 46% / 58% 43% 57% 42%;
     transform: rotate(10deg);
     z-index: 0;
@@ -134,9 +135,9 @@
 
 .input_group input:focus {
     outline: none;
-    border-color: var(--color-primario);
+    border-color: var(--naranja-acento);
     background-color: white;
-    box-shadow: 0 0 0 3px var(--verde-clarito);
+    box-shadow: 0 0 0 3px var(--naranja-suave);
 }
 
 .input_group input::placeholder {
@@ -224,9 +225,9 @@
 }
 
 .primary_button:hover {
-    background-color: var(--color-terciario);
+    background-color: var(--naranja-acento);
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(57, 110, 129, 0.3);
+    box-shadow: 0 6px 15px rgba(242, 122, 36, 0.3);
 }
 
 
@@ -282,7 +283,7 @@
 }
 
 .create_account {
-    color: var(--color-primario);
+    color: var(--naranja-acento);
     font-weight: 600;
     text-decoration: none;
     margin-left: 0.4rem;
