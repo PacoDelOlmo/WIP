@@ -1,0 +1,186 @@
+.pageWrapper {
+    background-color: #fafafa;
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* =========================================
+   FONDOS ANIMADOS (BLOBS)
+========================================= */
+.blobShape1 {
+    position: absolute;
+    top: -10%;
+    left: -5%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, var(--verde-clarito) 0%, transparent 70%);
+    opacity: 0.6;
+    animation: float 8s ease-in-out infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.blobShape2 {
+    position: absolute;
+    bottom: -15%;
+    right: -10%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, #fbd5b9 0%, transparent 70%); /* Naranja suave */
+    opacity: 0.5;
+    animation: float 10s ease-in-out infinite reverse;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, -30px); }
+}
+
+/* =========================================
+   TARJETA PRINCIPAL
+========================================= */
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 500px;
+    padding: 1rem;
+}
+
+.successCard {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 3.5rem 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(57, 110, 129, 0.1);
+    border: 1px solid var(--verde-clarito);
+    text-align: center;
+    animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* =========================================
+   ANIMACIÓN DEL ICONO DE ÉXITO
+========================================= */
+.iconWrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pulseRing {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primario);
+    border-radius: 50%;
+    opacity: 0;
+    animation: pulseRingAnim 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulseRingAnim {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+
+.iconBackground {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-primario), var(--color-acento));
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    box-shadow: 0 10px 20px rgba(57, 110, 129, 0.3);
+    animation: scaleInBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards 0.2s;
+    opacity: 0;
+}
+
+.checkIcon {
+    color: white;
+}
+
+@keyframes scaleInBounce {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* =========================================
+   TEXTOS Y BOTÓN
+========================================= */
+.title {
+    color: var(--color-texto-primario);
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+}
+
+.message {
+    color: var(--color-texto-secundario);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0 0 2.5rem 0;
+}
+
+.linkContainer {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+
+.primaryButton {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.primaryButton:hover {
+    background-color: var(--naranja-acento);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(242, 122, 36, 0.25);
+}
+
+/* RESPONSIVE */
+@media (max-width: 576px) {
+    .successCard {
+        padding: 2.5rem 1.5rem;
+    }
+    .title {
+        font-size: 1.5rem;
+    }
+    .iconWrapper {
+        width: 80px;
+        height: 80px;
+    }
+    .iconBackground {
+        width: 60px;
+        height: 60px;
+    }
+}

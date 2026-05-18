@@ -17,6 +17,8 @@ import { PoliticaCookies } from './pages/politicaCookies/PoliticaCookies'
 import { PoliticaPrivacidad } from './pages/politicaPrivacidad/PoliticaPrivacidad'
 import { TerminosCondiciones } from './pages/terminosCondiciones/TerminosCondiciones'
 import { Trabaja } from './pages/trabajaConNosotros/Trabaja'
+import { RecuperarPassword } from './pages/recuperarPasword/RecuperarPassword'
+import { RecuperarExito } from './pages/recuperarExito/RecuperarExito'
 
 function App() {
   
@@ -25,6 +27,8 @@ function App() {
       <Route path='/' element={<HomePage />}/>
       <Route path='/login' element={<Login />}/>
       <Route path='/signup' element={<SignUp />}/>
+      <Route path='/recuperar_password' element={<RecuperarPassword />} />
+      <Route path='/recuperar_password/exito' element={<RecuperarExito />} />
       <Route path='/funciones' element={<Funciones />}/>
       <Route path='/recursos' element={<Recursos />}/>
       <Route path='/contacto' element={<Contacto />}/>
