@@ -3,6 +3,7 @@ import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import styles from './FAQs.module.css';
+import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
 
 export function FAQSs() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -79,6 +80,7 @@ export function FAQSs() {
                 </section>
             </main>
             <Footer />
+            <CookieBanner />
         </div>
     );
 }

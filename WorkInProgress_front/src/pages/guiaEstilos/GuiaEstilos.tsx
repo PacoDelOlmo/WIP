@@ -2,6 +2,7 @@ import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import { Palette, Type, Layout, MousePointerClick, Smile, Activity, ShieldCheck, Zap } from 'lucide-react';
 import styles from './GuiaEstilos.module.css';
+import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
 
 export function GuiaEstilos() {
     return (
@@ -216,8 +217,8 @@ export function GuiaEstilos() {
                     </div>
                 </section>
             </main>
-            
             <Footer />
+            <CookieBanner />
         </div>
     );
 }

@@ -2,6 +2,7 @@ import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import { ShieldAlert } from 'lucide-react';
 import styles from './PoliticaPrivacidad.module.css';
+import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
 
 export function PoliticaPrivacidad() {
     return (
@@ -32,6 +33,7 @@ export function PoliticaPrivacidad() {
                 </article>
             </main>
             <Footer />
+            <CookieBanner />
         </div>
     );
 }

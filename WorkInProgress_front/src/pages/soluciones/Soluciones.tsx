@@ -2,6 +2,7 @@ import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import { CheckCircle2, Users, Video, Megaphone, PenTool, Code2 } from 'lucide-react';
 import styles from './Soluciones.module.css';
+import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
 
 export function Soluciones() {
     return (
@@ -75,6 +76,7 @@ export function Soluciones() {
                 </section>
             </main>
             <Footer />
+            <CookieBanner />
         </div>
     );
 }
