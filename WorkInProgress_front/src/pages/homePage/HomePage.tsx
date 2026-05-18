@@ -5,6 +5,7 @@ import { Header } from "../../components/header/Header";
 import { useAuthStore } from "../../store/Auth";
 import { MousePointer2 } from "lucide-react"; 
 import styles from "./HomePage.module.css";
+import { CookieBanner } from "../../components/cookieBanner/CookieBanner";
 
 export function HomePage() {
     const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -140,6 +141,7 @@ export function HomePage() {
             </section>
         </main>
         <Footer />
+        <CookieBanner />
     </div>
   );
 }

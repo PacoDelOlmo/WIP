@@ -1,6 +1,7 @@
 import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import styles from './Funciones.module.css';
+import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
 
 export function Funciones() {
     return (
@@ -84,6 +85,7 @@ export function Funciones() {
                 </section>
             </main>
             <Footer />
+            <CookieBanner />
         </div>
     );
 }

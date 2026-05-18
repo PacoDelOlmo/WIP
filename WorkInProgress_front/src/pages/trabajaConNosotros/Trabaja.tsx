@@ -2,6 +2,7 @@ import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import { Github, Code, PenTool, Bug, GitPullRequest } from 'lucide-react';
 import styles from './Trabaja.module.css';
+import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
 
 export function Trabaja() {
     return (
@@ -51,7 +52,7 @@ export function Trabaja() {
                         <Github size={64} className={styles.githubLogo} />
                         <h2>Únete al Repositorio</h2>
                         <p>Todo el código está disponible en GitHub. Explora el proyecto, lee nuestras guías de contribución y deja tu estrella.</p>
-                        <a href="https://github.com/tu-usuario/tu-repo" target="_blank" rel="noreferrer" className={styles.githubBtn}>
+                        <a href="https://github.com/PacoDelOlmo/WIP" target="_blank" rel="noreferrer" className={styles.githubBtn}>
                             <Github size={20} />
                             Ver en GitHub
                         </a>
@@ -59,6 +60,7 @@ export function Trabaja() {
                 </section>
             </main>
             <Footer />
+            <CookieBanner />
         </div>
     );
 }

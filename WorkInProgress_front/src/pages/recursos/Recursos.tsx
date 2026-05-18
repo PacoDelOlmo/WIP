@@ -2,6 +2,7 @@ import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import { Database, Zap, Shield, Server, RefreshCw, HardDrive } from 'lucide-react';
 import styles from './Recursos.module.css';
+import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
 
 export function Recursos() {
     return (
@@ -57,6 +58,7 @@ export function Recursos() {
                 </div>
             </main>
             <Footer />
+            <CookieBanner />
         </div>
     );
 }

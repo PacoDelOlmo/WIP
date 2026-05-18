@@ -2,6 +2,7 @@ import { Header } from '../../components/header/Header';
 import { Footer } from '../../components/footer/Footer';
 import { Building2, Mail, Globe } from 'lucide-react';
 import styles from './Contacto.module.css';
+import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
 
 export function Contacto() {
     return (
@@ -74,6 +75,7 @@ export function Contacto() {
                 </div>
             </main>
             <Footer />
+            <CookieBanner />
         </div>
     );
 }

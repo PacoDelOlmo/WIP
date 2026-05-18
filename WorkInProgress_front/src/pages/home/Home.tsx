@@ -16,6 +16,7 @@ import { Colaboradores } from '../../components/colaboradores/Colaboradores'
 import { AjustesWorkspace } from '../../components/ajustesWorkspace/AjustesWorkspace'
 import { ResultadosBusqueda } from '../resultadosBusqueda/ResultadosBusqueda'
 import { GuiaAyuda } from '../guiaAyuda/GuiaAyuda'
+import { CookieBanner } from '../../components/cookieBanner/CookieBanner'
 
 export type UserCompleteDTO = {
   id: number,
@@ -104,6 +105,7 @@ export function Home() {
                 <Route path='/resultados' element={<ResultadosBusqueda />} />
                 <Route path= '/*' element={<NotFoundInternal/>} />
               </Routes>
+              <CookieBanner />
           </main>
         </> : ''}
     </>
