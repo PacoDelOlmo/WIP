@@ -4,7 +4,7 @@ import { Mail, User, Lock, AlertCircle, ArrowRight, ArrowLeft } from 'lucide-rea
 import ReCAPTCHA from "react-google-recaptcha";
 import LogoWip from './../../assets/img/WIP_SinLetra.png';
 import styles from '../login/Login.module.css';
-import { UserService } from '../../services/UserService';
+import { UserService, type RecoverContrasenaTO, type UserRecoverTO } from '../../services/UserService';
 
 export function RecuperarPassword() {
     const navigate = useNavigate();
@@ -32,8 +32,11 @@ export function RecuperarPassword() {
 
         setIsLoading(true);
         try {
-            // const valid = await UserService.verificarIdentidad(correo, usuario, captchaToken);
-            const valid = true; 
+            const user: UserRecoverTO = {
+                usuario: usuario,
+                correo: correo,
+            }
+            const valid = await UserService.postValidarDatos(user);
             
             if (valid) {
                 setPaso(2); 
@@ -66,8 +69,15 @@ export function RecuperarPassword() {
 
         setIsLoading(true);
         try {
-            // const valid = await UserService.verificarIdentidad(correo, usuario, captchaToken);
-            navigate('/password-success');
+            const user: RecoverContrasenaTO = {
+                nuevaPass: nuevaPassword,
+                correo: correo,
+            }
+            const valid = await UserService.putReestablecerContrasena(user);
+
+            if (valid){
+                navigate('/recuperar_password/exito');
+            }
         } catch (err) {
             setError('No se pudo actualizar la contraseña.');
         } finally {

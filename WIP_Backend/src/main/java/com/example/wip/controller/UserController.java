@@ -92,7 +92,7 @@ public class UserController {
         return userService.validarDatos(datos);        
     }
 
-    @PutMapping("/recuperar_contrasena/validar")
+    @PutMapping("/recuperar_contrasena")
     public boolean reestablecerContrasena(@RequestBody RecoverContrasenaDTO datos) {
         return userService.reestablecerContrasena(datos);        
     }
