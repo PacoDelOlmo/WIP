@@ -290,6 +290,25 @@
 }
 .create_account:hover { text-decoration: underline; }
 
+.error_general {
+    color: #d9534f;
+    background-color: #fbeee6;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem
+}
+
+.captcha {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem
+}
+
 
 /* Animación */
 @keyframes slideUp {

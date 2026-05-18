@@ -107,7 +107,7 @@ export function Login() {
                         </span>
                         <span className={styles.checkbox_text}>Recordarme</span>
                     </label>
-                    <Link to="#" className={styles.forgot_link}>¿Olvidaste tu contraseña?</Link>
+                    <Link to="/recuperar_password" className={styles.forgot_link}>¿Olvidaste tu contraseña?</Link>
                 </div>
 
                 <button className={styles.primary_button} type='submit'>Iniciar sesión</button>
