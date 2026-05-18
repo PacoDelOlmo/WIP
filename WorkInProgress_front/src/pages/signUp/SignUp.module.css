@@ -6,7 +6,7 @@
     --color-acento: #4A7984;
     --gris-claro: #EAEAEA;
     --gris-medio: #D3D3D3;
-    --subnavbar-bg: #4E94AD; 
+    --subnavbar-bg: #4E94AD;
     --bg-verde: #A8D1D5;
     --verde-clarito: #E2F7FF;
     --naranja-acento: #F27A24;
@@ -16,13 +16,13 @@
 
 
 .signupPageContainer {
-    min-height: 100vh; 
+    min-height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 1rem; 
-    background-color: var(--gris-claro); 
+    padding: 2rem 1rem;
+    background-color: var(--gris-claro);
     background-image: linear-gradient(to bottom, #ffffff, var(--verde-clarito));
     position: relative;
     overflow-x: hidden;
@@ -33,12 +33,12 @@
     position: absolute;
     top: -10%;
     right: -10%;
-    width: 60%; 
+    width: 60%;
     height: 70%;
     background: linear-gradient(135deg, var(--naranja-suave), var(--subnavbar-bg));
     opacity: 0.35;
     border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-    transform: rotate(20deg); 
+    transform: rotate(20deg);
     z-index: 0;
     filter: blur(70px);
 }
@@ -65,13 +65,13 @@
     backdrop-filter: blur(10px);
     padding: 2.5rem;
     border-radius: 1.5rem;
-    
+
     width: 100%;
     max-width: 500px;
-    
+
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(57, 110, 129, 0.15);
     border: .1rem solid var(--color-acento);
-    
+
     animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -79,7 +79,12 @@
     text-align: center;
     margin-bottom: 2rem;
 }
-.logo { width: 50px; margin-bottom: 0.5rem; }
+
+.logo {
+    width: 50px;
+    margin-bottom: 0.5rem;
+}
+
 .header h1 {
     font-family: var(--fuente-principal);
     color: var(--color-primario);
@@ -87,6 +92,7 @@
     font-size: 1.8rem;
     font-weight: 700;
 }
+
 .subtitle {
     color: var(--color-texto-secundario);
     margin-top: 0.2rem;
@@ -117,7 +123,8 @@
     align-items: center;
 }
 
-.input_icon, .input_prefix {
+.input_icon,
+.input_prefix {
     position: absolute;
     left: 0.8rem;
     color: var(--color-primario);
@@ -191,18 +198,19 @@
     color: white;
 }
 
-.checkbox_container:hover input ~ .checkmark {
+.checkbox_container:hover input~.checkmark {
     background-color: #ccc;
 }
 
-.checkbox_container input:checked ~ .checkmark {
+.checkbox_container input:checked~.checkmark {
     background-color: var(--color-primario);
 }
 
 .checkmark svg {
     display: none;
 }
-.checkbox_container input:checked ~ .checkmark svg {
+
+.checkbox_container input:checked~.checkmark svg {
     display: block;
 }
 
@@ -211,7 +219,10 @@
     font-weight: 600;
     text-decoration: none;
 }
-.terms_text a:hover { text-decoration: underline; }
+
+.terms_text a:hover {
+    text-decoration: underline;
+}
 
 
 .primary_button {
@@ -226,7 +237,7 @@
     font-family: var(--fuente-principal);
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .primary_button:hover {
@@ -247,10 +258,17 @@
     font-size: 0.8rem;
     margin-bottom: 1rem;
 }
-.separator::before, .separator::after {
-    content: ''; flex: 1; border-bottom: 1px solid var(--gris-medio);
+
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--gris-medio);
 }
-.separator span { margin: 0 1rem; }
+
+.separator span {
+    margin: 0 1rem;
+}
 
 .social_buttons_group {
     display: flex;
@@ -272,6 +290,7 @@
     transition: all 0.2s;
     color: var(--color-texto-primario);
 }
+
 .social_btn:hover {
     background-color: var(--gris-claro);
     border-color: var(--color-primario);
@@ -290,10 +309,54 @@
     text-decoration: none;
     margin-left: 0.4rem;
 }
-.login_link:hover { text-decoration: underline; }
+
+.login_link:hover {
+    text-decoration: underline;
+}
+
+.error_general {
+    color: #d9534f;
+    background-color: #fbeee6;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem
+}
+
+.captcha {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem
+}
+
+.error_correo {
+    color: #d9534f;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: block
+}
+
+.error_pass {
+    color: #d9534f;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: block;
+    line-height: 1.2
+}
 
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(40px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }

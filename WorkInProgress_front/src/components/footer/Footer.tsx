@@ -42,7 +42,7 @@ export function Footer() {
                     <h3 onClick={() => handleToggle('informacion')}>Información</h3>
                     <ul className={styles.enlaces}>
                         <li><Link to={'/guia_estilos'}>¿Que es WIP?</Link></li>
-                        <li><Link to={'/trabaja'}>Trabaja con nosotros</Link></li>
+                        <li><Link to={'/trabaja_con_nosotros'}>Trabaja con nosotros</Link></li>
                         <li><Link to={'/politica_privacidad'}>Política de privacidad</Link></li>
                         <li><Link to={'/terminos_condiciones'}>Términos y condiciones de uso</Link></li>
                         <li><Link to={'/politica_cookies'}>Politica de cookies</Link></li>
