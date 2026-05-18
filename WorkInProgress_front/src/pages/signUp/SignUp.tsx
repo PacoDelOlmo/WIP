@@ -6,8 +6,8 @@ import { useState, useRef } from 'react';
 import { RegisterService } from '../../services/RegisterService';
 import type { RegisterUser } from '../../services/RegisterService';
 import { useAuthStore } from '../../store/Auth';
+import { ToastNotification } from '../../components/toastNotification/ToastNotification';
 
-// ✨ IMPORTAMOS EL CAPTCHA
 import ReCAPTCHA from "react-google-recaptcha";
 
 export function SignUp() {
@@ -53,6 +53,12 @@ export function SignUp() {
         setCaptchaToken(token);
         if (error === 'Por favor, completa el CAPTCHA') setError('');
     };
+
+    const [toastConfig, setToastConfig] = useState<{ isVisible: boolean; message: string; type: 'success' | 'error' }>({
+        isVisible: false,
+        message: "",
+        type: "success"
+    });
 
     async function register(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -113,6 +119,10 @@ export function SignUp() {
             setCaptchaToken(null);
         }
     }
+
+    const showToast = (message: string, type: 'success' | 'error') => {
+        setToastConfig({ isVisible: true, message, type });
+    };
 
     return (
     <div className={styles.signupPageContainer}>
@@ -213,9 +223,32 @@ export function SignUp() {
                 </div>
                 
                 <div className={styles.social_buttons_group}>
-                    <button className={styles.social_btn} title="Google"><Chrome size={20}/></button>
-                    <button className={styles.social_btn} title="Apple"><Apple size={20}/></button>
-                    <button className={styles.social_btn} title="GitHub"><Github size={20}/></button>
+                    <button 
+                        type="button" 
+                        className={styles.social_btn} 
+                        title="Google"
+                        onClick={() => showToast("La integración con Google estará disponible en la v2.0", "success")}
+                    >
+                        <Chrome size={20}/>
+                    </button>
+                    
+                    <button 
+                        type="button" 
+                        className={styles.social_btn} 
+                        title="Apple"
+                        onClick={() => showToast("El inicio de sesión con Apple llegará próximamente", "success")}
+                    >
+                        <Apple size={20}/>
+                    </button>
+                    
+                    <button 
+                        type="button" 
+                        className={styles.social_btn} 
+                        title="GitHub"
+                        onClick={() => showToast("La vinculación con GitHub se implementará pronto", "success")}
+                    >
+                        <Github size={20}/>
+                    </button>
                 </div>
                 
                 <div className={styles.links_footer}>
@@ -224,6 +257,14 @@ export function SignUp() {
                 </div>
             </section>
         </main>
+
+        <ToastNotification 
+            isVisible={toastConfig.isVisible}
+            message={toastConfig.message}
+            type={toastConfig.type}
+            onClose={() => setToastConfig({ ...toastConfig, isVisible: false })}
+        />
+        
     </div>
     )
 }
