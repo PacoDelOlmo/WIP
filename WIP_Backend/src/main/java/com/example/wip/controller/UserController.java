@@ -6,11 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.wip.model.ConfirmationObject;
 import com.example.wip.model.ElementDTO;
 import com.example.wip.model.NewElementDTO;
+import com.example.wip.model.RecoverContrasenaDTO;
 import com.example.wip.model.TaskboardDTO;
 import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.model.UserMailDTO;
 import com.example.wip.model.UserPasswordDTO;
+import com.example.wip.model.UserRecoverDTO;
 import com.example.wip.model.WorkspaceDTO;
 import com.example.wip.service.interfaces.TaskboardService;
 import com.example.wip.service.interfaces.UserService;
@@ -79,6 +81,22 @@ public class UserController {
     public ConfirmationObject actualizarContrasena(@PathVariable long id, @RequestBody UserPasswordDTO nuevaContrasena) {
         return userService.actualizarContrasena(nuevaContrasena);
     }
+
+    @PutMapping("/{id}/nuevo_nombre_usuario")
+    public ConfirmationObject actualizarNickname(@PathVariable long id, @RequestBody UserMailDTO nuevoNickname) {
+        return userService.actualizarNickname(nuevoNickname);
+    }
+
+    @PostMapping("/recuperar_contrasena/validar")
+    public boolean validarCorreoUsuario(@RequestBody UserRecoverDTO datos) {
+        return userService.validarDatos(datos);        
+    }
+
+    @PutMapping("/recuperar_contrasena/validar")
+    public boolean reestablecerContrasena(@RequestBody RecoverContrasenaDTO datos) {
+        return userService.reestablecerContrasena(datos);        
+    }
+    
 
     @PostMapping("/{id}/workspace/nuevo")
     public WorkspaceDTO nuevoWorkspace(@PathVariable long id, @RequestBody NewElementDTO workspace) {

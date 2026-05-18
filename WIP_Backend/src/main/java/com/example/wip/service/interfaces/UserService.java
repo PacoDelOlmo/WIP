@@ -7,10 +7,12 @@ import com.example.wip.model.ElementDTO;
 import com.example.wip.model.LoginDTO;
 import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.NewUserDTO;
+import com.example.wip.model.RecoverContrasenaDTO;
 import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.model.UserMailDTO;
 import com.example.wip.model.UserPasswordDTO;
+import com.example.wip.model.UserRecoverDTO;
 
 
 public interface UserService {
@@ -24,4 +26,7 @@ public interface UserService {
     ConfirmationObject actualizarCorreo(UserMailDTO nuevoEmail);
     ConfirmationObject actualizarContrasena(UserPasswordDTO nuevaContrasena);
     List<ElementDTO> buscarElementos(long idUser, NewElementDTO busqueda);
+    boolean validarDatos(UserRecoverDTO datos);
+    boolean reestablecerContrasena(RecoverContrasenaDTO datos);
+    ConfirmationObject actualizarNickname(UserMailDTO nuevoNickname);
 }

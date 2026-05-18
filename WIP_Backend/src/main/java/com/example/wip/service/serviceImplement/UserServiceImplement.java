@@ -14,6 +14,7 @@ import com.example.wip.model.ElementDTO;
 import com.example.wip.model.LoginDTO;
 import com.example.wip.model.NewElementDTO;
 import com.example.wip.model.NewUserDTO;
+import com.example.wip.model.RecoverContrasenaDTO;
 import com.example.wip.model.TaskDTO;
 import com.example.wip.model.TaskQueueDTO;
 import com.example.wip.model.TaskboardDTO;
@@ -21,6 +22,7 @@ import com.example.wip.model.UserCompleteDTO;
 import com.example.wip.model.UserDTO;
 import com.example.wip.model.UserMailDTO;
 import com.example.wip.model.UserPasswordDTO;
+import com.example.wip.model.UserRecoverDTO;
 import com.example.wip.model.WorkspaceDTO;
 import com.example.wip.repository.UserRepository;
 import com.example.wip.service.ConversorService;
@@ -154,7 +156,7 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public ConfirmationObject actualizarContrasena(UserPasswordDTO nuevaContrasena) {
-                ConfirmationObject confirmacion = new ConfirmationObject();
+        ConfirmationObject confirmacion = new ConfirmationObject();
         Optional<UserEntity> usuario = repo.findById(nuevaContrasena.getId());
 
         confirmacion.setCorrect(false);
@@ -211,6 +213,57 @@ public class UserServiceImplement implements UserService {
         } 
 
         return elementosCoincidientes;
+    }
+
+    @Override
+    public boolean validarDatos(UserRecoverDTO datos) {
+        boolean datosCorrectos = false;
+        UserEntity usuario = repo.findByCorreo(datos.getCorreo()); 
+
+        if (usuario != null){
+            if (usuario.getCorreo().equalsIgnoreCase(datos.getCorreo()) 
+                && usuario.getNombreUsuario().equalsIgnoreCase(datos.getUsuario())){
+                    datosCorrectos = true;
+            }
+        }
+
+        return datosCorrectos; 
+    }
+
+    @Override
+    public boolean reestablecerContrasena(RecoverContrasenaDTO datos) {
+        boolean datosCorrectos = false;
+        UserEntity usuario = repo.findByCorreo(datos.getCorreo()); 
+
+        if (usuario != null){
+            if (usuario.getCorreo().equalsIgnoreCase(datos.getCorreo())){
+                usuario.setContrasena(datos.getNuevaPass());
+                repo.save(usuario);
+                datosCorrectos = true;
+            }
+        }
+
+        return datosCorrectos; 
+    }
+
+    @Override
+    public ConfirmationObject actualizarNickname(UserMailDTO nuevoNickname) {
+        ConfirmationObject confirmacion = new ConfirmationObject();
+        Optional<UserEntity> usuario = repo.findById(nuevoNickname.getId());
+
+        if (usuario.isPresent()){
+            usuario.get().setNombreUsuario(nuevoNickname.getMail());
+            repo.save(usuario.get());
+            confirmacion.setCorrect(true);
+            confirmacion.setDescription("Correo acutalizado de forma correcta");
+            confirmacion.setIdUser(nuevoNickname.getId());
+        } else {
+            confirmacion.setCorrect(false);
+            confirmacion.setDescription("ERROR: Correo no acutalizado");
+            confirmacion.setIdUser(nuevoNickname.getId());
+        }
+
+        return confirmacion;
     }
 
 }
