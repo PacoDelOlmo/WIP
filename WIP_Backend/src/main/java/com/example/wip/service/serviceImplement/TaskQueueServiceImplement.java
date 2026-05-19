@@ -45,6 +45,7 @@ public class TaskQueueServiceImplement implements TaskQueueService{
             nuevaListaTareas.setNombreLista(lista.getTittle());
             nuevaListaTareas.setFechaCreacion(LocalDateTime.now());
             nuevaListaTareas.setPosicion(tablero.get().getListasTareas().size());
+            nuevaListaTareas.setColor("#EAEAEA");
             tqRepo.save(nuevaListaTareas);
 
             tablero.get().getListasTareas().add(nuevaListaTareas);

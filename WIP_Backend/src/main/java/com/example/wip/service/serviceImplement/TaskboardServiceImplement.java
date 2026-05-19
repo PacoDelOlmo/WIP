@@ -83,6 +83,7 @@ public class TaskboardServiceImplement implements TaskboardService {
             if (usuario.get().getIdUsuario() == workspace.get().getPropietario().getIdUsuario() && workspace.get().getIdEspacioTrabajo() == idw){
                 nuevoTablero.setNombreTablero(tablero.getTittle());
                 nuevoTablero.setEspacioTrabajo(workspace.get());
+                nuevoTablero.setColor("#A8D1D5");
                 repo.save(nuevoTablero);
             }
         }

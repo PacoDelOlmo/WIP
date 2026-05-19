@@ -51,6 +51,7 @@ public class ConversorService {
             dto.getTableros().add(entityADto(tb));
         }
         dto.setIdPropietario(entidad.getPropietario().getIdUsuario());
+        dto.setColor(entidad.getColor());
 
         return dto;
     }
@@ -60,7 +61,7 @@ public class ConversorService {
 
         dto.setId(entidad.getIdTablero());
         dto.setNombreTablero(entidad.getNombreTablero());
-        
+        dto.setColor(entidad.getColor());
         for(TaskqueueEntity t : entidad.getListasTareas()){
             dto.getListaTareas().add(entityADto(t));
         }
@@ -73,6 +74,7 @@ public class ConversorService {
         
         dto.setTitulo(entidad.getNombreLista());
         dto.setId(entidad.getIdListaTareas());
+        dto.setColor(entidad.getColor());
         for(TaskEntity t : entidad.getTareas()){
             dto.getTareas().add(entityADto(t));
         }
@@ -88,7 +90,7 @@ public class ConversorService {
         dto.setDescripcion(entidad.getDescripcion());
         dto.setCreador(entityADto(entidad.getAutor()));
         dto.setCompletada(entidad.isCompletada());
-        
+        dto.setColor(entidad.getColor());
         for (CommentEntity c : entidad.getComentarios()){
             dto.getComentarios().add(entityADto(c));
         }

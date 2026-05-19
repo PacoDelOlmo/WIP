@@ -85,6 +85,7 @@ public class TaskServiceImplement implements TaskService {
                 newTarea.setDescripcion("");
                 newTarea.setFechaCreacion(LocalDateTime.now());
                 newTarea.setPosicion(listaTareas.get().getTareas().size());
+                newTarea.setColor("#EAEAEA");
                 newTarea = tRepo.save(newTarea);
 
                 listaTareas.get().getTareas().add(newTarea);
@@ -124,6 +125,7 @@ public class TaskServiceImplement implements TaskService {
                 task.get().setDescripcion(tarea.getDescripcion());
                 task.get().setCompletada(tarea.isCompletada());
                 task.get().setTitulo(tarea.getTitulo());
+                task.get().setColor(tarea.getColor());
             }
 
         }
