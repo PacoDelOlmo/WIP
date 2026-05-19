@@ -193,6 +193,22 @@ public class TaskServiceImplement implements TaskService {
     }
     
 
+    @Override
+    public TaskDTO editarColorTarea(long id, long idl, long idt, NewElementDTO colorTarea) {
+        Optional<TaskboardEntity> tablero = repo.findById(id);
+        Optional<TaskqueueEntity> listaTareas = tqRepo.findById(idl);
+        Optional<TaskEntity> task = tRepo.findById(idt);
+
+        if (tablero.isPresent() && listaTareas.isPresent() && task.isPresent()){
+            if (tablero.get() == listaTareas.get().getTablero() && task.get().getListaTareas() == listaTareas.get()){
+                task.get().setColor(colorTarea.getTittle());
+            }
+
+        }
+        tRepo.save(task.get());
+        return conversor.entityADto(task.get());
+    }
+
 
     private Set<CommentEntity> convertirComentarios (List<CommentDTO> comentarios, long idTarea){
         Set<CommentEntity> comentariosEntidad = new HashSet<CommentEntity>();

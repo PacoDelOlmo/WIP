@@ -16,4 +16,5 @@ public interface WorkspaceService {
     boolean quitarAcceso(long id, long idUser);
     List<UserWorkSpaceDTO> mostrarPermisos(long id);
     WorkspaceDTO obtenerWorkSpace(long id);
+    WorkspaceDTO editarColorWorkspace(long id, long idw, NewElementDTO nuevoColor);
 }

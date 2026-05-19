@@ -74,6 +74,11 @@ public class TaskBoardController {
     public TaskQueueDTO editarLista(@PathVariable long id, @PathVariable long idl, @RequestBody NewElementDTO nuevoNombre) {
         return tqService.editarLista(id, idl, nuevoNombre);
     }
+
+    @PutMapping("/tablero/{id}/lista/{idl}/editar_color")
+    public TaskQueueDTO editarColorLista(@PathVariable long id, @PathVariable long idl, @RequestBody NewElementDTO nuevoColor) {
+        return tqService.editarColorLista(id, idl, nuevoColor);
+    }
     
     @PutMapping("/tablero/{id}/lista/{idl}/borrar")
     public boolean borrarLista(@PathVariable long id, @PathVariable long idl) {
@@ -88,6 +93,11 @@ public class TaskBoardController {
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/editar_nombre")
     public TaskDTO editarNombreTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @RequestBody NewElementDTO nuevoNombre) {
         return tService.editarNombreTarea(id, idl, idt, nuevoNombre);
+    }
+
+    @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/editar_color")
+    public TaskDTO editarColorTarea(@PathVariable long id, @PathVariable long idl, @PathVariable long idt, @RequestBody NewElementDTO nuevoColor) {
+        return tService.editarColorTarea(id, idl, idt, nuevoColor);
     }
 
     @PutMapping("/tablero/{id}/lista/{idl}/tarea/{idt}/editar")

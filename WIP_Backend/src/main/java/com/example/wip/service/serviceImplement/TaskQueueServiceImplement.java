@@ -89,4 +89,20 @@ public class TaskQueueServiceImplement implements TaskQueueService{
         return false;
     }
 
+        @Override
+    public TaskQueueDTO editarColorLista(long id, long idl, NewElementDTO lista) {
+        Optional<TaskboardEntity> tablero = tbRepo.findById(id);
+        Optional<TaskqueueEntity> listaTareas = tqRepo.findById(idl);
+
+        if (tablero.isPresent() && listaTareas.isPresent()){
+            if (tablero.get() == listaTareas.get().getTablero()){
+                listaTareas.get().setColor(lista.getTittle());
+                tqRepo.save(listaTareas.get());
+            }
+
+        }
+
+        return conversor.entityADto(listaTareas.get());
+    }
+
 }

@@ -107,6 +107,22 @@ public class TaskboardServiceImplement implements TaskboardService {
         return conversor.entityADto(tablero.get());
     }
 
+    @Override
+    public TaskboardDTO editarColorTablero(long id, long idw, long idt, NewElementDTO nuevoColor) {
+        Optional<UserEntity> usuario = uRepo.findById(id);
+        Optional<WorkspaceEntity> workspace = wRepo.findById(idw);
+        Optional<TaskboardEntity> tablero = repo.findById(idt);
+
+        if (usuario.isPresent() && workspace.isPresent() && tablero.isPresent()){
+            if (usuario.get().getIdUsuario() == id && workspace.get().getIdEspacioTrabajo() == idw && tablero.get().getIdTablero() == idt){
+                tablero.get().setColor(nuevoColor.getTittle());
+                repo.save(tablero.get());
+            }
+        }
+
+        return conversor.entityADto(tablero.get());
+    }
+
 
     @Override
     public long obtenerIdWorkSpace(long id) {

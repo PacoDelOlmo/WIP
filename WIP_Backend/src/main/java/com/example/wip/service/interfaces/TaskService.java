@@ -17,4 +17,5 @@ public interface TaskService {
     TaskDTO moverTarea(long id, long idl, long idt);
     TaskDTO actualizarEstadoTarea(long id, long idl, long idt);
     boolean borrarTarea(long id, long idl, long idt);
+    TaskDTO editarColorTarea(long id, long idl, long idt, NewElementDTO nuevoColor);
 }

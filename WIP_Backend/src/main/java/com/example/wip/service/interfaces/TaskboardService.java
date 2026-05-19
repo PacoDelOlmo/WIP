@@ -17,4 +17,5 @@ public interface TaskboardService {
     long obtenerIdWorkSpace(long id);
     boolean actualizarOrdenListas(long id, OrdenListasDTO nuevoOrden);
     boolean actuaizarOrdenTareasLista (long idTablero, long idLista, OrdenTareasListaDTO nuevoOrden);
+    TaskboardDTO editarColorTablero(long id, long idw, long idt, NewElementDTO nuevoColor);
 }
