@@ -27,22 +27,26 @@ export type UserCompleteDTO = {
 }
 export interface Tarea {
     id: number, 
-    titulo: string;
-    fecha?: string; 
+    titulo: string,
+    fecha?: string,
+    color: string,
 }
 export interface ListaTareas {
     titulo: string;
     tareas: Tarea[];
+    color: string,
 }
 export interface Tablero {
     id : number,
     nombreTablero: string;
     listaTareas: ListaTareas[];
+    color: string,
 }
 export interface WorkspaceType {
     id: number,
     nombre: string;
     tableros: Tablero[];
+    color: string,
 }
 
 export function Home() {

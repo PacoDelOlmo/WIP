@@ -7,7 +7,8 @@ export interface WorkSpaceTO{
     id: number,
     nombre: string, 
     tableros: BoardTO[],
-    idPropietario: number
+    idPropietario: number,
+    color: string,
 }
 
 export interface UserWorkSpaceTO{

@@ -9,6 +9,7 @@ export interface TaskQueueTO{
     id: number;
     titulo: string,
     tareas: TaskTO[],
+    color: string,
 }
 
 export const TaskQueueService = {

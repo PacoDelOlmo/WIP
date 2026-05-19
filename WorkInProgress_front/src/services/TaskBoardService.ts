@@ -5,6 +5,7 @@ export interface BoardTO{
     id: number,
     nombreTablero: string,
     listaTareas: TaskQueueTO[],
+    color: string,
 }
 
 export interface OrdenListas{
