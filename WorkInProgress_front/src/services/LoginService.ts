@@ -1,4 +1,5 @@
 import axiosClient from "../api/axiosClient";
+import { type UserCompleteDTO } from "../pages/home/Home";
 
 export interface UserTO{
     id: number,
@@ -16,7 +17,7 @@ export const LoginService = {
     },
 
     getUserById: async (id :number) =>{
-        const response = await axiosClient.get(`/users/user/${id}`);
+        const response = await axiosClient.get<UserCompleteDTO>(`/users/user/${id}`);
         return response.data;
     }
 }

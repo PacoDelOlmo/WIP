@@ -6,6 +6,7 @@ import { useAuthStore } from "../../store/Auth";
 import { MousePointer2 } from "lucide-react"; 
 import styles from "./HomePage.module.css";
 import { CookieBanner } from "../../components/cookieBanner/CookieBanner";
+import { usePageTitle } from "../../hooks/usePageTittle";
 
 export function HomePage() {
     const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -18,6 +19,8 @@ export function HomePage() {
     if (isLoggedIn){
         return <Navigate to="/user/home" replace/>
     }
+
+    usePageTitle(`Work In Progress`);
 
   return (
     <div className={styles.pageWrapper}>

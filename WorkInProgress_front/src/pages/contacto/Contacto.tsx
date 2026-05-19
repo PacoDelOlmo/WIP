@@ -3,8 +3,11 @@ import { Footer } from '../../components/footer/Footer';
 import { Building2, Mail, Globe } from 'lucide-react';
 import styles from './Contacto.module.css';
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function Contacto() {
+    usePageTitle('Contacto');
+
     return (
         <div className={styles.pageWrapper}>
             <Header />

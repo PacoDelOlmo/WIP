@@ -3,8 +3,10 @@ import { Footer } from '../../components/footer/Footer';
 import { Cookie } from 'lucide-react';
 import styles from './PoliticaCookies.module.css';
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function PoliticaCookies() {
+    usePageTitle(`Política de Cookies`);
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.blobShape1}></div>

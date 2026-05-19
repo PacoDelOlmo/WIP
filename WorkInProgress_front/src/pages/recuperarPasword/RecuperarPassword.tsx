@@ -5,6 +5,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import LogoWip from './../../assets/img/WIP_SinLetra.png';
 import styles from '../login/Login.module.css';
 import { UserService, type RecoverContrasenaTO, type UserRecoverTO } from '../../services/UserService';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function RecuperarPassword() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ export function RecuperarPassword() {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const recaptchaRef = useRef<ReCAPTCHA>(null);
-
+    usePageTitle('Recupera tu contraseña');
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
     const handleVerificar = async (e: React.FormEvent) => {

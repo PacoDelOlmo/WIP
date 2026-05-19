@@ -13,6 +13,7 @@ import type { newElementTO } from '../../services/TaskQueueService';
 import { DragDropContext, Droppable, Draggable, type DropResult } from '@hello-pangea/dnd';
 import type { TaskTO } from '../../services/TaskService';
 import { ConfirmModal } from '../modalConfirm/ConfirmModal';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 
 export function Board() {
@@ -24,7 +25,7 @@ export function Board() {
 
   const [isAddingList, setIsAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
-
+  usePageTitle(`${board?.nombreTablero}`);
 
   async function obtenerTablero(idTablero: number) {
     try {

@@ -8,6 +8,7 @@ import { ConfirmModal } from '../modalConfirm/ConfirmModal';
 import { ToastNotification } from '../toastNotification/ToastNotification';
 import { useAuthStore } from '../../store/Auth';
 import { AccessDeniedInternal } from '../../pages/accesDeneidInternal/AccessDeniedInternal';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 interface AjustesProps {
     usuario: UserCompleteDTO;
@@ -33,6 +34,8 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
     useEffect(() => {
         if (id) cargarDatos(Number(id));
     }, [id]);
+
+    usePageTitle(`${workspace?.nombre} | Ajustes`);
 
     const cargarDatos = async (idWs: number) => {
         try {

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import { ShieldAlert, Home, ArrowLeft } from 'lucide-react';
 import styles from './AccessDeniedInternal.module.css';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 interface AccessDeniedProps {
     mensaje?: string;
@@ -8,7 +9,7 @@ interface AccessDeniedProps {
 
 export function AccessDeniedInternal({ mensaje = "No tienes los permisos necesarios para acceder a esta área." }: AccessDeniedProps) {
     const navigate = useNavigate();
-
+    usePageTitle('Acceso denegado');
     return (
         <div className={styles.container}>
             <div className={styles.content}>

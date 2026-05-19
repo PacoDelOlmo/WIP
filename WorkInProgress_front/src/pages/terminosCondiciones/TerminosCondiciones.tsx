@@ -3,8 +3,10 @@ import { Footer } from '../../components/footer/Footer';
 import { Scale } from 'lucide-react';
 import styles from './TerminosCondiciones.module.css';
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function TerminosCondiciones() {
+    usePageTitle(`Términos y condiciones`);
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.blobShape1}></div>

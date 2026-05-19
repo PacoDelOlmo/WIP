@@ -4,6 +4,7 @@ import { Search, Briefcase, LayoutDashboard, List, CheckSquare, Loader2 } from '
 import { UserService, type ElementTO } from '../../services/UserService';
 import { useAuthStore } from '../../store/Auth';
 import styles from './ResultadosBusqueda.module.css';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function ResultadosBusqueda() {
     const [searchParams] = useSearchParams();
@@ -14,6 +15,8 @@ export function ResultadosBusqueda() {
     const [resultados, setResultados] = useState<ElementTO[]>([]);
     const [isSearching, setIsSearching] = useState(false);
 
+    usePageTitle(`Resultados: ${query}`);
+    
     useEffect(() => {
         if (query && idUsuario) {
             realizarBusqueda(query);

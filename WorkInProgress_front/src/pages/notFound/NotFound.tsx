@@ -3,10 +3,12 @@ import styles from "./NotFound.module.css";
 import { Link } from "react-router"; // O react-router-dom según tu versión
 import { Home, FileQuestion, LogIn } from "lucide-react";
 import { useAuthStore } from "../../store/Auth";
+import { usePageTitle } from "../../hooks/usePageTittle";
 
 export default function NotFound() {
 
     const userLogged = useAuthStore((state) => state.isLoggedIn);
+    usePageTitle(`404 | Tablero perdido`);
 
   return (
     <main className={styles.container}>

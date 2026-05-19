@@ -8,6 +8,7 @@ import type { UserCompleteDTO } from '../../pages/home/Home'
 import { TaskBoardService } from '../../services/TaskBoardService';
 import type { newElementTO } from '../../services/TaskQueueService';
 import { WorkSpaceService, type WorkSpaceTO } from '../../services/WorkSpaceService'
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 interface UserProps {
     usuario: UserCompleteDTO;
@@ -15,7 +16,7 @@ interface UserProps {
 }
 
 export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
-
+    usePageTitle(` Home | ${usuario.username}`);
   const navigate = useNavigate();
   const [isAddingWS, setIsAddingWS] = useState(false);
   const [newWorkSpaceTitle, setNewWorkSpaceTitle] = useState("");
