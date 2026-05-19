@@ -51,4 +51,9 @@ export const WorkSpaceService = {
         const response = await axiosClient.put<boolean>(`/users/${idUser}/workspace/${id}/editar`, nuevoNombre);
         return response.data;
     },
+
+    editarColorWorkSpace: async(id: number, idUser: number, nuevoColor: newElementTO) => {
+        const response = await axiosClient.put<boolean>(`/users/${idUser}/workspace/${id}/editar_color`, nuevoColor);
+        return response.data;
+    },
 }

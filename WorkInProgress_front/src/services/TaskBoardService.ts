@@ -41,6 +41,11 @@ export const TaskBoardService = {
         return response.data;
     }, 
 
+    editarColorTablero: async (nuevoColor: newElementTO, idUser: number, idTablero: number, idWs: number, ) => {
+        const response = await axiosClient.put<BoardTO>(`/users/${idUser}/workspace/${idWs}/tablero/${idTablero}/editar_color`, nuevoColor);
+        return response.data;
+    }, 
+
     updateOrdenListas: async (idTablero: number, nuevasOrden: OrdenListas) => {
         const response = await axiosClient.put<boolean>(`/taskboard/tablero/${idTablero}/actualizar_orden`, nuevasOrden);
         return response.data;

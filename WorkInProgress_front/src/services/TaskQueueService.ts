@@ -28,6 +28,11 @@ export const TaskQueueService = {
         return response.data;
     }, 
 
+    editarColorLista: async (nuevoColor: newElementTO, idTablero: number, idLista: number) => {
+        const response = await axiosClient.put<TaskQueueTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/editar_color`, nuevoColor);
+        return response.data;
+    }, 
+
     deleteLista: async ( idTablero: number, idLista: number) =>{
         const response = await axiosClient.put<boolean>(`/taskboard/tablero/${idTablero}/lista/${idLista}/borrar`);
         return response.data;

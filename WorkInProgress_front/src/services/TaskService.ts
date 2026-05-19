@@ -8,6 +8,7 @@ export interface TaskTO{
     descripcion: string,
     completada: boolean,
     creador: UserTO,
+    color: string,
     etiquetas: TagTO[],
     comentarios: CommentTO[],
 }
@@ -58,6 +59,11 @@ export const TaskService = {
 
     editarNombreTarea: async (nuevoNombre: newElementTO, idTablero: number, idLista: number, idTarea: number) => {
         const response = await axiosClient.put<TaskTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/editar_nombre`, nuevoNombre);
+        return response.data;
+    }, 
+
+    editarColorTarea: async (nuevoColor: newElementTO, idTablero: number, idLista: number, idTarea: number) => {
+        const response = await axiosClient.put<TaskTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/tarea/${idTarea}/editar_color`, nuevoColor);
         return response.data;
     }, 
 
