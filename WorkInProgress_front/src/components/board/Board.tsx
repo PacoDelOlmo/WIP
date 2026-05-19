@@ -25,7 +25,6 @@ export function Board() {
 
   const [isAddingList, setIsAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
-  usePageTitle(`${board?.nombreTablero}`);
 
   async function obtenerTablero(idTablero: number) {
     try {
