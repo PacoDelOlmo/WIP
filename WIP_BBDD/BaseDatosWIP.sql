@@ -16,6 +16,7 @@ CREATE TABLE WORKSPACE(
     ID_WORKSPACE BIGINT AUTO_INCREMENT PRIMARY KEY,
     NOMBRE VARCHAR(255),
     PROPIETARIO BIGINT NOT NULL,
+    COLOR VARCHAR(7) DEFAULT '#EAEAEA',
     CONSTRAINT FK_WORKSPACE_USER FOREIGN KEY (PROPIETARIO) REFERENCES APP_USER(ID_USUARIO)
 );
 
@@ -33,6 +34,7 @@ CREATE TABLE TASKBOARD(
     NOMBRE VARCHAR(255),
     FECHA_CREACION DATETIME,
     ID_WORKSPACE BIGINT NOT NULL,
+    COLOR VARCHAR(7) DEFAULT '#EAEAEA',
     CONSTRAINT FK_TASKBOARD_WORKSPACE FOREIGN KEY (ID_WORKSPACE) REFERENCES WORKSPACE(ID_WORKSPACE)
 );
 
@@ -42,6 +44,7 @@ CREATE TABLE TASKQUEUE(
     FECHA_CREACION DATETIME,
     POSICION BIGINT,
     ID_TASKBOARD BIGINT NOT NULL,
+    COLOR VARCHAR(7) DEFAULT '#EAEAEA',
     CONSTRAINT FK_TASKBQUEUE_TASKBOARD FOREIGN KEY (ID_TASKBOARD) REFERENCES TASKBOARD(ID_TASKBOARD)
 );
 
@@ -54,6 +57,7 @@ CREATE TABLE TASK(
     FECHA_CREACION DATETIME,
     POSICION BIGINT,
     ID_TASKQUEUE BIGINT NOT NULL,
+    COLOR VARCHAR(7) DEFAULT '#FFFFFF',
     CONSTRAINT FK_TASK_TASKQUEUE FOREIGN KEY (ID_TASKQUEUE) REFERENCES TASKQUEUE(ID_TASKQUEUE),
     CONSTRAINT FK_TASK_USER FOREIGN KEY (AUTOR) REFERENCES APP_USER(ID_USUARIO)
 );
@@ -96,7 +100,9 @@ VALUES ('Ana', 'Martínez', 'anam', 'ana.martinez@test.com', 'admin_pass');
 -- ==========================================
 -- 1. CREACIÓN DE WORKSPACE 
 -- ==========================================
-INSERT INTO WORKSPACE (NOMBRE, PROPIETARIO) VALUES ('Desarrollo TFG WIP', 1);
+-- Le damos el color Verde Agua (#A8D1D5) al workspace principal
+INSERT INTO WORKSPACE (NOMBRE, PROPIETARIO, COLOR) 
+VALUES ('Desarrollo TFG WIP', 1, '#A8D1D5');
 
 -- ==========================================
 -- 2. ASIGNACIÓN DE ROLES (USER_WORKSPACE)
@@ -108,29 +114,30 @@ INSERT INTO USER_WORKSPACE (ID_USUARIO, ID_WORKSPACE, ROL) VALUES
 -- ==========================================
 -- 3. CREACIÓN DE TABLEROS (TASKBOARD)
 -- ==========================================
-INSERT INTO TASKBOARD (NOMBRE, FECHA_CREACION, ID_WORKSPACE) VALUES 
-('Frontend - React', NOW(), 1),      
-('Backend - Spring Boot', NOW(), 1); 
+INSERT INTO TASKBOARD (NOMBRE, FECHA_CREACION, ID_WORKSPACE, COLOR) VALUES 
+('Frontend - React', NOW(), 1, '#B3E5FC'),      
+('Backend - Spring Boot', NOW(), 1, '#E1BEE7'); 
 
 -- ==========================================
 -- 4. CREACIÓN DE PILAS DE TAREAS (TASKQUEUE) CON POSICIÓN
 -- ==========================================
-INSERT INTO TASKQUEUE (NOMBRE, FECHA_CREACION, POSICION, ID_TASKBOARD) VALUES 
-('Por hacer', NOW(), 0, 1),       
-('En Progreso', NOW(), 1, 1),     
-('Terminado', NOW(), 2, 1),       
-('Backlog', NOW(), 0, 2),         
-('En Revisión', NOW(), 1, 2);     
+INSERT INTO TASKQUEUE (NOMBRE, FECHA_CREACION, POSICION, ID_TASKBOARD, COLOR) VALUES 
+('Por hacer', NOW(), 0, 1, '#EAEAEA'),       
+('En Progreso', NOW(), 1, 1, '#FBD5B9'), 
+('Terminado', NOW(), 2, 1, '#C8E6C9'),   
+('Backlog', NOW(), 0, 2, '#EAEAEA'),         
+('En Revisión', NOW(), 1, 2, '#FFF9C4');
 
 -- ==========================================
 -- 5. CREACIÓN DE TAREAS (TASK) CON POSICIÓN
 -- ==========================================
-INSERT INTO TASK (TITULO, AUTOR, DESCRIPCION, COMPLETADA, FECHA_CREACION, POSICION, ID_TASKQUEUE) VALUES 
-('Maquetar Header', 1, 'Usar CSS Modules y el logo nuevo', FALSE, NOW(), 0, 1),  
-('Componente Card', 2, 'Debe recibir props dinámicas', FALSE, NOW(), 0, 2),      
-('Configurar Vite', 3, 'Instalación inicial y limpieza', TRUE, NOW(), 0, 3),     
-('Diseñar Entidad User', 2, 'Definir campos y relaciones JPA', FALSE, NOW(), 0, 4),
-('Endpoint Login', 1, 'Solucionar problema de CORS', FALSE, NOW(), 0, 5);        
+-- Dejamos casi todas en blanco (#FFFFFF) excepto una urgente en Rosa Pálido
+INSERT INTO TASK (TITULO, AUTOR, DESCRIPCION, COMPLETADA, FECHA_CREACION, POSICION, ID_TASKQUEUE, COLOR) VALUES 
+('Maquetar Header', 1, 'Usar CSS Modules y el logo nuevo', FALSE, NOW(), 0, 1, '#FFFFFF'),  
+('Componente Card', 2, 'Debe recibir props dinámicas', FALSE, NOW(), 0, 2, '#FFFFFF'),      
+('Configurar Vite', 3, 'Instalación inicial y limpieza', TRUE, NOW(), 0, 3, '#FFFFFF'),     
+('Diseñar Entidad User', 2, 'Definir campos y relaciones JPA', FALSE, NOW(), 0, 4, '#FFFFFF'),
+('Endpoint Login', 1, 'Solucionar problema de CORS', FALSE, NOW(), 0, 5, '#F8BBD0'); -- Tarea destacada      
 
 -- ==========================================
 -- 6. NUEVAS ETIQUETAS (CATÁLOGO ÚNICO)
