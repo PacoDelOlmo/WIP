@@ -17,6 +17,7 @@ import { AjustesWorkspace } from '../../components/ajustesWorkspace/AjustesWorks
 import { ResultadosBusqueda } from '../resultadosBusqueda/ResultadosBusqueda'
 import { GuiaAyuda } from '../guiaAyuda/GuiaAyuda'
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner'
+import { usePageTitle } from '../../hooks/usePageTittle'
 
 export type UserCompleteDTO = {
   id: number,
@@ -47,7 +48,6 @@ export interface WorkspaceType {
 export function Home() {
 
   const userLogged = useAuthStore((state) => state.idUsuario)
-  
   const [user , setUser] = useState<UserCompleteDTO | null>(null);
 
   const handleAddWorkspace = (nuevoWorkspace: WorkSpaceTO) => {
@@ -71,7 +71,7 @@ export function Home() {
     const fetchUser = async () => {
       try {
         let datosUsuario = await LoginService.getUserById(userLogged);
-        console.log(datosUsuario);
+        //console.log(datosUsuario);
         setUser(datosUsuario);
       } catch (e) {
         console.error("Error cargando usuario:", e)

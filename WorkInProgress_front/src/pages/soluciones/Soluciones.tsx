@@ -3,8 +3,10 @@ import { Footer } from '../../components/footer/Footer';
 import { CheckCircle2, Users, Video, Megaphone, PenTool, Code2 } from 'lucide-react';
 import styles from './Soluciones.module.css';
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function Soluciones() {
+    usePageTitle(`Soluciones`);
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.blobShape1}></div>

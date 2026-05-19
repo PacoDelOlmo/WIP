@@ -9,8 +9,10 @@ import {
     Zap
 } from 'lucide-react';
 import styles from './GuiaAyuda.module.css';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function GuiaAyuda() {
+    usePageTitle('Guía de ayuda');
     return (
         <div className={styles.pageWrapper}>
             {/* Fondo con blobs dinámicos */}

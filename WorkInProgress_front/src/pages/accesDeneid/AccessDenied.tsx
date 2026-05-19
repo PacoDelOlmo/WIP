@@ -8,10 +8,11 @@ import {
     AlertOctagon
 } from 'lucide-react';
 import styles from './AccessDenied.module.css';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function AccessDeneid() {
     const navigate = useNavigate();
-
+    usePageTitle('Acceso denegado');
     return (
         <div className={styles.pageContainer}>
             <div className={styles.mainWrapper}>

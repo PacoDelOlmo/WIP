@@ -3,8 +3,10 @@ import { Footer } from '../../components/footer/Footer';
 import { ShieldAlert } from 'lucide-react';
 import styles from './PoliticaPrivacidad.module.css';
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function PoliticaPrivacidad() {
+    usePageTitle(`Política de Privacidad`);
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.blobShape1}></div>

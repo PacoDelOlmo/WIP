@@ -3,8 +3,10 @@ import { Footer } from '../../components/footer/Footer';
 import { Github, Code, PenTool, Bug, GitPullRequest } from 'lucide-react';
 import styles from './Trabaja.module.css';
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function Trabaja() {
+    usePageTitle(`Trabaja con nosotros`);
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.blobShape1}></div>

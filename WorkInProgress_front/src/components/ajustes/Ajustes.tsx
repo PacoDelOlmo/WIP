@@ -3,6 +3,7 @@ import { Mail, Lock, User, Save, AlertCircle, CheckCircle2 } from 'lucide-react'
 import { useState } from 'react'
 import { UserService } from '../../services/UserService'
 import { useAuthStore } from '../../store/Auth'
+import { usePageTitle } from '../../hooks/usePageTittle'
 
 export function Ajustes() {
     const userId = useAuthStore((state) => state.idUsuario);
@@ -17,7 +18,7 @@ export function Ajustes() {
     const [statusUsuario, setStatusUsuario] = useState<{ type: 'success' | 'error', msg: string } | null>(null);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-
+    usePageTitle(`Ajustes del perfil`);
 
     const handleCambioCorreo = async (e: React.FormEvent) => {
         e.preventDefault();

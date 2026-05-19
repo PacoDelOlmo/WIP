@@ -7,6 +7,7 @@ import { TaskBoardService } from '../../services/TaskBoardService';
 import { Link, useNavigate } from 'react-router';
 import { ConfirmModal } from '../modalConfirm/ConfirmModal';
 import { WorkSpaceService, type WorkSpaceTO } from '../../services/WorkSpaceService';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 interface NavTableroProps {
     tittle : string | undefined;
@@ -25,7 +26,7 @@ export function Nav_tablero( {tittle, id, idWS}: NavTableroProps) {
     const navigate = useNavigate();
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
     const [workSpace, setWorkspace] = useState<WorkSpaceTO>();
-
+    usePageTitle(`${currentTitle}`);
 
     const toggleOptionsActive = () => {
         setOptionsActive(!optionsActive);

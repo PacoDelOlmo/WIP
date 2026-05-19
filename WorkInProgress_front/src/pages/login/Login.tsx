@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router'
 import { useState, type ReactElement } from 'react';
 import { LoginService } from '../../services/LoginService';
 import { useAuthStore } from '../../store/Auth';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 
 export function Login() {
@@ -25,6 +26,8 @@ export function Login() {
         setContrasena(e.target.value);
         setError(null);
     }
+
+    usePageTitle('Login');
 
     async function comprobarLogin (event : React.FormEvent<HTMLFormElement>){
         event.preventDefault();

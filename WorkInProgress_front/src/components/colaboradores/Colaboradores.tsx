@@ -7,6 +7,7 @@ import styles from './Colaboradores.module.css';
 import { ToastNotification } from '../toastNotification/ToastNotification';
 import { AccessDeniedInternal } from '../../pages/accesDeneidInternal/AccessDeniedInternal';
 import { useAuthStore } from '../../store/Auth';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 interface ColaboradoresProps {
     usuario: UserCompleteDTO;
@@ -33,6 +34,8 @@ export function Colaboradores({ usuario }: ColaboradoresProps) {
             cargarDatos(Number(id));
         }
     }, [id]);
+
+    usePageTitle(`${workspace?.nombre} | Colaboradores`);
 
     const cargarDatos = async (idWs: number) => {
         try {

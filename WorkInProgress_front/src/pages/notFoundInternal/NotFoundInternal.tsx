@@ -2,8 +2,10 @@ import React from 'react';
 import styles from './NotFoundInternal.module.css';
 import { Link } from 'react-router'; 
 import { Search, AlertCircle, ArrowLeft } from 'lucide-react';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export default function NotFoundInternal() {
+      usePageTitle(`404 | Tarjeta perdida`);
   return (
     <section className={styles.internal_error_section}>
       <div className={styles.wrapper}>

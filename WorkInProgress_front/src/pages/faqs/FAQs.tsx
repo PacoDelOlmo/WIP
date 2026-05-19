@@ -4,10 +4,11 @@ import { Footer } from '../../components/footer/Footer';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import styles from './FAQs.module.css';
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function FAQSs() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
-
+    usePageTitle('Preguntas Frecuentes');
     const faqs = [
         {
             q: "¿Qué es WIP y a quién va dirigido?",

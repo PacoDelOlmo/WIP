@@ -1,8 +1,12 @@
 import { Link } from 'react-router';
 import { CheckCircle } from 'lucide-react';
 import styles from './RecuperarExito.module.css'
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function RecuperarExito() {
+
+    usePageTitle('Recuperación correcta de contraseña');
+
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.blobShape1}></div>

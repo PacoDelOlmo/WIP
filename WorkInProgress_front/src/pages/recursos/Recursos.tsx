@@ -3,8 +3,10 @@ import { Footer } from '../../components/footer/Footer';
 import { Database, Zap, Shield, Server, RefreshCw, HardDrive } from 'lucide-react';
 import styles from './Recursos.module.css';
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner';
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function Recursos() {
+    usePageTitle(`Recursos`);
     return (
         <div className={styles.pageWrapper}>
             <Header />

@@ -9,6 +9,7 @@ import { useAuthStore } from '../../store/Auth';
 import { ToastNotification } from '../../components/toastNotification/ToastNotification';
 
 import ReCAPTCHA from "react-google-recaptcha";
+import { usePageTitle } from '../../hooks/usePageTittle';
 
 export function SignUp() {
 
@@ -32,6 +33,7 @@ export function SignUp() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
+    usePageTitle(`Sign Up`);
 
     const recogerCorreo = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCorreo(e.target.value);

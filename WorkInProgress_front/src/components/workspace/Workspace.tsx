@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { TaskBoardService } from "../../services/TaskBoardService"; // ✨ Importamos el servicio
 import type { newElementTO } from "../../services/TaskQueueService";
 import type { WorkSpaceTO } from "../../services/WorkSpaceService";
+import { usePageTitle } from "../../hooks/usePageTittle";
 
 interface UserProps {
     usuario: UserCompleteDTO;
@@ -28,6 +29,8 @@ export function Workspace({ usuario }: UserProps) {
             }
         });
     }, [usuario, id]);
+
+    usePageTitle(`${workspace?.nombre} | Workspace` );
 
     const handleCrearTablero = async () => {
         if (newBoardTitle.trim() === "" || !workspace) return;

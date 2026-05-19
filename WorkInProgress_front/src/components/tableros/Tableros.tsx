@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import type { UserCompleteDTO, WorkspaceType } from "../../pages/home/Home";
 import type { newElementTO } from "../../services/TaskQueueService";
 import { TaskBoardService } from "../../services/TaskBoardService";
+import { usePageTitle } from "../../hooks/usePageTittle";
 
 interface UserProps {
   usuario: UserCompleteDTO;
@@ -25,6 +26,7 @@ export function Tableros({ usuario }: UserProps) {
     });
   }, [usuario]);
 
+    usePageTitle(`Tableros`);
 
   return (
     <section className={styles.content_section}>
