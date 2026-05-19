@@ -63,7 +63,15 @@
     }
 }
 
-.board_draw, .board_draw_activity{
+.board_draw{
+    height: 80%;
+    width: 100%;
+    /*background: radial-gradient(circle, var(--color-primario) 0%, var(--color-texto-app) 100%);*/
+    border-radius: 1vw 1vw 0rem 0rem;
+    border: .1rem solid var(--gris-medio);
+}
+
+.board_draw_activity{
     height: 80%;
     width: 100%;
     background: radial-gradient(circle, var(--color-primario) 0%, var(--color-texto-app) 100%);

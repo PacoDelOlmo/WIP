@@ -105,7 +105,7 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
 
   return (
     <>
-      <section className={styles.pila_tareas}>
+      <section className={styles.pila_tareas} style={{ background: queueData.color || 'var(--gris-oscuro)' }}>
         <div className={styles.titulo_opciones} {...dragHandleProps}>
           {isEditingTitle ? (
               <input 

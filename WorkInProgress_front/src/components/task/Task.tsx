@@ -235,7 +235,8 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
                         onClick={toggleOpen}
                         style={{
                             ...provided.draggableProps.style,
-                            cursor: snapshot.isDragging ? "grabbing" : "pointer" 
+                            cursor: snapshot.isDragging ? "grabbing" : "pointer",
+                            background: currentTask.color || 'var(--gris-oscuro)'
                         }}
                     >
                         <div className={Styles.titulo_check}>

@@ -235,7 +235,7 @@ export function Board() {
 
   return (
     <>
-      <div className={styles.board}>
+      <div className={styles.board} style={{ background: board?.color || 'var(--gris-oscuro)' }}>
         <Nav_tablero tittle={board?.nombreTablero} id={board?.id} idWS={idWS}/>
 
         <DragDropContext onDragEnd={handleDragEnd} >
