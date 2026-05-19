@@ -11,6 +11,7 @@ public class TaskDTO {
     private UserDTO creador;
     private List<TagDTO> etiquetas;
     private List<CommentDTO> comentarios;
+    private String color;
 
     public TaskDTO() {
         this.setEtiquetas(new ArrayList<TagDTO>());
@@ -18,7 +19,7 @@ public class TaskDTO {
     }
 
     public TaskDTO(long id, String titulo, String descripcion, boolean completada, UserDTO creador, List<TagDTO> etiquetas,
-            List<CommentDTO> comentarios) {
+            List<CommentDTO> comentarios, String color) {
         this.setId(id);
         this.setTitulo(titulo);
         this.setDescripcion(descripcion);
@@ -26,6 +27,7 @@ public class TaskDTO {
         this.setCompletada(completada);
         this.setEtiquetas(etiquetas);
         this.setComentarios(comentarios);
+        this.setColor(color);
     }
 
 
@@ -72,6 +74,14 @@ public class TaskDTO {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     

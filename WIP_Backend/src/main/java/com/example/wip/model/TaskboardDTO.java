@@ -8,6 +8,7 @@ public class TaskboardDTO {
     private long id;
     private String nombreTablero;
     private List<TaskQueueDTO> listaTareas;
+    private String color;
 
     
 
@@ -15,10 +16,11 @@ public class TaskboardDTO {
         this.setListaTareas(new ArrayList<TaskQueueDTO>());
     }
 
-    public TaskboardDTO(long id, String nombreTablero, List<TaskQueueDTO> listaTareas) {
+    public TaskboardDTO(long id, String nombreTablero, List<TaskQueueDTO> listaTareas, String color) {
         this.setId(id);
         this.setNombreTablero(nombreTablero);
         this.setListaTareas(listaTareas);
+        this.setColor(color);
     }
 
 
@@ -41,6 +43,14 @@ public class TaskboardDTO {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     

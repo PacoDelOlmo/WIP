@@ -8,15 +8,17 @@ public class TaskQueueDTO {
     private long id;
     private String titulo;
     private List<TaskDTO> tareas;
+    private String color;
 
     public TaskQueueDTO() {
         this.setTareas(new ArrayList<TaskDTO>());
     }
 
-    public TaskQueueDTO(String titulo, List<TaskDTO> tareas, long id) {
+    public TaskQueueDTO(String titulo, List<TaskDTO> tareas, long id, String color) {
         this.setTitulo(titulo);
         this.setTareas(tareas);
         this.setId(id);
+        this.setColor(color);
     }
 
 
@@ -37,6 +39,14 @@ public class TaskQueueDTO {
     }
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     

@@ -30,6 +30,9 @@ public class WorkspaceEntity implements Serializable{
     @Column(name = "NOMBRE")
     private String nombreEspacioTrabajo;
 
+    @Column(name = "color", length = 7)
+    private String color;
+
     @ManyToOne
     @JoinColumn(name = "PROPIETARIO")
     private UserEntity propietario;
@@ -79,4 +82,14 @@ public class WorkspaceEntity implements Serializable{
     public void setMiembros(List<UserWorkSpaceEntity> miembros) {
         this.miembros = miembros;
     }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    
 }

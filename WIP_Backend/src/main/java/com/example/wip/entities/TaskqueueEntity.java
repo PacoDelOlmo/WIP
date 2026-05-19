@@ -41,6 +41,9 @@ public class TaskqueueEntity implements Serializable{
     @Column(name = "POSICION")
     private long posicion;
 
+    @Column(name = "color", length = 7)
+    private String color;
+
     @ManyToOne
     @JoinColumn(name = "ID_TASKBOARD")
     private TaskboardEntity tablero;
@@ -95,6 +98,14 @@ public class TaskqueueEntity implements Serializable{
 
     public void setTareas(List<TaskEntity> tareas) {
         this.tareas = tareas;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     
