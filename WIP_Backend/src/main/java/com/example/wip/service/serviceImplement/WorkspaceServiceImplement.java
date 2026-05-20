@@ -104,6 +104,21 @@ public class WorkspaceServiceImplement implements WorkspaceService {
     }
 
     @Override
+    public WorkspaceDTO editarColorWorkspace(long id, long idw, NewElementDTO nuevoColor) {
+        Optional<UserEntity> usuario = uRepo.findById(id);
+        Optional<WorkspaceEntity> workspace = repo.findById(idw);
+
+        if (usuario.isPresent() && workspace.isPresent()){
+            if (usuario.get().getIdUsuario() == workspace.get().getPropietario().getIdUsuario() && workspace.get().getIdEspacioTrabajo() == idw){
+                workspace.get().setColor(nuevoColor.getTittle());
+                repo.save(workspace.get());
+            }
+        }
+
+        return conversor.entityADto(workspace.get());
+    }
+
+    @Override
     public boolean compartirTableros(long id, String correo) {
         boolean compartido = false;
         try {

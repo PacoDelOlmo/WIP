@@ -1,4 +1,4 @@
-import { Check, EllipsisVertical, Pencil, Plus, Trash, X } from "lucide-react";
+import { ArrowLeft, Check, EllipsisVertical, Palette, Pencil, Plus, Trash, X } from "lucide-react";
 import { Task } from "../task/Task";
 import styles from "./Task_Queue.module.css";
 import { useEffect, useState } from "react";
@@ -11,6 +11,18 @@ import {
 import { useAuthStore } from "../../store/Auth";
 import { Droppable } from "@hello-pangea/dnd";
 import { ConfirmModal } from "../modalConfirm/ConfirmModal";
+
+const PALETA_COLORES = [
+    { hex: '#EAEAEA', nombre: 'Gris Base' },
+    { hex: '#A8D1D5', nombre: 'Verde Agua' },
+    { hex: '#FBD5B9', nombre: 'Naranja Suave' },
+    { hex: '#B3E5FC', nombre: 'Azul Cielo' },
+    { hex: '#C8E6C9', nombre: 'Verde Menta' },
+    { hex: '#FFF9C4', nombre: 'Amarillo Arena' },
+    { hex: '#E1BEE7', nombre: 'Lavanda' },
+    { hex: '#F8BBD0', nombre: 'Rosa Pálido' },
+    { hex: '#E6B3B3', nombre: 'Rojo Pastel' }
+];
 
 interface TaskQueueProps {
   queueData: TaskQueueTO;
@@ -31,6 +43,8 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
   const [newTitle, setNewTitle] = useState(currentTitle);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
+  const [isColorMenuMode, setIsColorMenuMode] = useState(false);
+  const [currentColor, setCurrentColor] = useState(queueData.color || '#EAEAEA');
 
   const toggleOptions = () => {
     setOptionsOpen(!optionsOpen);
@@ -89,11 +103,24 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
     }
   };
 
-      const handleDeleteClick = (e: React.MouseEvent) => {
+    const handleDeleteClick = (e: React.MouseEvent) => {
         e.stopPropagation(); 
         setIsConfirmModalOpen(true);
         setOptionsOpen(false);
     };
+
+    const handleColorChange = async (colorHex: string) => {
+      if (colorHex === currentColor) return;
+      
+      setCurrentColor(colorHex);
+      setOptionsOpen(false); 
+      
+      try {
+          await TaskQueueService.editarColorLista({ tittle: colorHex }, idTablero, queueData.id);
+      } catch (error) {
+          console.error("Error al cambiar color de la lista:", error);
+      }
+  };
 
   useEffect(() => {
     setTareas(queueData.tareas || []);
@@ -105,7 +132,7 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
 
   return (
     <>
-      <section className={styles.pila_tareas}>
+      <section className={styles.pila_tareas} style={{ background: currentColor || 'var(--gris-oscuro)' }}>
         <div className={styles.titulo_opciones} {...dragHandleProps}>
           {isEditingTitle ? (
               <input 
@@ -132,21 +159,52 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
 
           {optionsOpen && (
             <div className={styles.dropdown_menu}>
-              <button 
-                  className={styles.dropdown_item} 
-                  onClick={() => {
-                      setIsEditingTitle(true);
-                      setOptionsOpen(false);
-                  }}
-              >
-                <Pencil size={18} />
-                <span>Renombrar</span>
-              </button>
-              <hr className={styles.separator} />
-              <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteClick}>
-                <Trash size={18} />
-                <span>Borrar Lista</span>
-              </button>
+                {!isColorMenuMode ? (
+                    <>
+                        <button 
+                            className={styles.dropdown_item} 
+                            onClick={() => {
+                                setIsEditingTitle(true);
+                                setOptionsOpen(false);
+                            }}
+                        >
+                            <Pencil size={18} />
+                            <span>Renombrar</span>
+                        </button>
+
+                        <button className={styles.dropdown_item} onClick={() => setIsColorMenuMode(true)}>
+                            <Palette size={18} />
+                            <span>Cambiar Color</span>
+                        </button>
+
+                        <hr className={styles.separator} />
+
+                        <button className={`${styles.dropdown_item} ${styles.danger}`} onClick={handleDeleteClick}>
+                            <Trash size={18} />
+                            <span>Borrar Lista</span>
+                        </button>
+                    </>
+                ) : (
+                    <div className={styles.color_palette_view}>
+                        <div className={styles.palette_header}>
+                            <button className={styles.icon_btn_small} onClick={() => setIsColorMenuMode(false)}>
+                                <ArrowLeft size={16} />
+                            </button>
+                            <span>Color de lista</span>
+                        </div>
+                        <div className={styles.color_grid}>
+                            {PALETA_COLORES.map(color => (
+                                <div 
+                                    key={color.hex}
+                                    className={`${styles.color_swatch} ${currentColor === color.hex ? styles.selected : ''}`}
+                                    style={{ backgroundColor: color.hex }}
+                                    onClick={() => handleColorChange(color.hex)}
+                                    title={color.nombre}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
           )}
         </div>

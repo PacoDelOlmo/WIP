@@ -5,6 +5,7 @@ export interface BoardTO{
     id: number,
     nombreTablero: string,
     listaTareas: TaskQueueTO[],
+    color: string,
 }
 
 export interface OrdenListas{
@@ -38,6 +39,11 @@ export const TaskBoardService = {
 
     editarNombreTablero: async (nuevoNombre: newElementTO, idUser: number, idTablero: number, idWs: number, ) => {
         const response = await axiosClient.put<BoardTO>(`/users/${idUser}/workspace/${idWs}/tablero/${idTablero}/editar`, nuevoNombre);
+        return response.data;
+    }, 
+
+    editarColorTablero: async (nuevoColor: newElementTO, idUser: number, idTablero: number, idWs: number, ) => {
+        const response = await axiosClient.put<BoardTO>(`/users/${idUser}/workspace/${idWs}/tablero/${idTablero}/editar_color`, nuevoColor);
         return response.data;
     }, 
 

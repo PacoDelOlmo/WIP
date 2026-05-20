@@ -78,7 +78,7 @@ export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
                     
                     {usuario.workspace?.flatMap((ws, index) => 
                             <div key={`${ws.nombre}-${index}`} className={styles.board_button_link}>
-                                <div className={styles.board_draw}></div>
+                                <div className={styles.board_draw} style={{ background: ws.color || 'var(--gris-oscuro)' }}></div>
                                 <Link to={`/user/workspace/${ws.id}`} className={styles.board_name}>
                                     {ws.nombre}
                                 </Link>

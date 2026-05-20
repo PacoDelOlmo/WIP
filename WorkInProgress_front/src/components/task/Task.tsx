@@ -22,6 +22,7 @@ import {
     Terminal,
     CircleCheckBig,
     Trash2,
+    Palette,
 } from "lucide-react";
 import Styles from "./Task.module.css";
 import { useState, useEffect } from "react";
@@ -38,54 +39,63 @@ interface TaskProps{
     index: number;
 }
 
+const PALETA_COLORES = [
+    { hex: '#FFFFFF', nombre: 'Blanco Base' },
+    { hex: '#4DD0E1', nombre: 'Verde Agua' },
+    { hex: '#FFB74D', nombre: 'Naranja Suave' },
+    { hex: '#4FC3F7', nombre: 'Azul Cielo' },
+    { hex: '#81C784', nombre: 'Verde Menta' },
+    { hex: '#FFD54F', nombre: 'Amarillo Arena' },
+    { hex: '#BA68C8', nombre: 'Lavanda' },
+    { hex: '#F06292', nombre: 'Rosa Pálido' },
+    { hex: '#E57373', nombre: 'Rojo Pastel' }
+];
+
 const obtenerIconoEtiqueta = (nombreEtiqueta: string) => {
     const nombreNormalizado = nombreEtiqueta.toString().toLowerCase();
 
     switch (nombreNormalizado) {
-        // --- CATEGORÍAS GENERALES ---
         case "frontend":
-            return <Monitor size={14} />;
+            return <Monitor size={14} color="#3B82F6" />; 
         case "backend":
-            return <Server size={14} />;
+            return <Server size={14} color="#10B981" />; 
         case "desarrollo":
         case "dev":
-            return <Code size={14} />;
+            return <Code size={14} color="#6366F1" />; 
 
-        // --- TECNOLOGÍAS ESPECÍFICAS ---
         case "react":
         case "reactjs":
-            return <Atom size={14} />;
+            return <Atom size={14} color="#06B6D4" />; 
         case "html":
         case "css":
         case "sass":
         case "tailwind":
-            return <FileCode size={14} />;
+            return <FileCode size={14} color="#F97316" />; 
         case "java":
         case "c#":
         case "python":
         case "cpp":
-            return <Cpu size={14} />;
+            return <Cpu size={14} color="#8B5CF6" />; 
         case "database":
         case "sql":
         case "mysql":
         case "postgre":
         case "mongodb":
-            return <Database size={14} />;
+            return <Database size={14} color="#14B8A6" />; 
 
-        // --- ESTADOS Y TIPOS ---
         case "bug":
         case "error":
-            return <Bug size={14} />;
+            return <Bug size={14} color="#EF4444" />; 
         case "urgente":
         case "prioridad":
-            return <Zap size={14} />;
+            return <Zap size={14} color="#F59E0B" />; 
         case "diseño":
         case "ui":
         case "ux":
-            return <Paintbrush size={14} />;
+            return <Paintbrush size={14} color="#EC4899" />; 
             
         default:
-            return <Tag size={14} />;
+            return <Tag size={14} color="#94A3B8" />; 
     }
 };
 
@@ -106,6 +116,8 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
     const [newDesc, setNewDesc] = useState(currentTask.descripcion || "");
     const [isDeleted, setIsDeleted] = useState(false);
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
+    const [currentColor, setCurrentColor] = useState(taskData.color || '#606060');
+    const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
 
     const toggleOpen = () => {
         setIsOpen(!isOpen);
@@ -207,6 +219,20 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
         setIsConfirmModalOpen(true);
     };
 
+    const handleColorChange = async (colorHex: string) => {
+        if (colorHex === currentColor) return;
+        
+        setCurrentColor(colorHex);
+        setCurrentTask({ ...currentTask, color: colorHex });
+        setIsColorMenuOpen(false); 
+        
+        try {
+            await TaskService.editarColorTarea({ tittle: colorHex }, taskBoardID, listID, currentTask.id);
+        } catch (error) {
+            console.error("Error al cambiar color de la tarea:", error);
+        }
+    };
+
     useEffect(() =>{
         setCurrentTask(taskData);
         setNewTitle(taskData.titulo);
@@ -235,7 +261,8 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
                         onClick={toggleOpen}
                         style={{
                             ...provided.draggableProps.style,
-                            cursor: snapshot.isDragging ? "grabbing" : "pointer" 
+                            cursor: snapshot.isDragging ? "grabbing" : "pointer",
+                            background: currentTask.color || '#707070'
                         }}
                     >
                         <div className={Styles.titulo_check}>
@@ -260,15 +287,44 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
                 <div className={Styles.modalOverlay} onClick={toggleOpen}>
                     <div className={Styles.modalBox} onClick={(e) => e.stopPropagation()}>
                         <div className={Styles.contenidoExpandido}>
-                            <div className={Styles.cardHeader}>
-                                <span className={Styles.nombreLista}>{listaName}</span>
+
+                            <div className={Styles.cardHeader} style={{ backgroundColor: currentColor !== '#EAEAEA' ? currentColor : 'white' }}>
+                                <span className={Styles.nombreLista}>En la lista: <strong>{listaName}</strong></span>
+                                
                                 <div className={Styles.headerActions}>
-                                    <button title="Borrar" onClick={handleDeleteClick} className={Styles.btnDanger}>
+                                    <div className={Styles.colorMenuContainer}>
+                                        <button 
+                                            title="Cambiar Color" 
+                                            onClick={() => setIsColorMenuOpen(!isColorMenuOpen)}
+                                            className={isColorMenuOpen ? Styles.activeBtn : ""}
+                                        >
+                                            <Palette size={18} />
+                                        </button>
+
+                                        {isColorMenuOpen && (
+                                            <div className={Styles.colorDropdown}>
+                                                <div className={Styles.palette_header}>
+                                                    <span>Color de tarjeta</span>
+                                                </div>
+                                                <div className={Styles.color_grid}>
+                                                    {PALETA_COLORES.map(color => (
+                                                        <div 
+                                                            key={color.hex}
+                                                            className={`${Styles.color_swatch} ${currentColor === color.hex ? Styles.selected : ''}`}
+                                                            style={{ backgroundColor: color.hex }}
+                                                            onClick={() => handleColorChange(color.hex)}
+                                                            title={color.nombre}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <button title="Borrar Tarea" onClick={handleDeleteClick} className={Styles.btnDanger}>
                                         <Trash2 size={18} />
                                     </button>
-                                    <button title="Menu">
-                                        <MoreHorizontal size={18} />
-                                    </button>
+                                    
                                     <button title="Cerrar" onClick={toggleOpen}>
                                         <X size={18} />
                                     </button>

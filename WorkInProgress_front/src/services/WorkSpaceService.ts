@@ -7,7 +7,8 @@ export interface WorkSpaceTO{
     id: number,
     nombre: string, 
     tableros: BoardTO[],
-    idPropietario: number
+    idPropietario: number,
+    color: string,
 }
 
 export interface UserWorkSpaceTO{
@@ -49,6 +50,11 @@ export const WorkSpaceService = {
 
     editarNombreWorkSpace: async(id: number, idUser: number, nuevoNombre: newElementTO) => {
         const response = await axiosClient.put<boolean>(`/users/${idUser}/workspace/${id}/editar`, nuevoNombre);
+        return response.data;
+    },
+
+    editarColorWorkSpace: async(id: number, idUser: number, nuevoColor: newElementTO) => {
+        const response = await axiosClient.put<boolean>(`/users/${idUser}/workspace/${id}/editar_color`, nuevoColor);
         return response.data;
     },
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { Settings, Save, Trash2, ShieldAlert } from 'lucide-react';
+import { Settings, Save, Trash2, ShieldAlert, ChevronDown } from 'lucide-react';
 import { WorkSpaceService, type UserWorkSpaceTO, type WorkSpaceTO } from '../../services/WorkSpaceService';
 import type { UserCompleteDTO } from '../../pages/home/Home';
 import styles from './AjustesWorkspace.module.css';
@@ -10,9 +10,21 @@ import { useAuthStore } from '../../store/Auth';
 import { AccessDeniedInternal } from '../../pages/accesDeneidInternal/AccessDeniedInternal';
 import { usePageTitle } from '../../hooks/usePageTittle';
 
+const PALETA_COLORES = [
+    { hex: '#EAEAEA', nombre: 'Gris Base' },
+    { hex: '#A8D1D5', nombre: 'Verde Agua' },
+    { hex: '#FBD5B9', nombre: 'Naranja Suave' },
+    { hex: '#B3E5FC', nombre: 'Azul Cielo' },
+    { hex: '#C8E6C9', nombre: 'Verde Menta' },
+    { hex: '#FFF9C4', nombre: 'Amarillo Arena' },
+    { hex: '#E1BEE7', nombre: 'Lavanda' },
+    { hex: '#F8BBD0', nombre: 'Rosa Pálido' },
+    { hex: '#E6B3B3', nombre: 'Rojo Pastel' } 
+];
+
 interface AjustesProps {
     usuario: UserCompleteDTO;
-    onUpdateWorkspace: (idWs: number, nuevoNombre: string) => void;
+    onUpdateWorkspace: (idWs: number, nuevoNombre: string, nuevoColor: string) => void;
 }
 
 export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
@@ -30,6 +42,9 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
     });
     const usuarioLogged = useAuthStore((state)=> state.idUsuario);
     const [isPropietaio, setIsPropietario] = useState<boolean>(false);
+    const [nuevoColor, setNuevoColor] = useState("#EAEAEA");
+    const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
+
 
     useEffect(() => {
         if (id) cargarDatos(Number(id));
@@ -54,19 +69,39 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
         setToastConfig({ isVisible: true, message, type });
     };
 
-    const handleRenombrar = async () => {
-        if (nuevoNombre.trim() === "" || nuevoNombre === workspace?.nombre) return;
+    const handleGuardarCambios = async () => {
+        if (!workspace) return;
+        
+        const haCambiadoNombre = nuevoNombre.trim() !== "" && nuevoNombre !== workspace.nombre;
+        const haCambiadoColor = nuevoColor !== workspace.color;
+
+        if (!haCambiadoNombre && !haCambiadoColor) return; // No hay nada que guardar
+
         setIsSaving(true);
         try {
-            const exito = await WorkSpaceService.editarNombreWorkSpace(Number(id), usuario.id, { tittle: nuevoNombre });
-            if (exito) {
-                setWorkspace(prev => prev ? { ...prev, nombre: nuevoNombre } : null);
-                onUpdateWorkspace(Number(id), nuevoNombre);
-                showToast("Nombre actualizado correctamente", "success");
+            const peticiones = [];
+
+            if (haCambiadoNombre) {
+                peticiones.push(WorkSpaceService.editarNombreWorkSpace(Number(id), usuario.id, { tittle: nuevoNombre }));
             }
+            if (haCambiadoColor) {
+                peticiones.push(WorkSpaceService.editarColorWorkSpace(Number(id), usuario.id, { tittle: nuevoColor }));
+            }
+
+            await Promise.all(peticiones);
+
+            const nombreFinal = haCambiadoNombre ? nuevoNombre : workspace.nombre;
+            const colorFinal = haCambiadoColor ? nuevoColor : workspace.color;
+
+            setWorkspace(prev => prev ? { ...prev, nombre: nuevoNombre, color: nuevoColor } : null);
+            
+            onUpdateWorkspace(Number(id), nombreFinal, colorFinal);
+            
+            showToast("Cambios guardados correctamente", "success");
+            setIsColorMenuOpen(false); 
         } catch (e) {
-            console.error("Error al renombrar", e);
-            showToast("Error al guardar el nuevo nombre", "error");
+            console.error("Error al guardar", e);
+            showToast("Error al guardar los cambios", "error");
         } finally {
             setIsSaving(false);
         }
@@ -115,25 +150,63 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
             <div className={styles.gridContent}>
                 <div className={styles.ajusteCard}>
                     <h3 className={styles.cardTitle}>Detalles del Espacio</h3>
-                    <p className={styles.cardDesc}>Modifica el nombre público de tu espacio de trabajo.</p>
+                    <p className={styles.cardDesc}>Modifica el nombre público y el color de identificación de tu espacio de trabajo.</p>
                     
-                    <div className={styles.inputGroup}>
-                        <label>Nombre del Espacio</label>
-                        <input 
-                            type="text" 
-                            value={nuevoNombre}
-                            onChange={(e) => setNuevoNombre(e.target.value)}
-                        />
+                    <div className={styles.inputsRow}>
+                        <div className={styles.inputGroup}>
+                            <label>Nombre del Espacio</label>
+                            <input 
+                                type="text" 
+                                value={nuevoNombre}
+                                onChange={(e) => setNuevoNombre(e.target.value)}
+                            />
+                        </div>
+
+                        <div className={styles.inputGroup}>
+                            <label>Color de Identificación</label>
+                            <div className={styles.colorPickerContainer}>
+                                <button 
+                                    type="button"
+                                    className={styles.colorSelectTrigger} 
+                                    onClick={() => setIsColorMenuOpen(!isColorMenuOpen)}
+                                >
+                                    <div className={styles.colorTriggerContent}>
+                                        <div className={styles.colorCircle} style={{ backgroundColor: nuevoColor }}></div>
+                                        <span>{PALETA_COLORES.find(c => c.hex === nuevoColor)?.nombre || 'Personalizado'}</span>
+                                    </div>
+                                    <ChevronDown size={18} style={{ transform: isColorMenuOpen ? 'rotate(180deg)' : 'none', transition: '0.2s' }} />
+                                </button>
+
+                                {isColorMenuOpen && (
+                                    <div className={styles.colorDropdown}>
+                                        {PALETA_COLORES.map(color => (
+                                            <div 
+                                                key={color.hex}
+                                                className={`${styles.colorSwatch} ${nuevoColor === color.hex ? styles.selected : ''}`}
+                                                style={{ backgroundColor: color.hex }}
+                                                onClick={() => {
+                                                    setNuevoColor(color.hex);
+                                                    setIsColorMenuOpen(false);
+                                                }}
+                                                title={color.nombre}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
+
                     <button 
                         className={styles.btnSave} 
-                        onClick={handleRenombrar}
-                        disabled={isSaving || nuevoNombre === workspace?.nombre}
+                        onClick={handleGuardarCambios}
+                        disabled={isSaving || (nuevoNombre === workspace?.nombre && nuevoColor === workspace?.color)}
                     >
                         <Save size={18} /> {isSaving ? 'Guardando...' : 'Guardar Cambios'}
                     </button>
                 </div>
 
+                {/* ... (El resto del componente sigue exactamente igual: Gestión de accesos, Modales, Toasts) ... */}
                 <div className={styles.ajusteCard}>
                     <div className={styles.cardHeaderWithIcon}>
                         <ShieldAlert className={styles.dangerIcon} />
@@ -185,7 +258,6 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
                 type={toastConfig.type}
                 onClose={() => setToastConfig({ ...toastConfig, isVisible: false })}
             />
-
         </section>
     );
 }

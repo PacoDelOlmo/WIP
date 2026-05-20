@@ -22,10 +22,6 @@ export interface UserMailTO{
     mail: string,
 }
 
-export interface UserMailTO{
-    id: number,
-    mail: string,
-}
 
 export interface UserPasswordTO{
     id: number,
@@ -61,12 +57,12 @@ export const UserService = {
         return response.data;
     },
 
-        editUserPassword: async(id: number, nuevaPass: UserPasswordTO) => {
+    editUserPassword: async(id: number, nuevaPass: UserPasswordTO) => {
         const response = await axiosClient.put<ConfirmationTO>(`/users/${id}/nuevo_contrasena`, nuevaPass);
         return response.data;
     },
 
-        editUserName: async(id: number, nuevoNickname: UserMailTO) => {
+    editUserName: async(id: number, nuevoNickname: UserMailTO) => {
         const response = await axiosClient.put<ConfirmationTO>(`/users/${id}/nuevo_nombre_usuario`, nuevoNickname);
         return response.data;
     },

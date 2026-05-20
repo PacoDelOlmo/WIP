@@ -37,6 +37,9 @@ public class TaskboardEntity implements Serializable{
     @Column(name = "FECHA_CREACION")
     private LocalDateTime fechaCreacion;
 
+    @Column(name = "color", length = 7)
+    private String color;
+
     @ManyToOne
     @JoinColumn(name = "ID_WORKSPACE")
     private WorkspaceEntity espacioTrabajo;
@@ -83,6 +86,14 @@ public class TaskboardEntity implements Serializable{
 
     public void setEspacioTrabajo(WorkspaceEntity espacioTrabajo) {
         this.espacioTrabajo = espacioTrabajo;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     

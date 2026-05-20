@@ -85,6 +85,7 @@ public class TaskServiceImplement implements TaskService {
                 newTarea.setDescripcion("");
                 newTarea.setFechaCreacion(LocalDateTime.now());
                 newTarea.setPosicion(listaTareas.get().getTareas().size());
+                newTarea.setColor("#EAEAEA");
                 newTarea = tRepo.save(newTarea);
 
                 listaTareas.get().getTareas().add(newTarea);
@@ -124,6 +125,7 @@ public class TaskServiceImplement implements TaskService {
                 task.get().setDescripcion(tarea.getDescripcion());
                 task.get().setCompletada(tarea.isCompletada());
                 task.get().setTitulo(tarea.getTitulo());
+                task.get().setColor(tarea.getColor());
             }
 
         }
@@ -190,6 +192,22 @@ public class TaskServiceImplement implements TaskService {
         return false;
     }
     
+
+    @Override
+    public TaskDTO editarColorTarea(long id, long idl, long idt, NewElementDTO colorTarea) {
+        Optional<TaskboardEntity> tablero = repo.findById(id);
+        Optional<TaskqueueEntity> listaTareas = tqRepo.findById(idl);
+        Optional<TaskEntity> task = tRepo.findById(idt);
+
+        if (tablero.isPresent() && listaTareas.isPresent() && task.isPresent()){
+            if (tablero.get() == listaTareas.get().getTablero() && task.get().getListaTareas() == listaTareas.get()){
+                task.get().setColor(colorTarea.getTittle());
+            }
+
+        }
+        tRepo.save(task.get());
+        return conversor.entityADto(task.get());
+    }
 
 
     private Set<CommentEntity> convertirComentarios (List<CommentDTO> comentarios, long idTarea){

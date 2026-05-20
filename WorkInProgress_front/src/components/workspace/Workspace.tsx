@@ -98,7 +98,7 @@ export function Workspace({ usuario }: UserProps) {
                         {workspace.tableros.length > 0 ? (
                             workspace.tableros.map((tablero, key) => (
                                 <div key={key} className={styles.board_button_link}>
-                                    <div className={styles.board_draw}></div>
+                                    <div className={styles.board_draw} style={{ background: tablero.color || 'var(--gris-oscuro)' }}></div>
                                     <Link
                                         to={`/taskboard/${tablero.id}`}
                                         className={styles.board_name}

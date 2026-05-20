@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -113,9 +112,19 @@ public class UserController {
         return wsService.editarWorkspace(id, idw, nuevoNombre);
     }
 
+    @PutMapping("/{id}/workspace/{idw}/editar_color")
+    public WorkspaceDTO editarColorWrokspace(@PathVariable long id,@PathVariable long idw, @RequestBody NewElementDTO nuevoColor) {
+        return wsService.editarColorWorkspace(id, idw, nuevoColor);
+    }
+
     @PutMapping("/{id}/workspace/{idw}/tablero/{idt}/editar")
     public TaskboardDTO editarTablero(@PathVariable long id, @PathVariable long idw, @PathVariable long idt, @RequestBody NewElementDTO nuevoNombre) {
         return tbService.editarTablero(id, idw, idt, nuevoNombre);
+    }
+
+    @PutMapping("/{id}/workspace/{idw}/tablero/{idt}/editar_color")
+    public TaskboardDTO editarColorTablero(@PathVariable long id, @PathVariable long idw, @PathVariable long idt, @RequestBody NewElementDTO nuevoColor) {
+        return tbService.editarColorTablero(id, idw, idt, nuevoColor);
     }
     
     @PostMapping("/{idUser}/buscar")

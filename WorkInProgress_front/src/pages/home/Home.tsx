@@ -27,22 +27,26 @@ export type UserCompleteDTO = {
 }
 export interface Tarea {
     id: number, 
-    titulo: string;
-    fecha?: string; 
+    titulo: string,
+    fecha?: string,
+    color: string,
 }
 export interface ListaTareas {
     titulo: string;
     tareas: Tarea[];
+    color: string,
 }
 export interface Tablero {
     id : number,
     nombreTablero: string;
     listaTareas: ListaTareas[];
+    color: string,
 }
 export interface WorkspaceType {
     id: number,
     nombre: string;
     tableros: Tablero[];
+    color: string,
 }
 
 export function Home() {
@@ -59,10 +63,10 @@ export function Home() {
     })
   }
 
-  const handleUpdateWorkspace = (idWs: number, nuevoNombre: string) => {
+  const handleUpdateWorkspace = (idWs: number, nuevoNombre: string, nuevoColor: string) => {
     if (!user) return;
     const workspacesActualizados = user.workspace.map(ws => 
-      ws.id === idWs ? { ...ws, nombre: nuevoNombre } : ws
+      ws.id === idWs ? { ...ws, nombre: nuevoNombre, color: nuevoColor } : ws
     );
     setUser({ ...user, workspace: workspacesActualizados });
   }

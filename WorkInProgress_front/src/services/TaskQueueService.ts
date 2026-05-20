@@ -9,6 +9,7 @@ export interface TaskQueueTO{
     id: number;
     titulo: string,
     tareas: TaskTO[],
+    color: string,
 }
 
 export const TaskQueueService = {
@@ -25,6 +26,11 @@ export const TaskQueueService = {
 
     editarNombreLista: async (nuevoNombre: newElementTO, idTablero: number, idLista: number) => {
         const response = await axiosClient.put<TaskQueueTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/editar`, nuevoNombre);
+        return response.data;
+    }, 
+
+    editarColorLista: async (nuevoColor: newElementTO, idTablero: number, idLista: number) => {
+        const response = await axiosClient.put<TaskQueueTO>(`/taskboard/tablero/${idTablero}/lista/${idLista}/editar_color`, nuevoColor);
         return response.data;
     }, 
 

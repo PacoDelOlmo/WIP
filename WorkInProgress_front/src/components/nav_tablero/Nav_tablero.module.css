@@ -179,28 +179,86 @@
     transition: background-color 0.2s ease;
 }
 
-/* Oscurecemos un poquito el fondo al pasar el ratón para que se note que es clicable */
 .editable_title:hover {
     background-color: rgba(0, 0, 0, 0.15); 
 }
 
 .edit_title_input {
-    font-size: 1.17em; /* Tamaño por defecto de un h3 */
+    font-size: 1.17em; 
     font-weight: 600;
     font-family: var(--fuente-principal);
-    color: var(--color-secundario); /* Letra blanca/clara */
-    background-color: rgba(0, 0, 0, 0.2); /* Fondo semitransparente oscuro */
-    border: 1px solid var(--color-secundario); /* Borde clarito */
+    color: var(--color-secundario); 
+    background-color: rgba(0, 0, 0, 0.2); 
+    border: 1px solid var(--color-secundario); 
     border-radius: 0.3rem;
     padding: 0.1rem 0.4rem;
     margin-left: -0.4rem;
     outline: none;
-    width: 200px; /* Un ancho base para que no sea muy pequeño */
+    width: 200px; 
 }
 
 .edit_title_input:focus {
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.color_palette_view {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 0.5rem;
+}
+
+.palette_header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-texto-secundario);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.icon_btn_small {
+    background: transparent;
+    border: none;
+    color: var(--color-texto-secundario);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+    border-radius: 4px;
+}
+
+.icon_btn_small:hover {
+    background: var(--gris-claro);
+    color: var(--color-texto-primario);
+}
+
+.color_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+}
+
+.color_swatch {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.color_swatch:hover {
+    transform: scale(1.1);
+}
+
+.color_swatch.selected {
+    border-color: var(--color-primario); 
+    transform: scale(1.05);
 }
 
 
