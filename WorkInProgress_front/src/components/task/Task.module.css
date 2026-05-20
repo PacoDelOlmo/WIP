@@ -546,11 +546,88 @@
     color: #d9534f !important;
 }
 
+.btnTag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: var(--verde-clarito);
+    border: 1px solid transparent;
+    color: var(--color-texto-secundario); 
+    font-weight: 600;
+}
+
 .tarjetaVolando {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2) !important;
     background-color: white !important;
     z-index: 9999 !important;
     transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.colorMenuContainer {
+    position: relative;
+}
+
+.activeBtn {
+    background-color: var(--gris-claro);
+    color: var(--color-primario) !important;
+    border-radius: 4px;
+}
+
+.colorDropdown {
+    position: absolute;
+    top: 120%;
+    right: 0; 
+    width: 10rem; 
+    background: white;
+    border: 1px solid var(--gris-claro);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 1rem;
+    z-index: 1000; /* Por encima de todo en el modal */
+    animation: fadeIn 0.2s ease-out;
+}
+
+.palette_header {
+    display: flex;
+    align-items: center;
+    color: var(--color-texto-secundario);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding-bottom: 0.8rem;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.color_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+}
+
+.color_swatch {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.color_swatch:hover {
+    transform: scale(1.1);
+}
+
+.color_swatch.selected {
+    border-color: var(--color-primario);
+    transform: scale(1.05);
+}
+
+.tarea h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-texto-primario);
 }
 
 /* RESPONSIVE DESIGN */

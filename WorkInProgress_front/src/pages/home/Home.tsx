@@ -63,10 +63,10 @@ export function Home() {
     })
   }
 
-  const handleUpdateWorkspace = (idWs: number, nuevoNombre: string) => {
+  const handleUpdateWorkspace = (idWs: number, nuevoNombre: string, nuevoColor: string) => {
     if (!user) return;
     const workspacesActualizados = user.workspace.map(ws => 
-      ws.id === idWs ? { ...ws, nombre: nuevoNombre } : ws
+      ws.id === idWs ? { ...ws, nombre: nuevoNombre, color: nuevoColor } : ws
     );
     setUser({ ...user, workspace: workspacesActualizados });
   }

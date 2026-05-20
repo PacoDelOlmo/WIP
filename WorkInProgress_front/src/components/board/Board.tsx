@@ -233,10 +233,22 @@ export function Board() {
     setBoard({ ...board, listaTareas: nuevasListas });
   };
 
+  const updateBoardColor = (nuevoColor: string) => {
+    if (board) {
+      setBoard({ ...board, color: nuevoColor });
+    }
+  };
+
   return (
     <>
       <div className={styles.board} style={{ background: board?.color || 'var(--gris-oscuro)' }}>
-        <Nav_tablero tittle={board?.nombreTablero} id={board?.id} idWS={idWS}/>
+        <Nav_tablero 
+            tittle={board?.nombreTablero} 
+            id={board?.id} 
+            idWS={idWS}
+            colorActual={board?.color}
+            onUpdateColor={updateBoardColor}
+        />
 
         <DragDropContext onDragEnd={handleDragEnd} >
           <section className={styles.board_lists}>
