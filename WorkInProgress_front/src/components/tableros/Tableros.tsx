@@ -78,7 +78,7 @@ export function Tableros({ usuario }: UserProps) {
                 <UserIcon className={styles.user_icon} />
                 Espacio de trabajo&nbsp;<span>{ws.nombre}</span>
               </h1>
-              <Link to="/user/tableros" className={styles.header_link}>
+              <Link to={`/user/workspace/${ws.id}`} className={styles.header_link}>
                 {" "}
                 Tableros <ChevronRight size={"4vw"} />
               </Link>

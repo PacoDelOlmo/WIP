@@ -423,4 +423,8 @@
     .btn_trigger_add {
         font-size: 3vw;
     }
+
+    .recent_activity_wrapper{
+        flex-direction: column;
+    }
 }
