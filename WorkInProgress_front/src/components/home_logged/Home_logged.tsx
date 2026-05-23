@@ -26,6 +26,7 @@ export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
         ws.tableros.flatMap(tablero => 
             tablero.listaTareas.flatMap(lista => 
                 lista.tareas.map(tarea => ({
+                    idTablero: tablero.id,
                     nombreTablero: tablero.nombreTablero,
                     nombreLista: lista.titulo,
                     tituloTarea: tarea.titulo,
@@ -33,7 +34,7 @@ export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
                 }))
             )
         )
-    ).slice(0, 3);
+    ).slice(0, 6);
 
 
     const handleCrearWorkSpace = async () => {
@@ -143,7 +144,7 @@ export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
                             <div className={styles.board_button_activity}>
                                 <div className={styles.board_draw_activity}></div>
 
-                                <Link to='' className={styles.board_info}>
+                                <Link to={`/taskboard/${actividad.idTablero}`} className={styles.board_info}>
                                     <div>
                                         <h3 className={styles.board_name}>{actividad.nombreTablero}</h3>
                                         <h4 className={styles.board_date}>{actividad.fecha}</h4>
