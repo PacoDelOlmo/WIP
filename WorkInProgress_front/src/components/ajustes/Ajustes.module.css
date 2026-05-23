@@ -150,9 +150,11 @@
 
 @media (max-width: 576px) {
     .settings_container {
-        padding: 1.5rem;
-        margin: 1rem; 
+        padding: 1rem;
+        margin: .5rem; 
         border-radius: 0.8rem;
+        align-content: center;
+        width: 100vw;
     }
 
     .main_title {
@@ -175,5 +177,9 @@
 
     .last{
         margin-bottom: 5vh;
+    }
+
+    .inputWrapper{
+        width: 90vw;
     }
 }

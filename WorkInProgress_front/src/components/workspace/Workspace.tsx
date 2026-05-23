@@ -9,6 +9,7 @@ import type { newElementTO } from "../../services/TaskQueueService";
 import type { WorkSpaceTO } from "../../services/WorkSpaceService";
 import { usePageTitle } from "../../hooks/usePageTittle";
 import { useAuthStore } from "../../store/Auth";
+import { AccessDeniedInternal } from "../../pages/accesDeneidInternal/AccessDeniedInternal";
 
 interface UserProps {
     usuario: UserCompleteDTO;
@@ -20,12 +21,14 @@ export function Workspace({ usuario }: UserProps) {
     const idUser = useAuthStore((state) => state.idUsuario);
     const [isAddingBoard, setIsAddingBoard] = useState(false);
     const [newBoardTitle, setNewBoardTitle] = useState("");
+    const [existeWs,setExisteWs] = useState<boolean>(false);
 
     useEffect(() => {
         usuario.workspace?.map((ws, key) => {
             if (id) {
                 if (ws.id == parseInt(id)) {
                     setWorkspace(ws);
+                    setExisteWs(true);
                 }
             }
         });
@@ -56,6 +59,10 @@ export function Workspace({ usuario }: UserProps) {
             console.error("Error al crear el tablero:", error);
         }
     };
+
+    if(!existeWs){
+        return <AccessDeniedInternal mensaje="No dispones permisos para acceder o no existe este Espacio de trabajo."/>
+    }
 
     return (
         <section className={styles.content_section}>

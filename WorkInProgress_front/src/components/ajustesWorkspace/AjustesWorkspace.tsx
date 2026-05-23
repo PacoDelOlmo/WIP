@@ -206,7 +206,6 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
                     </button>
                 </div>
 
-                {/* ... (El resto del componente sigue exactamente igual: Gestión de accesos, Modales, Toasts) ... */}
                 <div className={styles.ajusteCard}>
                     <div className={styles.cardHeaderWithIcon}>
                         <ShieldAlert className={styles.dangerIcon} />
