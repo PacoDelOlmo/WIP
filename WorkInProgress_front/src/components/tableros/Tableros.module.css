@@ -301,12 +301,13 @@
     .user_info{
         justify-self: flex-start;
         align-self: flex-start;
+        flex-direction: column;
         margin-left: -1.5vw;
 
         width: 100%;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
 
         h1{
             display: flex;
@@ -341,6 +342,7 @@
         color: var(--color-texto-app);
         align-items: center;
         font-size: 3vw;
+        align-self: flex-end;
     }
 
     .secondary_button{

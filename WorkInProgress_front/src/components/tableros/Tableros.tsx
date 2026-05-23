@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Tableros.module.css";
 import WIP_Logo from "./../../assets/img/WIP_SinLetra.png";
-import { Clock, UserIcon, ChevronRight, Check, X } from "lucide-react";
+import { Clock, UserIcon, ChevronRight, Check, X, Container } from "lucide-react";
 import { Link } from "react-router";
 import type { UserCompleteDTO, WorkspaceType } from "../../pages/home/Home";
 import type { newElementTO } from "../../services/TaskQueueService";
@@ -47,7 +47,7 @@ export function Tableros({ usuario }: UserProps) {
               key={`recent-${tablero.nombreTablero}`}
               className={styles.board_button_link}
             >
-              <div className={styles.board_draw}></div>
+              <div className={styles.board_draw} style={{ background: tablero.color || 'var(--gris-oscuro)'}}></div>
               <Link
                 to={`/taskboard/${tablero.id}`}
                 className={styles.board_name}
@@ -75,7 +75,7 @@ export function Tableros({ usuario }: UserProps) {
             />
             <div className={styles.user_info}>
               <h1>
-                <UserIcon className={styles.user_icon} />
+                <Container className={styles.user_icon} />
                 Espacio de trabajo&nbsp;<span>{ws.nombre}</span>
               </h1>
               <Link to={`/user/workspace/${ws.id}`} className={styles.header_link}>
@@ -88,7 +88,7 @@ export function Tableros({ usuario }: UserProps) {
           <div className={styles.user_boards}>
             {ws.tableros.map((tablero) => (
               <div key={tablero.id} className={styles.board_button_link}>
-                <div className={styles.board_draw}></div>
+                <div className={styles.board_draw} style={{ background: tablero.color || 'var(--gris-oscuro)' }}></div>
                 <Link
                   to={`/taskboard/${tablero.id}`}
                   className={styles.board_name}
