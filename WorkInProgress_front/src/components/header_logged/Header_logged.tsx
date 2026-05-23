@@ -29,6 +29,7 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
     const [workspaces, setWorkspaces] = useState<WorkSpaceTO[]>(usuario.workspace);
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
+    const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
 
     const toggleWorkspaceMenu = () => {
         setWorkspaceMenuOpen(!workspaceMenuOpen);
@@ -65,6 +66,7 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
         if (searchTerm.trim() !== "") {
             navigate(`/user/resultados?q=${encodeURIComponent(searchTerm)}`);
             setSearchTerm("");
+            setIsMobileSearchOpen(false);
         }
     };
 
@@ -82,7 +84,7 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
                         </button>
 
                         {workspaceMenuOpen && (
-                            <div className={styles.dropdown_menu} style={{left: 0, right: 'auto', width: '250px', top: '120%'}}>
+                            <div className={`${styles.dropdown_menu} ${styles.workspace_dropdown}`}>
                                 <div className={styles.user_info}>
                                     <p className={styles.user_name}>Tus Espacios</p>
                                 </div>
@@ -210,6 +212,22 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
                 </div>
             </div>
 
+            {isMobileSearchOpen && (
+                <div className={styles.floating_search_container}>
+                    <input 
+                        type="text" 
+                        placeholder="Buscar tareas, tableros..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                        autoFocus
+                    />
+                    <button onClick={handleSearch} className={styles.btn_floating_search}>
+                        <Search size={18} />
+                    </button>
+                </div>
+            )}
+
             <nav className={styles.mobile_bottom_nav}>
                 <Link to={"/user/tableros"} className={styles.nav_item}>
                     <LayoutDashboard size={24} />
@@ -221,20 +239,20 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
                     <span>Ayuda</span>
                 </Link>
 
-                <Link to="#buscar" className={`${styles.nav_item} ${styles.nav_search}`}>
+                <button onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)} className={`${styles.nav_item} ${styles.nav_search}`}>
                     <Search size={28} />
                     <span>Buscar</span>
-                </Link>
-
-                <Link to="#notificaciones" className={styles.nav_item}>
-                    <BellRing size={24} />
-                    <span>Notificaciones</span>
-                </Link>
+                </button>
 
                 <Link to={'/user/perfil'} className={styles.nav_item}>
                     <UserCircle2 size={24} />
                     <span>Perfil</span>
                 </Link>
+
+                <button onClick={logout} className={`${styles.nav_item} ${styles.nav_search}`}>
+                    <LogOut size={28} />
+                    <span>Logout</span>
+                </button>
             </nav>
         </header>
     </>
