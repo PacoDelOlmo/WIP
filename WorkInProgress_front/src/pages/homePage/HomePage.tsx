@@ -3,10 +3,11 @@ import { Card } from "../../components/card/Card";
 import { Footer } from "../../components/footer/Footer";
 import { Header } from "../../components/header/Header";
 import { useAuthStore } from "../../store/Auth";
-import { MousePointer2 } from "lucide-react"; 
+import { Apple, MoreVertical, MousePointer2, Share, Smartphone } from "lucide-react"; 
 import styles from "./HomePage.module.css";
 import { CookieBanner } from "../../components/cookieBanner/CookieBanner";
 import { usePageTitle } from "../../hooks/usePageTittle";
+import { useState } from "react";
 
 export function HomePage() {
     const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
@@ -15,6 +16,7 @@ export function HomePage() {
     const heroTittle : string = 'Organiza tu trabajo\nSimplifica tu proceso';
     const heroText : string = 'En Work In Progress\ncada tarea te acerca a tus objetivos\n'
     +'Gestiona tus proyectos con tableros intuitivos\nlistas claras y una experiencia diseñada para fluir';
+    const [pwaTab, setPwaTab] = useState<'android' | 'ios'>('android');
 
     if (isLoggedIn){
         return <Navigate to="/user/home" replace/>
@@ -139,6 +141,51 @@ export function HomePage() {
                     <h3>Empieza a construir tu próximo proyecto con WIP</h3>
                     <div className={styles.primary_button}>
                         <button onClick={() => navigate('/signup')}>Crea tu primer tablero</button>
+                    </div>
+                </div>
+            </section>
+
+            <section className={styles.pwaSection}>
+                <div className={styles.pwaContent}>
+                    <div className={styles.pwaHeader}>
+                        <Smartphone className={styles.pwaIcon} size={40} />
+                        <h2>Lleva WIP siempre contigo</h2>
+                        <p>Instala nuestra aplicación directamente desde tu navegador para tener acceso instantáneo, sin descargas pesadas ni consumir almacenamiento de tu teléfono.</p>
+                    </div>
+
+                    <div className={styles.pwaTabsContainer}>
+                        <div className={styles.pwaTabs}>
+                            <button 
+                                className={`${styles.pwaTabBtn} ${pwaTab === 'android' ? styles.activeTab : ''}`}
+                                onClick={() => setPwaTab('android')}
+                            >
+                                Android (Chrome)
+                            </button>
+                            <button 
+                                className={`${styles.pwaTabBtn} ${pwaTab === 'ios' ? styles.activeTab : ''}`}
+                                onClick={() => setPwaTab('ios')}
+                            >
+                                <Apple size={16} /> iOS (Safari)
+                            </button>
+                        </div>
+
+                        <div className={styles.pwaInstructions}>
+                            {pwaTab === 'android' ? (
+                                <ol className={styles.pwaList}>
+                                    <li>Abre el navegador <strong>Chrome</strong>.</li>
+                                    <li>Toca el menú de los tres puntos <MoreVertical size={16} style={{verticalAlign: 'middle'}}/> en la esquina superior derecha.</li>
+                                    <li>Selecciona <strong>"Instalar aplicación"</strong> o <strong>"Añadir a la pantalla de inicio"</strong>.</li>
+                                    <li>Sigue las instrucciones en pantalla.</li>
+                                </ol>
+                            ) : (
+                                <ol className={styles.pwaList}>
+                                    <li>Abre el navegador <strong>Safari</strong>.</li>
+                                    <li>Toca el botón Compartir <Share size={16} style={{verticalAlign: 'middle', margin: '0 4px'}}/> en la parte inferior de la pantalla.</li>
+                                    <li>Desliza hacia arriba el menú y selecciona <strong>"Añadir a la pantalla de inicio"</strong>.</li>
+                                    <li>Toca "Añadir" en la esquina superior derecha.</li>
+                                </ol>
+                            )}
+                        </div>
                     </div>
                 </div>
             </section>
