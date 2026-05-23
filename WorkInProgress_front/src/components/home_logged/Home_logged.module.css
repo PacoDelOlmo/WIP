@@ -449,4 +449,38 @@
     .btn_trigger_add {
         font-size: 3vw;
     }
+
+    .board_button_add {
+        height: auto; 
+        padding: 0.5rem; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .add_board_form {
+        width: 100%;
+        padding: 0.2rem;
+        gap: 0.8rem; 
+        box-sizing: border-box;
+    }
+
+    .add_board_input {
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    .btn_confirm,
+    .btn_cancel {
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+    }
+
+    .btn_trigger_add {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
 }
