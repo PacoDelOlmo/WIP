@@ -1,13 +1,14 @@
 import styles from "./Workspace.module.css";
 import WIP_Logo from "./../../assets/img/WIP_Logo.png";
-import { ChevronRight, LockIcon, UserIcon, Check, X } from "lucide-react"; // ✨ Añadidos Check y X
+import { ChevronRight, LockIcon, UserIcon, Check, X, Settings, Users2 } from "lucide-react";
 import { Link, useParams } from "react-router";
 import type { UserCompleteDTO, WorkspaceType } from "../../pages/home/Home";
 import { useEffect, useState } from "react";
-import { TaskBoardService } from "../../services/TaskBoardService"; // ✨ Importamos el servicio
+import { TaskBoardService } from "../../services/TaskBoardService";
 import type { newElementTO } from "../../services/TaskQueueService";
 import type { WorkSpaceTO } from "../../services/WorkSpaceService";
 import { usePageTitle } from "../../hooks/usePageTittle";
+import { useAuthStore } from "../../store/Auth";
 
 interface UserProps {
     usuario: UserCompleteDTO;
@@ -16,7 +17,7 @@ interface UserProps {
 export function Workspace({ usuario }: UserProps) {
     const [workspace, setWorkspace] = useState<WorkSpaceTO | null>(null);
     const { id } = useParams();
-
+    const idUser = useAuthStore((state) => state.idUsuario);
     const [isAddingBoard, setIsAddingBoard] = useState(false);
     const [newBoardTitle, setNewBoardTitle] = useState("");
 
@@ -88,10 +89,20 @@ export function Workspace({ usuario }: UserProps) {
                             <p>{workspace.nombre}</p>
                         </div>
 
-                        <Link to="" className={styles.header_link}>
-                            {" "}
-                            Tableros <ChevronRight size={"4vw"} />
-                        </Link>
+                        {idUser === workspace.idPropietario ? 
+                            <div className={styles.boards_article_header_wrapper}>
+                                <Link to={`/user/workspace/${workspace.id}/ajustes`} className={styles.header_link}>
+                                    <Settings size={"6vw"} />
+                                </Link>
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                <Link to={`/user/workspace/${workspace.id}/colaboradores`} className={styles.header_link}>
+                                    <Users2 size={"6vw"} />
+                                </Link>
+                            </div>
+                        :
+                            <></>
+                        }
+                        
                     </header>
 
                     <div className={styles.user_boards}>
