@@ -73,7 +73,7 @@ export function Nav_tablero( {tittle, id, idWS, colorActual, onUpdateColor}: Nav
 
         try {
             const response = await TaskBoardService.deleteTablero(id);
-            console.log(response);
+            //console.log(response);
             navigate('/user/home'); 
         } catch (error) {
             console.error("Error al borrar el tablero:", error);
@@ -102,7 +102,7 @@ export function Nav_tablero( {tittle, id, idWS, colorActual, onUpdateColor}: Nav
         const fetchWs= async () => {
             try {
                 let workSpace = await WorkSpaceService.getEspacioTrabajo(idWS);
-                console.log(workSpace);
+                //console.log(workSpace);
                 setWorkspace(workSpace);
             } catch (e) {
                 console.error("Error cargando usuario:", e)

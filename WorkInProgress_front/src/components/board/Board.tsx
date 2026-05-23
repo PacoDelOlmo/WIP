@@ -30,7 +30,7 @@ export function Board() {
     try {
       let response = await TaskBoardService.getTablero(idTablero);
       setBoard(response);
-      console.log(response);
+      //console.log(response);
     } catch (e) {
       console.error(e);
       setError('Error de conexión con el servidor');
@@ -41,7 +41,7 @@ export function Board() {
     try {
       let response = await TaskBoardService.getIdWS(idTablero);
       setIdWs(response);
-      console.log(response);
+      //console.log(response);
     } catch (e) {
       console.error(e);
       setError('Error de conexión con el servidor');
@@ -106,7 +106,7 @@ export function Board() {
       try {
         let ordenListas : number[] = [];
         nuevasListas.map(lista => ordenListas.push(lista.id));
-        console.log(ordenListas);
+        //console.log(ordenListas);
 
         const nuevoOrden: OrdenListas = { 
           idTablero: Number(id),
@@ -114,7 +114,7 @@ export function Board() {
         };
 
         const ordenActualizado = await TaskBoardService.updateOrdenListas(Number(id), nuevoOrden);
-        console.log(ordenActualizado);
+        //console.log(ordenActualizado);
       } catch (e) {
         console.error("Error al actualizar el tablero", e);
       }
@@ -149,7 +149,7 @@ export function Board() {
       try {
         let ordenTareasLista : number[] = [];
         nuevasTareas.map(tarea => ordenTareasLista.push(tarea.id));
-        console.log(ordenTareasLista);
+        //console.log(ordenTareasLista);
 
         const nuevoOrden: OrdenTareas = { 
           idLista: sourceListId,
@@ -157,7 +157,7 @@ export function Board() {
         };
 
         const ordenActualizado = await TaskBoardService.updateOrdenTareasLista(Number(id), sourceListId, nuevoOrden);
-        console.log(ordenActualizado);
+        //console.log(ordenActualizado);
       } catch (e) {
         console.error("Error al actualizar el tablero", e);
       }
@@ -189,11 +189,11 @@ export function Board() {
       try {
         let ordenTareasListaOrigen : number[] = [];
         sourceTareas.map(tarea => ordenTareasListaOrigen.push(tarea.id));
-        console.log(ordenTareasListaOrigen);
+        //console.log(ordenTareasListaOrigen);
 
         let ordenTareasListaDestino : number[] = [];
         destinationTareas.map(tarea => ordenTareasListaDestino.push(tarea.id));
-        console.log(ordenTareasListaDestino);
+        //console.log(ordenTareasListaDestino);
 
         const nuevoOrdenOrigen: OrdenTareas = { 
           idLista: sourceListId,
@@ -206,9 +206,9 @@ export function Board() {
         };
         
         const ordenActualizadoDestino = await TaskBoardService.updateOrdenTareasLista(Number(id), destinationListId, nuevoOrdenDestino);
-        console.log(ordenActualizadoDestino);
+        //console.log(ordenActualizadoDestino);
         const ordenActualizadoOrigen = await TaskBoardService.updateOrdenTareasLista(Number(id), sourceListId, nuevoOrdenOrigen);
-        console.log(ordenActualizadoOrigen);
+        //console.log(ordenActualizadoOrigen);
         
       } catch (e) {
         console.error("Error al actualizar el tablero", e);
