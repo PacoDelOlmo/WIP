@@ -406,6 +406,108 @@ main {
     animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
 }
 
+.pwaSection {
+    display: none;
+    background-color: white;
+    padding: 6vw 5vw;
+    border-top: 1px solid var(--gris-claro);
+}
+
+.pwaContent {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fafafa;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.pwaHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.pwaIcon {
+    color: var(--color-primario);
+    margin-bottom: 1rem;
+}
+
+.pwaHeader h2 {
+    color: var(--color-texto-primario);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+}
+
+.pwaHeader p {
+    color: var(--color-texto-secundario);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.pwaTabsContainer {
+    width: 100%;
+}
+
+.pwaTabs {
+    display: flex;
+    background-color: var(--gris-claro);
+    border-radius: 8px;
+    padding: 0.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.pwaTabBtn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem;
+    border: none;
+    background: transparent;
+    color: var(--color-texto-secundario);
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pwaTabBtn.activeTab {
+    background-color: white;
+    color: var(--color-primario);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.pwaInstructions {
+    background-color: white;
+    border: 1px solid var(--gris-medio);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.pwaList {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--color-texto-primario);
+}
+
+.pwaList li {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.pwaList li:last-child {
+    margin-bottom: 0;
+}
+
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
@@ -420,6 +522,10 @@ main {
     .animatedShowcase {
         transform: scale(0.8) rotateX(0deg);
         margin-top: 2rem;
+    }
+
+    .pwaSection {
+        display: block;
     }
 }
 
@@ -462,5 +568,25 @@ main {
     
     .showcaseDrag, .showcaseExpand, .showcaseNew {
         transform: scale(0.7);
+    }
+
+    .pwaContent {
+        padding: 1.5rem;
+        background-color: transparent;
+        box-shadow: none;
+        border: none;
+    }
+    
+    .pwaHeader h2 {
+        font-size: 1.5rem;
+    }
+    
+    .pwaTabBtn {
+        font-size: 0.85rem;
+        padding: 0.6rem;
+    }
+    
+    .pwaList li {
+        font-size: 0.9rem;
     }
 }
