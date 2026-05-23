@@ -157,7 +157,7 @@ Asegúrate de tener instalado en tu sistema:
 
 ### 1. Clonar el repositorio
 ```bash
-git clone [https://github.com/tu-usuario/work-in-progress.git](https://github.com/tu-usuario/work-in-progress.git)
+git clone [https://github.com/PacoDelOlmo/WIP.git](https://github.com/PacoDelOlmo/WIP)
 cd work-in-progress
 ```
 
