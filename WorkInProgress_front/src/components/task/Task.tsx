@@ -266,15 +266,24 @@ export function Task({ taskData, listaName, listID, taskBoardID, index }: TaskPr
                         }}
                     >
                         <div className={Styles.titulo_check}>
-                            <input 
-                                type="checkbox" 
-                                checked={currentTask.completada || false} 
-                                onChange={handleToggleEstado}
-                                onClick={(e) => e.stopPropagation()} 
-                                onMouseDown={(e) => e.stopPropagation()} 
-                            />
-                            
-                            <h4>{currentTask.titulo}</h4>
+                            {currentTask.completada ? (
+                                <CircleCheckBig
+                                    size={20}
+                                    onClick={(e)=> { e.stopPropagation(); handleToggleEstado()}} 
+                                    onMouseDown={(e) => e.stopPropagation()}
+                                    className={Styles.checkedInput}
+                                />
+                            ) : (
+                                <Circle
+                                    size={20}
+                                    onClick={(e)=> { e.stopPropagation(); handleToggleEstado()}} 
+                                    onMouseDown={(e) => e.stopPropagation()}
+                                    className={Styles.unCheckedInput}
+                                />
+                            )}
+                            <h4>
+                                {currentTask.titulo}
+                            </h4>
                         </div>
                         <button>
                             <SquarePen />
