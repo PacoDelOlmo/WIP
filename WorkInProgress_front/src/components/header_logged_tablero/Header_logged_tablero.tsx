@@ -32,12 +32,12 @@ export function Header_logged_tablero() {
 
     async function obtenerWsUser(idUser: number){
         try {
-                let response = await WorkSpaceService.getWorkSpaces(idUser);
-                setWorkspaces(response);
-                console.log(response);
-            } catch (e) {
-                console.error(e);
-            }
+            let response = await WorkSpaceService.getWorkSpaces(idUser);
+            setWorkspaces(response);
+            //console.log(response);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     const handleSearch = () => {

@@ -70,9 +70,19 @@
     transform: none !important;
 }
 
-.tarea input {
-    margin-left: 0.2rem;
+.checkedInput{
+    margin: 0.2rem 0rem 0rem 0.2rem;
+    visibility: visible;
+    opacity: 1;
+    color: var(--color-primario);
+    transition: all 0.2s ease-in-out;
+}
+
+.unCheckedInput{
+    margin: 0.2rem 0rem 0rem 0.2rem;
     visibility: hidden;
+    opacity: 0;
+    color: var(--gris-oscuro);
     transition: all 0.2s ease-in-out;
 }
 
@@ -84,11 +94,12 @@
     cursor: pointer;
 }
 
-.tarea:hover input, 
+.tarea:hover .unCheckedInput,
 .tarea:hover button,
 .tareaSeleccionada input,
 .tareaSeleccionada button {
     visibility: visible;
+    opacity: 1;
 }
 
 .titulo_check{

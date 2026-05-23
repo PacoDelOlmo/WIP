@@ -73,7 +73,7 @@ export function Nav_tablero( {tittle, id, idWS, colorActual, onUpdateColor}: Nav
 
         try {
             const response = await TaskBoardService.deleteTablero(id);
-            console.log(response);
+            //console.log(response);
             navigate('/user/home'); 
         } catch (error) {
             console.error("Error al borrar el tablero:", error);
@@ -102,7 +102,7 @@ export function Nav_tablero( {tittle, id, idWS, colorActual, onUpdateColor}: Nav
         const fetchWs= async () => {
             try {
                 let workSpace = await WorkSpaceService.getEspacioTrabajo(idWS);
-                console.log(workSpace);
+                //console.log(workSpace);
                 setWorkspace(workSpace);
             } catch (e) {
                 console.error("Error cargando usuario:", e)
@@ -162,21 +162,18 @@ export function Nav_tablero( {tittle, id, idWS, colorActual, onUpdateColor}: Nav
 
                 <div className={styles.mobile_left_section}>
                     <button className={styles.icon_transparent}>
-                        <X size={28} />
+                        <Link to={`/user/workspace/${idWS}`} >
+                            <X size={28} />
+                        </Link>
                     </button>
                     <div className={styles.mobile_tittles}>
                         {renderTitulo()}
-                        <span className={styles.subtitulo_tablero}>Espacio de trabajo de USER</span>
+                        <span className={styles.subtitulo_tablero}>{workSpace?.nombre}</span>
                     </div>
                 </div>
             </div>
 
             <div className={styles.right_section}>
-                <div className={styles.mobile_actions}>
-                    <button className={styles.icon_transparent}><Filter size={24}/></button>
-                    <button className={styles.icon_transparent}><Bell size={24}/></button>
-                </div>
-                
                 <div className={styles.options_container}>
                     <button 
                     className={`${styles.option_button} ${styles.desktop_option_btn}`}

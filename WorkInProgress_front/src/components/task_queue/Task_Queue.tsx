@@ -214,7 +214,7 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              style={{ minHeight: "20px" }} 
+              className={styles.lista_scrollable}
             >
               {queueData.tareas?.map((tarea, index) => (
                 <Task 

@@ -24,14 +24,44 @@
 }
 
 .pila_tareas{
-    width: 28vh;
+    width: 30vh;
     background-color: var(--gris-medio);
     padding: 1rem;
     margin: 1vh;
     border-radius: 0.5rem;
 
-    
+    max-height: 75vh;
+    display: flex;
+    flex-direction: column;
 }
+
+.lista_scrollable {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.4rem;
+    margin-bottom: 0.5rem;
+    min-height: 20px;
+}
+
+.lista_scrollable::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lista_scrollable::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.lista_scrollable::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+.lista_scrollable::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+
 
 .btn_nueva_tarea{
     display: flex;
