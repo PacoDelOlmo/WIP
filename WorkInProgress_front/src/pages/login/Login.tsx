@@ -57,8 +57,9 @@ export function Login() {
         
         <main className={styles.login_card}>
             <header className={styles.header}>
-                <img src={LogoWip} alt="Logo de WIP" className={styles.logo}/>
-                <h1>WIP</h1>
+                <Link to={'/'}>
+                    <img src={LogoWip} alt="Logo de WIP" className={styles.logo}/>
+                </Link>                <h1>WIP</h1>
                 <p className={styles.subtitle}>Bienvenido de nuevo</p>
             </header>
 

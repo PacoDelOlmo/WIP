@@ -131,7 +131,9 @@ export function SignUp() {
         
         <main className={styles.signup_card}>
             <header className={styles.header}>
-                <img src={LogoWip} alt="Logo de WIP" className={styles.logo}/>
+                <Link to={'/'}>
+                    <img src={LogoWip} alt="Logo de WIP" className={styles.logo}/>
+                </Link>
                 <h1>Crear Cuenta</h1>
                 <p className={styles.subtitle}>Únete a WIP y organiza tu trabajo</p>
             </header>
