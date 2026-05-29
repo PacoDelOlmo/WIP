@@ -126,12 +126,7 @@ export function Workspace({ usuario }: UserProps) {
                                 </div>
                             ))
                         ) : (
-                            <p
-                                className={styles.board_name}
-                                style={{ padding: "0 1rem", color: "#888" }}
-                            >
-                                No hay tableros en este espacio
-                            </p>
+                            <></>
                         )}
 
                             {usuario.id === workspace.idPropietario ? (
