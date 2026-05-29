@@ -89,8 +89,6 @@ export function Task_Queue({ queueData, idTablero, dragHandleProps, onTareaCread
   };
 
   const handleDeleteLista = async () => {
-    const confirmar = window.confirm(`¿Estás seguro de que deseas eliminar la lista "${currentTitle}" y todas las tarjetas que contiene?`);
-    if (!confirmar) return;
 
     try {
       await TaskQueueService.deleteLista(idTablero, queueData.id);

@@ -303,9 +303,29 @@
     color: var(--color-primario);
 }
 
+.logout_link {
+    background: transparent;
+    border: none;
+    padding: 8px 12px; 
+    margin: 0;
+    font: inherit; 
+    color: inherit; 
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-radius: 4px; 
+}
+
 .logout_link:hover {
-    background-color: #ffeaea !important; 
-    color: #d9534f !important; 
+    background-color: #ffeaea; 
+    color: #d9534f; 
+}
+
+.logout_link:focus {
+    outline: none;
 }
 
 .mobile_bottom_nav {
