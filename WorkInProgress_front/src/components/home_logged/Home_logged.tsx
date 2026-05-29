@@ -34,8 +34,9 @@ export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
                 }))
             )
         )
-    ).slice(0, 6);
+    );
 
+    const actividadReciente = actividadesRecientes.reverse(); 
 
     const handleCrearWorkSpace = async () => {
             if (newWorkSpaceTitle.trim() === "") return;
@@ -138,8 +139,8 @@ export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
                     </div>
                 </header>
 
-                {actividadesRecientes.length > 0 ? (
-                    actividadesRecientes.map((actividad, index) => (
+                {actividadReciente.length > 0 ? (
+                    actividadReciente.map((actividad, index) => (
                         <div key={index} className={styles.recent_activity}>
                             <div className={styles.board_button_activity}>
                                 <div className={styles.board_draw_activity}></div>
@@ -155,7 +156,7 @@ export function Home_logged({ usuario, onWorkspaceCreated }: UserProps) {
                                 </Link>
                             </div>
                         </div>
-                    ))
+                    )).slice(0, 6)
                 ) : (
                     <p style={{textAlign: 'center', padding: '1rem', color: 'gray'}}>
                         No hay actividad reciente
