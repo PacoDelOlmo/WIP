@@ -9,12 +9,12 @@ describe('Autenticación Global (Zustand)', () => {
   it('Debe iniciar con el usuario deslogueado por defecto', () => {
     const estado = useAuthStore.getState();
     expect(estado.isLoggedIn).toBe(false);
-    expect(estado.idUsuario).toBeNull();
+    expect(estado.idUsuario).toBe(-1);
   });
 
   it('Debe actualizar el estado al hacer login', () => {
     const mockUser = { id: 1, nombre: 'Paco', correo: 'paco@test.com' };
-    
+
     useAuthStore.getState().login(mockUser.id); 
 
     const estadoActualizado = useAuthStore.getState();
