@@ -18,6 +18,7 @@ import { ResultadosBusqueda } from '../resultadosBusqueda/ResultadosBusqueda'
 import { GuiaAyuda } from '../guiaAyuda/GuiaAyuda'
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner'
 import { usePageTitle } from '../../hooks/usePageTittle'
+import type { BoardTO } from '../../services/TaskBoardService'
 
 export type UserCompleteDTO = {
   id: number,
@@ -71,6 +72,22 @@ export function Home() {
     setUser({ ...user, workspace: workspacesActualizados });
   }
 
+  const handleAddBoard = (idWorkspace: number, nuevoTablero: BoardTO) => {
+    if (!user) return;
+    
+    const workspacesActualizados = user.workspace.map(ws => {
+      if (ws.id === idWorkspace) {
+        return {
+          ...ws,
+          tableros: [...ws.tableros, nuevoTablero]
+        };
+      }
+      return ws;
+    });
+
+    setUser({ ...user, workspace: workspacesActualizados });
+  }
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -96,7 +113,7 @@ export function Home() {
           <main className={styles.body}>
               {user ? <Aside usuario={user}/> : ''}
               <Routes>
-                <Route path='/workspace/:id' element={<Workspace usuario={user}/>} />
+                <Route path='/workspace/:id' element={<Workspace usuario={user} onBoardCreated={handleAddBoard}/>} />
                 <Route path='/home' element={<Home_logged usuario={user} onWorkspaceCreated={handleAddWorkspace} /> }/>
                 <Route path='/tableros' element={<Tableros usuario={user} />}/>
                 <Route path='/perfil' element={<Ajustes />}/>
