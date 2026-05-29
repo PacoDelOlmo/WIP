@@ -4,7 +4,7 @@ import { ChevronRight, LockIcon, UserIcon, Check, X, Settings, Users2 } from "lu
 import { Link, useParams } from "react-router";
 import type { UserCompleteDTO, WorkspaceType } from "../../pages/home/Home";
 import { useEffect, useState } from "react";
-import { TaskBoardService } from "../../services/TaskBoardService";
+import { TaskBoardService, type BoardTO } from "../../services/TaskBoardService";
 import type { newElementTO } from "../../services/TaskQueueService";
 import type { WorkSpaceTO } from "../../services/WorkSpaceService";
 import { usePageTitle } from "../../hooks/usePageTittle";
@@ -13,9 +13,10 @@ import { AccessDeniedInternal } from "../../pages/accesDeneidInternal/AccessDeni
 
 interface UserProps {
     usuario: UserCompleteDTO;
+    onBoardCreated: (idWorkspace: number, tablero: BoardTO) => void;
 }
 
-export function Workspace({ usuario }: UserProps) {
+export function Workspace({ usuario, onBoardCreated }: UserProps) {
     const [workspace, setWorkspace] = useState<WorkSpaceTO | null>(null);
     const { id } = useParams();
     const idUser = useAuthStore((state) => state.idUsuario);
@@ -44,14 +45,14 @@ export function Workspace({ usuario }: UserProps) {
         const idUsuario = usuario.id;
 
         try {
-            // Llamamos al backend
             const tableroCreado = await TaskBoardService.createTablero(payload, idUsuario, workspace.id,);
 
-            
+            onBoardCreated(workspace.id, tableroCreado);
             setWorkspace({
                 ...workspace,
                 tableros: [...workspace.tableros, tableroCreado],
             });
+
 
             setNewBoardTitle("");
             setIsAddingBoard(false);
@@ -126,12 +127,7 @@ export function Workspace({ usuario }: UserProps) {
                                 </div>
                             ))
                         ) : (
-                            <p
-                                className={styles.board_name}
-                                style={{ padding: "0 1rem", color: "#888" }}
-                            >
-                                No hay tableros en este espacio
-                            </p>
+                            <></>
                         )}
 
                             {usuario.id === workspace.idPropietario ? (
