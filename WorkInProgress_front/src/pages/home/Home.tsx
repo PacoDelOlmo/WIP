@@ -88,6 +88,24 @@ export function Home() {
     setUser({ ...user, workspace: workspacesActualizados });
   }
 
+  const handleUpdateNickUser = (nuevoUsername: string) => {
+    if (!user) return;
+    
+    setUser({
+      ...user,
+      username: nuevoUsername
+    });
+  }
+
+  const handleUpdateMailUser = (nuevoMail: string) => {
+    if (!user) return;
+    
+    setUser({
+      ...user,
+      mail: nuevoMail
+    });
+  }
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -116,7 +134,7 @@ export function Home() {
                 <Route path='/workspace/:id' element={<Workspace usuario={user} onBoardCreated={handleAddBoard}/>} />
                 <Route path='/home' element={<Home_logged usuario={user} onWorkspaceCreated={handleAddWorkspace} /> }/>
                 <Route path='/tableros' element={<Tableros usuario={user} />}/>
-                <Route path='/perfil' element={<Ajustes />}/>
+                <Route path='/perfil' element={<Ajustes onUpdateNickUser={handleUpdateNickUser} onUpdateMailUser={handleUpdateMailUser}/>}/>
                 <Route path='/ayuda' element={<GuiaAyuda />}/>
                 <Route path='/workspace/:id/colaboradores' element={<Colaboradores usuario={user}/>} />
                 <Route 

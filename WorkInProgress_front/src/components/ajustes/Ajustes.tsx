@@ -5,7 +5,12 @@ import { UserService } from '../../services/UserService'
 import { useAuthStore } from '../../store/Auth'
 import { usePageTitle } from '../../hooks/usePageTittle'
 
-export function Ajustes() {
+interface AjustesProps {
+    onUpdateNickUser: (nuevoUsername: string) => void;
+    onUpdateMailUser: (nuevoCorreo: string) => void;
+}
+
+export function Ajustes({onUpdateNickUser, onUpdateMailUser}: AjustesProps) {
     const userId = useAuthStore((state) => state.idUsuario);
 
     const [nuevoCorreo, setNuevoCorreo] = useState('');
@@ -33,6 +38,7 @@ export function Ajustes() {
             const response = await UserService.editUserCorreo(userId, { id: userId, mail: nuevoCorreo });
             if (response.correct) {
                 setStatusCorreo({ type: 'success', msg: 'Correo actualizado correctamente.' });
+                onUpdateMailUser(nuevoCorreo);
                 setNuevoCorreo('');
             } else {
                 setStatusCorreo({ type: 'error', msg: response.description || 'Error al actualizar el correo.' });
@@ -90,6 +96,7 @@ export function Ajustes() {
             if (response.correct) {
                 setStatusUsuario({ type: 'success', msg: 'Nombre de usuario actualizado.' });
                 setNuevoUsuario('');
+                onUpdateNickUser(nuevoUsuario);
             } else {
                 setStatusUsuario({ type: 'error', msg: response.description || 'El nombre de usuario ya está en uso.' });
             }
