@@ -8,6 +8,7 @@ import { useAuthStore } from '../../store/Auth';
 import { type UserCompleteDTO } from '../home/Home';
 import { LoginService } from '../../services/LoginService';
 import { AccessDeneid } from '../accesDeneid/AccessDenied';
+import { Loader } from '../../components/loader/Loader';
 
 export function Taskboard() {
 
@@ -43,7 +44,11 @@ export function Taskboard() {
   }, [id, idUser]);
 
   if (isLoading) {
-      return <div className={styles.contenedor_principal}>Cargando tablero...</div>;
+      return (
+          <main className={styles.body}>
+              <Loader />
+          </main>
+      );
   }
 
   const hasAccess = user?.workspace?.some(ws => 

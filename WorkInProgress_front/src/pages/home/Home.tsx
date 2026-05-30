@@ -19,6 +19,7 @@ import { GuiaAyuda } from '../guiaAyuda/GuiaAyuda'
 import { CookieBanner } from '../../components/cookieBanner/CookieBanner'
 import { usePageTitle } from '../../hooks/usePageTittle'
 import type { BoardTO } from '../../services/TaskBoardService'
+import { Loader } from '../../components/loader/Loader'
 
 export type UserCompleteDTO = {
   id: number,
@@ -54,6 +55,7 @@ export function Home() {
 
   const userLogged = useAuthStore((state) => state.idUsuario)
   const [user , setUser] = useState<UserCompleteDTO | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleAddWorkspace = (nuevoWorkspace: WorkSpaceTO) => {
     if (!user) return; 
@@ -114,6 +116,8 @@ export function Home() {
         setUser(datosUsuario);
       } catch (e) {
         console.error("Error cargando usuario:", e)
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -121,6 +125,13 @@ export function Home() {
 
   }, [userLogged]);
 
+  if (isLoading) {
+        return (
+            <main className={styles.body}>
+                <Loader />
+            </main>
+        );
+    }
 
 
   return (

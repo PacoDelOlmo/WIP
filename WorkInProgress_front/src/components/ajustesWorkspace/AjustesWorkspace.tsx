@@ -9,6 +9,7 @@ import { ToastNotification } from '../toastNotification/ToastNotification';
 import { useAuthStore } from '../../store/Auth';
 import { AccessDeniedInternal } from '../../pages/accesDeneidInternal/AccessDeniedInternal';
 import { usePageTitle } from '../../hooks/usePageTittle';
+import { Loader } from '../loader/Loader';
 
 const PALETA_COLORES = [
     { hex: '#EAEAEA', nombre: 'Gris Base' },
@@ -44,7 +45,7 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
     const [isPropietaio, setIsPropietario] = useState<boolean>(false);
     const [nuevoColor, setNuevoColor] = useState("#EAEAEA");
     const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (id) cargarDatos(Number(id));
@@ -62,6 +63,8 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
             setColaboradores(Array.isArray(colabs) ? colabs : [colabs as any]);
         } catch (e) {
             console.error("Error cargando ajustes", e);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -133,6 +136,14 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
             setUserToRemove(null);
         }
     };
+
+    if (isLoading) {
+        return (
+            <main className={styles.body}>
+                <Loader />
+            </main>
+        );
+    }
 
     if(!isPropietaio){
         return <AccessDeniedInternal mensaje="Solo los propietarios del espacio pueden acceder a los ajustes y gestión de accesos." />;

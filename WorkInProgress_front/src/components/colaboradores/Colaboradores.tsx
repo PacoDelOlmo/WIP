@@ -8,6 +8,7 @@ import { ToastNotification } from '../toastNotification/ToastNotification';
 import { AccessDeniedInternal } from '../../pages/accesDeneidInternal/AccessDeniedInternal';
 import { useAuthStore } from '../../store/Auth';
 import { usePageTitle } from '../../hooks/usePageTittle';
+import { Loader } from '../loader/Loader';
 
 interface ColaboradoresProps {
     usuario: UserCompleteDTO;
@@ -28,6 +29,7 @@ export function Colaboradores({ usuario }: ColaboradoresProps) {
     });
     const usuarioLogged = useAuthStore((state)=> state.idUsuario);
     const [isPropietaio, setIsPropietario] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (id) {
@@ -46,6 +48,8 @@ export function Colaboradores({ usuario }: ColaboradoresProps) {
             setColaboradores(Array.isArray(colabs) ? colabs : [colabs as any]);
         } catch (e) {
             console.error("Error cargando colaboradores", e);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -72,6 +76,14 @@ export function Colaboradores({ usuario }: ColaboradoresProps) {
     const showToast = (message: string, type: 'success' | 'error') => {
         setToastConfig({ isVisible: true, message, type });
     };
+
+    if (isLoading) {
+        return (
+            <main className={styles.body}>
+                <Loader />
+            </main>
+        );
+    }
 
     if(!isPropietaio){
         return <AccessDeniedInternal mensaje="Solo los propietarios del espacio pueden acceder a los ajustes y gestión de accesos." />;
