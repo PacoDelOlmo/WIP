@@ -1,4 +1,4 @@
-import styles from './Nav_Tablero.module.css'
+import styles from './Pepito.module.css'
 import LogoWip from './../../assets/img/WIP_SinLetra.png'
 import { EllipsisVertical, Pencil, XCircle, Share2, Bell, Filter, X, ArrowLeft, Palette } from 'lucide-react'
 import { useState, useEffect } from 'react'
