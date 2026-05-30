@@ -1,0 +1,24 @@
+Service URI
+mysql://
+CLICK_TO:REVEAL_PASSWORD
+@mysql-wip1-fjdom-df8a.l.aivencloud.com:12965/defaultdb?ssl-mode=REQUIRED
+
+Database name
+defaultdb
+
+Host
+mysql-wip1-fjdom-df8a.l.aivencloud.com
+
+Port
+12965
+
+User
+avnadmin
+
+Password
+AVNS_PcKdOMV5aF_3fcewElT
+
+
+SSL mode
+REQUIRED
+
