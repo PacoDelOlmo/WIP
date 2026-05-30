@@ -139,7 +139,7 @@ export function AjustesWorkspace({ usuario, onUpdateWorkspace }: AjustesProps) {
 
     if (isLoading) {
         return (
-            <main className={styles.body}>
+            <main className={styles.container}>
                 <Loader />
             </main>
         );

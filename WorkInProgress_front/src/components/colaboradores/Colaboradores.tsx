@@ -79,7 +79,7 @@ export function Colaboradores({ usuario }: ColaboradoresProps) {
 
     if (isLoading) {
         return (
-            <main className={styles.body}>
+            <main className={styles.container}>
                 <Loader />
             </main>
         );

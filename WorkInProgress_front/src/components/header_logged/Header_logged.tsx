@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import styles from './Header_logged.module.css'
 import LogoWip from './../../assets/img/WIP_SinLetra.png'
 import { 
@@ -30,6 +30,8 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
     const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+    const searchContainerRef = useRef<HTMLDivElement>(null);
+
 
     const toggleWorkspaceMenu = () => {
         setWorkspaceMenuOpen(!workspaceMenuOpen);
@@ -49,7 +51,6 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
         const idUsuario = usuario.id;
 
         try {
-            // Llamamos al backend
             const espacioTrabajoCreado = await WorkSpaceService.createEspacioTrabajo(payload, idUsuario);
             
             onWorkspaceCreated(espacioTrabajoCreado);
@@ -69,6 +70,19 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
             setIsMobileSearchOpen(false);
         }
     };
+
+    useEffect(() => {
+        if (isMobileSearchOpen && searchContainerRef.current) {
+            const scrollTimeout = setTimeout(() => {
+                searchContainerRef.current?.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center'
+                });
+            }, 300);
+
+            return () => clearTimeout(scrollTimeout);
+        }
+    }, [isMobileSearchOpen]);
 
     return (
     <>
@@ -213,7 +227,7 @@ export function Header_logged({usuario, onWorkspaceCreated} : HeaderProps) {
             </div>
 
             {isMobileSearchOpen && (
-                <div className={styles.floating_search_container}>
+                <div ref={searchContainerRef} className={styles.floating_search_container}>
                     <input 
                         type="text" 
                         placeholder="Buscar tareas, tableros..."
