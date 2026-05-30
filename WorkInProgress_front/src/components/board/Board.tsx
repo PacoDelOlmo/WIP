@@ -14,6 +14,7 @@ import { DragDropContext, Droppable, Draggable, type DropResult } from '@hello-p
 import type { TaskTO } from '../../services/TaskService';
 import { ConfirmModal } from '../modalConfirm/ConfirmModal';
 import { usePageTitle } from '../../hooks/usePageTittle';
+import { Loader } from '../loader/Loader';
 
 
 export function Board() {
@@ -22,7 +23,7 @@ export function Board() {
   const [board, setBoard] = useState<BoardTO | null>(null);
   const [error, setError] = useState<String | null>();
   const [idWS, setIdWs] = useState<number>(-1);
-
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAddingList, setIsAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
 
@@ -34,6 +35,8 @@ export function Board() {
     } catch (e) {
       console.error(e);
       setError('Error de conexión con el servidor');
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -238,6 +241,14 @@ export function Board() {
       setBoard({ ...board, color: nuevoColor });
     }
   };
+
+    if (isLoading) {
+      return (
+          <main className={styles.board}>
+              <Loader />
+          </main>
+      );
+  }
 
   return (
     <>
