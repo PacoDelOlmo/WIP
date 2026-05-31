@@ -157,14 +157,14 @@ Debido a las políticas de ahorro de recursos en los planes de despliegue gratui
 
 1.  **Despertar el servidor:** Antes de acceder a la plataforma principal, haz clic en el siguiente endpoint de la API para forzar el arranque del servidor Java. *(Nota: El primer arranque puede tardar entre 30 y 50 segundos).*
     
-    🔗 **Endpoint de activación:** [https://wipjuca.onrender.com/api/users/](https://wipjuca.onrender.com/api/users/)
+    🔗 **Endpoint de activación:** [https://wipjuca.onrender.com/api/users/](https://wip-juca.onrender.com/api/users/)
 
     > **💡 Tip de pruebas:** Al cargar la ruta superior, la API te devolverá un `.json` con la información de los usuarios ya registrados. Puedes elegir el correo y la contraseña de cualquiera de ellos para iniciar sesión directamente, sin necesidad de completar el flujo de registro.
 
 2.  **Acceder a la herramienta:**
     Una vez que el endpoint anterior devuelva el JSON (confirmando que el motor de la base de datos y el servidor están al 100%), accede al frontend para probar y disfrutar con plenitud de todas las características de WIP:
 
-    🔗 **Acceso a WIP:** [https://wipneon.vercel.app/](https://wipneon.vercel.app/)
+    🔗 **Acceso a WIP:** [https://wipneon.vercel.app/](https://wip-neon.vercel.app/)
 
 ---
 
